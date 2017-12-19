@@ -1,3 +1,7 @@
 package org.voegtle.wunschmanager.data
 
-class WishList(val id: Long, val event: String, val wishes: List<Wish>)
+import com.googlecode.objectify.annotation.Entity
+import com.googlecode.objectify.annotation.Id
+
+@Entity
+class WishList(@Id var id: Long? = null, var event: String = "")
