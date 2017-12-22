@@ -11,7 +11,7 @@ import org.voegtle.wunschmanager.data.WishList
 class WishListService {
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/create")
-  fun createList(@RequestParam() event: String) : WishList {
+  fun create(@RequestParam() event: String): WishList {
     val newWishList = WishList(event = event)
     ObjectifyService.ofy().save().entity(newWishList).now()
     return newWishList
@@ -19,8 +19,15 @@ class WishListService {
 
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/list")
-  fun listList(): List<WishList> {
+  fun list(): List<WishList> {
     return ObjectifyService.ofy().load().type(WishList::class.java).list()
+  }
+
+  @CrossOrigin(origins = ["*"])
+  @RequestMapping("/wishlist/delete")
+  fun delete(@RequestParam() id: Long): Boolean {
+    ObjectifyService.ofy().delete().type(WishList::class.java).id(id).now()
+    return true
   }
 
 
