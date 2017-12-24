@@ -1,3 +1,7 @@
 package org.voegtle.wunschmanager.data
 
-class User(val id: Long, val firstname: String, val familyname: String)
+import com.googlecode.objectify.annotation.Entity
+import com.googlecode.objectify.annotation.Id
+
+@Entity class User(@Id var email: String? = null, var firstname: String? = null,
+                   var familyname: String? = null)

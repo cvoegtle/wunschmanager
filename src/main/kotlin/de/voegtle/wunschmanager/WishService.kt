@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
 import org.voegtle.wunschmanager.data.WishList
+import javax.servlet.http.HttpServletRequest
 
 @RestController() class WishService {
   @CrossOrigin(origins = ["*"])
@@ -29,7 +30,8 @@ import org.voegtle.wunschmanager.data.WishList
 
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/update", method = [RequestMethod.POST])
-  fun update(@RequestBody() updateRequest: UpdateRequest): Boolean {
+  fun update(@RequestBody() updateRequest: UpdateRequest, request: HttpServletRequest): Boolean {
+    val userPrincipal = request.userPrincipal
     val wish = updateRequest.wish
     wish?.let {
       val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(updateRequest.listId!!).now()
