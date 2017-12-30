@@ -26,7 +26,7 @@ class UserManagementServiceTest {
     Mockito.`when`(request.serverPort).thenReturn(8443)
 
     Mockito.`when`(userService!!.createLoginURL("/go")).thenReturn("/_ah/login/go")
-    Mockito.`when`(userService!!.createLogoutURL("/go")).thenReturn("_ah/logout?/go")
+    Mockito.`when`(userService.createLogoutURL("/go")).thenReturn("_ah/logout?/go")
     val userStatus = userManagementService.status("/go", request)
     assertEquals("https://www.voegtle.org:8443/_ah/login/go", userStatus.url)
   }
