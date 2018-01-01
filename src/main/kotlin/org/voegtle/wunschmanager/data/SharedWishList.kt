@@ -1,5 +1,8 @@
 package org.voegtle.wunschmanager.data
 
+import com.googlecode.objectify.annotation.Entity
 import com.googlecode.objectify.annotation.Id
+import com.googlecode.objectify.annotation.Index
 
-class SharedWishList (@Id var id: Long? = null, var sharedWith: String? = null, var wishListId: Long? = null )
+@Entity
+class SharedWishList(@Id var id: Long? = null, @Index var sharedWith: String? = null, @Index var wishListId: Long? = null)
