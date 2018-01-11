@@ -73,7 +73,7 @@ import javax.servlet.http.HttpServletRequest
 
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long,
-                                               request: HttpServletRequest): Boolean {
+                                               request: HttpServletRequest): Wish {
     val userName = extractUserName(request, true)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
@@ -88,7 +88,7 @@ import javax.servlet.http.HttpServletRequest
     }
 
     ObjectifyService.ofy().save().entity(existingWish).now()
-    return true
+    return existingWish
   }
 
 
