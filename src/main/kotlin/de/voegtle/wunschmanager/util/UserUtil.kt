@@ -17,3 +17,10 @@ fun checkOwnership(request: HttpServletRequest, wishList: WishList, message: Str
     throw PermissionDenied(message = message)
   }
 }
+
+fun checkNotOwnership(userName: String?, wishList: WishList, message: String) {
+  if (wishList.owner == userName) {
+    throw PermissionDenied(message= message)
+  }
+}
+

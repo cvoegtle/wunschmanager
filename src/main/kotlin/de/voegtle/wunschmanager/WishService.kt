@@ -2,6 +2,8 @@ package de.voegtle.wunschmanager
 
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
+import de.voegtle.wunschmanager.util.PermissionDenied
+import de.voegtle.wunschmanager.util.checkNotOwnership
 import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -70,13 +72,20 @@ import javax.servlet.http.HttpServletRequest
   }
 
   @CrossOrigin(origins = ["*"])
-  @RequestMapping("/wish/give") fun give(@RequestParam() listId: Long, @RequestParam() wishId: Long,
-                                         request: HttpServletRequest): Boolean {
+  @RequestMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long,
+                                               request: HttpServletRequest): Boolean {
     val userName = extractUserName(request, true)
-
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
+
+    checkNotOwnership(userName, wishList, "You cannot make reservations to your own wishes");
+
     val existingWish = ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).id(wishId).now()
-    existingWish.donor = userName
+
+    when {
+      existingWish.donor == null -> existingWish.donor = userName
+      existingWish.donor == userName -> existingWish.donor = null;
+      else -> throw PermissionDenied("This wish is reserved by ${existingWish.donor}")
+    }
 
     ObjectifyService.ofy().save().entity(existingWish).now()
     return true
