@@ -1,5 +1,6 @@
 package de.voegtle.wunschmanager
 
+import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.extractUserName
@@ -21,6 +22,19 @@ class WishListService {
     val newWishList = WishList(event = event, owner = userName)
     ObjectifyService.ofy().save().entity(newWishList).now()
     return newWishList
+  }
+
+  @CrossOrigin(origins = ["*"])
+  @RequestMapping("/wishlist/rename")
+  fun rename(@RequestParam() id: Long, @RequestParam() event: String, req: HttpServletRequest): WishList {
+    val renameCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
+
+    checkOwnership(req, renameCandidate, "You do not have the permission to change the list.")
+
+    renameCandidate.event = event
+    ObjectifyService.ofy().save().entity(renameCandidate).now()
+
+    return renameCandidate
   }
 
   @CrossOrigin(origins = ["*"])
@@ -61,6 +75,32 @@ class WishListService {
     }
 
     return result
+  }
+
+  @CrossOrigin(origins = ["*"])
+  @RequestMapping("/wishlist/shared")
+  fun shared(req: HttpServletRequest): Collection<WishList> {
+    val userName = extractUserName(req)
+
+    val sharedLists = ObjectifyService.ofy().load().type(SharedWishList::class.java)
+        .filter("sharedWith", userName).list()
+    val keys = ArrayList<Key<WishList>>()
+    sharedLists.forEach { keys.add(Key.create(WishList::class.java, it.wishListId!!)) }
+
+    val wishLists = ObjectifyService.ofy().load().keys(keys)
+
+    return wishLists.values
+  }
+
+  @CrossOrigin(origins = ["*"])
+  @RequestMapping("/wishlist/unshare")
+  fun unshare(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
+    val userName = extractUserName(req)
+    val sharedLists = ObjectifyService.ofy().load().type(SharedWishList::class.java)
+        .filter("sharedWith", userName).filter("wishListId", id).list()
+    ObjectifyService.ofy().delete().entities(sharedLists).now()
+
+    return !sharedLists.isEmpty()
   }
 
 
