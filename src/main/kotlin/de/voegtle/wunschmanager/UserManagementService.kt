@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.UserStatus
+import java.util.logging.Logger
 import javax.servlet.http.HttpServletRequest
 
 @RestController class UserManagementService {
+  protected val log = Logger.getLogger("UserManagementService")
+
   var userService = UserServiceFactory.getUserService()
 
   @CrossOrigin(origins = ["*"])
@@ -18,6 +21,8 @@ import javax.servlet.http.HttpServletRequest
   fun status(@RequestParam() startUrl: String, req: HttpServletRequest): UserStatus {
     val userName = extractUserName(request = req, exceptionIfNull = false)
     val loggedIn = userName != null
+
+    log.info("UserName=$userName,  currentUser=${userService?.currentUser?.email}");
 
     return UserStatus(name = userName, loggedIn = loggedIn,
                       url = localise(createUserManagementUrl(userService, startUrl, loggedIn), req))
@@ -30,6 +35,6 @@ import javax.servlet.http.HttpServletRequest
     val scheme = req.scheme
     val hostname = req.serverName
     val port = req.serverPort
-    return "$scheme://$hostname:$port$url"
+    return if (hostname == "localhost") "$scheme://$hostname:$port$url" else url
   }
 }

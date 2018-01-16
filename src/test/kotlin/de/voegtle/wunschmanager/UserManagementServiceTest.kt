@@ -28,15 +28,24 @@ class UserManagementServiceTest {
     Mockito.`when`(userService!!.createLoginURL("/go")).thenReturn("/_ah/login/go")
     Mockito.`when`(userService.createLogoutURL("/go")).thenReturn("_ah/logout?/go")
     val userStatus = userManagementService.status("/go", request)
-    assertEquals("https://www.voegtle.org:8443/_ah/login/go", userStatus.url)
+    assertEquals("/_ah/login/go", userStatus.url)
   }
 
-  @Test fun checkLocalise() {
+  @Test fun checkLocaliseGlobal() {
     val request = Mockito.mock(HttpServletRequest::class.java)
     Mockito.`when`(request.scheme).thenReturn("https")
     Mockito.`when`(request.serverName).thenReturn("www.voegtle.org")
     Mockito.`when`(request.serverPort).thenReturn(8443)
     val localUrl = userManagementService.localise(req = request, url = "/go")
-    assertEquals("https://www.voegtle.org:8443/go", localUrl)
+    assertEquals("/go", localUrl)
+  }
+
+  @Test fun checkLocaliseLocalhost() {
+    val request = Mockito.mock(HttpServletRequest::class.java)
+    Mockito.`when`(request.scheme).thenReturn("https")
+    Mockito.`when`(request.serverName).thenReturn("localhost")
+    Mockito.`when`(request.serverPort).thenReturn(8443)
+    val localUrl = userManagementService.localise(req = request, url = "/go")
+    assertEquals("https://localhost:8443/go", localUrl)
   }
 }

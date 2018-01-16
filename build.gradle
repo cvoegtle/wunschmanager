@@ -46,6 +46,11 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+war {
+    webInf { from 'web/WEB-INF' }
+}
+
+
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
@@ -54,10 +59,6 @@ appengine {  // App Engine tasks configuration
         stopPreviousVersion = true
         promote = true
     }
-}
-
-war {
-    webInf { from 'web/WEB-INF' }
 }
 
 task explodedWar(type: Sync) {
