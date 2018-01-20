@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletRequest
 class WishListService {
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/create")
-  fun create(@RequestParam() event: String, req: HttpServletRequest): WishList {
+  fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, req: HttpServletRequest): WishList {
     val userName = extractUserName(req, true)
 
-    val newWishList = WishList(event = event, owner = userName)
+    val newWishList = WishList(event = event, owner = userName, managed = managed)
     ObjectifyService.ofy().save().entity(newWishList).now()
     return newWishList
   }

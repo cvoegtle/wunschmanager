@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest
 
     val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList).list() as MutableList<Wish>
     val userName = extractUserName(request, true)
-    if (userName == wishList.owner) {
+    if (userName == wishList.owner && !wishList.managed) {
       wishes.forEach { it.available = it.donor == null; it.donor = null }
     }
     return wishes
