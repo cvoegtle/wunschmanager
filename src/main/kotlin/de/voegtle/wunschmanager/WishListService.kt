@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.SharedWishList
 import org.voegtle.wunschmanager.data.WishList
+import java.util.Collections
+import java.util.Date
 import javax.servlet.http.HttpServletRequest
 
 @RestController
@@ -19,7 +21,7 @@ class WishListService {
   fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, req: HttpServletRequest): WishList {
     val userName = extractUserName(req, true)
 
-    val newWishList = WishList(event = event, owner = userName, managed = managed)
+    val newWishList = WishList(event = event, owner = userName, managed = managed, createTimestamp = Date().time)
     ObjectifyService.ofy().save().entity(newWishList).now()
     return newWishList
   }
@@ -41,7 +43,8 @@ class WishListService {
   @RequestMapping("/wishlist/list")
   fun list(req: HttpServletRequest): List<WishList> {
     val userName = extractUserName(req, true)
-    return ObjectifyService.ofy().load().type(WishList::class.java).filter("owner ==", userName).list()
+    return ObjectifyService.ofy().load().type(WishList::class.java).filter("owner ==", userName)
+        .order("createTimestamp").list()
   }
 
   @CrossOrigin(origins = ["*"])
@@ -88,8 +91,10 @@ class WishListService {
     sharedLists.forEach { keys.add(Key.create(WishList::class.java, it.wishListId!!)) }
 
     val wishLists = ObjectifyService.ofy().load().keys(keys)
+    val sortedList = ArrayList<WishList>(wishLists.values)
+    sortedList.sort()
 
-    return wishLists.values
+    return sortedList
   }
 
   @CrossOrigin(origins = ["*"])
