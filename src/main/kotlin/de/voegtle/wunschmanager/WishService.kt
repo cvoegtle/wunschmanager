@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
 import org.voegtle.wunschmanager.data.WishList
+import java.util.Date
 import javax.servlet.http.HttpServletRequest
 
 @RestController() class WishService {
@@ -22,7 +23,8 @@ import javax.servlet.http.HttpServletRequest
   @RequestMapping("/wish/list") fun list(@RequestParam() list: Long, request: HttpServletRequest): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
-    val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList).list() as MutableList<Wish>
+    val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList)
+        .order("createTimestamp").list() as MutableList<Wish>
     val userName = extractUserName(request, true)
     if (userName == wishList.owner && !wishList.managed) {
       wishes.forEach { it.available = it.donor == null; it.donor = null }
@@ -36,7 +38,7 @@ import javax.servlet.http.HttpServletRequest
 
     checkOwnership(request, wishList, "You must be the owner of the list to create new wishes")
 
-    val newWish = Wish(wishList = Key.create(wishList))
+    val newWish = Wish(wishList = Key.create(wishList), createTimestamp = Date().time)
     ObjectifyService.ofy().save().entity(newWish).now()
     return newWish
   }
