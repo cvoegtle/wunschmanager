@@ -1,0 +1,12 @@
+indexes:
+  - kind: WishList
+    ancestor: no
+    properties:
+      - name: owner
+        direction: asc
+      - name: createTimestamp
+        direction: asc
+  - kind: Wish
+    ancestor: yes
+    properties:
+      - name: createTimestamp
