@@ -14,6 +14,5 @@ import com.googlecode.objectify.annotation.Parent
                    @Index var description: String = "",
                    var link: String? = null,
                    @Index var donor: String? = null,
-                   @Index var createTimestamp: Long? = null) {
-  @Ignore var available: Boolean? = null
-}
+                   @Index var createTimestamp: Long? = null,
+                   var invisible: Boolean? = null)

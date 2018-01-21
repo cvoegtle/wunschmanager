@@ -26,8 +26,12 @@ import javax.servlet.http.HttpServletRequest
     val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList)
         .order("createTimestamp").list() as MutableList<Wish>
     val userName = extractUserName(request, true)
-    if (userName == wishList.owner && !wishList.managed) {
-      wishes.forEach { it.available = it.donor == null; it.donor = null }
+    if (userName == wishList.owner) {
+      if (!wishList.managed) {
+        wishes.forEach { it.donor = null }
+      }
+    } else {
+      wishes.removeIf { it.invisible == true }
     }
     return wishes
   }
@@ -56,6 +60,7 @@ import javax.servlet.http.HttpServletRequest
       existingWish.caption = it.caption
       existingWish.description = it.description
       existingWish.link = it.link
+      existingWish.invisible = it.invisible
       ObjectifyService.ofy().save().entity(existingWish).now()
       return true
     }
