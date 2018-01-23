@@ -29,7 +29,16 @@ import javax.servlet.http.HttpServletRequest
   }
 
   fun createUserManagementUrl(userService: UserService, startUrl: String, loggedIn: Boolean)
-    = if (loggedIn) userService.createLogoutURL(startUrl) else userService.createLoginURL(startUrl)
+    = if (loggedIn) createLogoutUrl(userService, startUrl) else userService.createLoginURL(startUrl)
+
+  private fun createLogoutUrl(userService: UserService,
+                              startUrl: String) = userService.createLogoutURL(trimUrlParameter(startUrl))
+
+  private fun trimUrlParameter(url: String): String {
+    val startParameter = url.indexOf("?")
+    return if (startParameter >= 0) url.substring(0, startParameter) else url
+  }
+
 
   fun localise(url: String, req: HttpServletRequest): String {
     val scheme = req.scheme
