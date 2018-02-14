@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.SharedWishList
 import org.voegtle.wunschmanager.data.WishList
-import java.util.Collections
 import java.util.Date
 import javax.servlet.http.HttpServletRequest
 
@@ -25,6 +24,11 @@ class WishListService {
     ObjectifyService.ofy().save().entity(newWishList).now()
     return newWishList
   }
+
+  @CrossOrigin(origins = ["*"])
+  @RequestMapping("/wishlist/get")
+  fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList
+      = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/rename")

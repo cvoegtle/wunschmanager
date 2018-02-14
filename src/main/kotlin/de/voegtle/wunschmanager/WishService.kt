@@ -25,13 +25,22 @@ import javax.servlet.http.HttpServletRequest
 
     val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList)
         .order("createTimestamp").list() as MutableList<Wish>
-    val userName = extractUserName(request, true)
-    if (userName == wishList.owner) {
-      if (!wishList.managed) {
-        wishes.forEach { it.donor = null }
+    val userName = extractUserName(request, false)
+
+    return reduceWishList(userName, wishList, wishes)
+  }
+
+  private fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wish>): MutableList<Wish> {
+    when (userName) {
+      wishList.owner -> {
+        if (!wishList.managed) {
+          wishes.forEach { it.donor = null }
+        }
       }
-    } else {
-      wishes.removeIf { it.invisible == true }
+
+      null -> wishes.removeIf { it.invisible == true || it.donor != null }
+
+      else -> wishes.removeIf { it.invisible == true }
     }
     return wishes
   }
