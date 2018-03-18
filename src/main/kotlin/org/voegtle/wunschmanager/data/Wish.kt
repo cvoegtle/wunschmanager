@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.annotation.Entity
 import com.googlecode.objectify.annotation.Id
-import com.googlecode.objectify.annotation.Ignore
 import com.googlecode.objectify.annotation.Index
 import com.googlecode.objectify.annotation.Parent
 
@@ -14,5 +13,13 @@ import com.googlecode.objectify.annotation.Parent
                    @Index var description: String = "",
                    var link: String? = null,
                    @Index var donor: String? = null,
-                   @Index var createTimestamp: Long? = null,
-                   var invisible: Boolean? = null)
+                   @Index var createTimestamp: Long = 0,
+                   @Index var priority: Int = 0,
+                   var invisible: Boolean? = null) : Comparable<Wish> {
+  override fun compareTo(other: Wish): Int {
+    if (this.priority == other.priority) {
+      return this.createTimestamp.compareTo(other.createTimestamp)
+    }
+    return this.priority.compareTo(other.priority)
+  }
+}

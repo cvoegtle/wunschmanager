@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest
   @RequestMapping("/wish/list") fun list(@RequestParam() list: Long, request: HttpServletRequest): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
-    val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList)
-        .order("createTimestamp").list() as MutableList<Wish>
+    val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList).order("createTimestamp").list() as MutableList<Wish>
+    wishes.sort()
     val userName = extractUserName(request, false)
 
     return reduceWishList(userName, wishList, wishes)
