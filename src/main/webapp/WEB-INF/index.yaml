@@ -12,8 +12,8 @@ indexes:
       - name: createTimestamp
   - kind: Wish
     ancestor: yes
-      properties:
-        - name: priority
-          direction: desc
-        - name: createTimestamp
-          direction: asc
+    properties:
+      - name: priority
+        direction: desc
+      - name: createTimestamp
+        direction: asc
