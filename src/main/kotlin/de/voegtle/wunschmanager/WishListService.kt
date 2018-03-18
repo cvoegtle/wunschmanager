@@ -5,6 +5,7 @@ import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -31,13 +32,14 @@ class WishListService {
       = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
   @CrossOrigin(origins = ["*"])
-  @RequestMapping("/wishlist/rename")
-  fun rename(@RequestParam() id: Long, @RequestParam() event: String, req: HttpServletRequest): WishList {
-    val renameCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
+  @RequestMapping("/wishlist/update")
+  fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
+    val renameCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
 
     checkOwnership(req, renameCandidate, "You do not have the permission to change the list.")
 
-    renameCandidate.event = event
+    renameCandidate.event = wishList.event
+    renameCandidate.description = wishList.description
     ObjectifyService.ofy().save().entity(renameCandidate).now()
 
     return renameCandidate
