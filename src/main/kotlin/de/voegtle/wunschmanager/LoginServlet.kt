@@ -1,12 +1,6 @@
 package de.voegtle.wunschmanager
 
 import com.google.appengine.api.users.UserServiceFactory
-import org.springframework.boot.SpringApplication
-import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.boot.web.support.SpringBootServletInitializer
-import org.springframework.context.annotation.Bean
 import java.io.IOException
 import javax.servlet.Servlet
 import javax.servlet.ServletException

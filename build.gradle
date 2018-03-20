@@ -9,7 +9,7 @@ buildscript {    // Configuration for building
         classpath 'com.google.cloud.tools:appengine-gradle-plugin:+'    // latest App Engine Gradle tasks
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE"
     }
 }
 
@@ -23,8 +23,9 @@ repositories {   // repositories for Jar's you access in your code
 }
 
 apply plugin: 'kotlin'
-apply plugin: "kotlin-spring"
+apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 apply plugin: 'war'
 apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 
@@ -55,7 +56,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '3'
+        version = '4'
         project = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
