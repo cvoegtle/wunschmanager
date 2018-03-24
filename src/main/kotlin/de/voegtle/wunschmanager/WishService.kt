@@ -70,6 +70,7 @@ import javax.servlet.http.HttpServletRequest
       existingWish.description = it.description
       existingWish.link = it.link
       existingWish.priority = it.priority
+      existingWish.background = it.background
       existingWish.invisible = it.invisible
       ObjectifyService.ofy().save().entity(existingWish).now()
       return true
