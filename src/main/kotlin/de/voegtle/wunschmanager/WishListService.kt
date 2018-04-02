@@ -34,15 +34,16 @@ class WishListService {
   @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/update")
   fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
-    val renameCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
+    val updateCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
 
-    checkOwnership(req, renameCandidate, "You do not have the permission to change the list.")
+    checkOwnership(req, updateCandidate, "You do not have the permission to change the list.")
 
-    renameCandidate.event = wishList.event
-    renameCandidate.description = wishList.description
-    ObjectifyService.ofy().save().entity(renameCandidate).now()
+    updateCandidate.event = wishList.event
+    updateCandidate.description = wishList.description
+    updateCandidate.background = wishList.background
+    ObjectifyService.ofy().save().entity(updateCandidate).now()
 
-    return renameCandidate
+    return updateCandidate
   }
 
   @CrossOrigin(origins = ["*"])
