@@ -15,7 +15,7 @@ import com.googlecode.objectify.annotation.Parent
                    @Index var donor: String? = null,
                    @Index var createTimestamp: Long = 0,
                    @Index var priority: Int = 5,
-                   var background: String? = null,
+                   var background: Color? = null,
                    var invisible: Boolean? = null) : Comparable<Wish> {
   override fun compareTo(other: Wish): Int {
     if (this.priority == other.priority) {
