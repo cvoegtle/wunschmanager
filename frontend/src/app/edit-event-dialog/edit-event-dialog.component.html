@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Anlass ändern</h1>
+<div mat-dialog-content>
+  <mat-form-field class="edit-event">
+    <input #event_field matInput [(ngModel)]="wishList.event" (change)="valueChanged()" />
+  </mat-form-field>
+  <mat-form-field class="edit-event">
+  <textarea matInput placeholder="Beschreibung" [(ngModel)]="wishList.description" matTextareaAutosize
+            matAutosizeMinRows="2" matAutosizeMaxRows="5" (change)="valueChanged()"></textarea>
+  </mat-form-field>
+  <mat-form-field class="edit-event">
+    <mat-select [(value)]="wishList.background" placeholder="Hintergrundfarbe" (change)="valueChanged()">
+      <mat-option></mat-option>
+      <mat-option value="red"><div class="background-red foreground-red">rot</div></mat-option>
+      <mat-option value="yellow"><div class="background-yellow foreground-yellow">gelb</div></mat-option>
+      <mat-option value="green"><div class="background-green foreground-green">grün</div></mat-option>
+      <mat-option value="blue"><div class="background-blue foreground-blue">blau</div></mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>

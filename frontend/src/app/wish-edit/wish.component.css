@@ -1,0 +1,64 @@
+.wish-card {
+    padding: 24px 24px 10px 24px;
+}
+
+.unavailable {
+    background: lightgray;
+}
+
+.wish-form {
+    min-width: 250px;
+    max-width: 510px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.wish-full-width {
+    max-width: 460px;
+    width: 100%;
+}
+
+.wish-line {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.wish-item {
+    width: 100%;
+}
+
+.wish-url {
+    flex: 1 1 auto;
+}
+
+mat-card {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 18px;
+}
+
+.caption {
+    font-weight: bold;
+}
+
+.description {
+    white-space: pre-line;
+}
+
+.wish-donor {
+    font-weight: bold;
+}
+
+.priority-caption {
+    margin: 10px 10px 0px 0;
+}
+
+.properties-control {
+    width: 100%;
+}
+
+.properties-dialog {
+    width: 320px;
+}

@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>{{wish.caption}}</h1>
+<div mat-dialog-content>
+  <div class="properties-dialog">
+    <mat-form-field class="properties-control">
+      <mat-select [(value)]="wish.background" placeholder="Hintergrundfarbe" (change)="onBackgroundChanged()">
+        <mat-option></mat-option>
+        <mat-option value="red"><div class="background-red foreground-red">rot</div></mat-option>
+        <mat-option value="yellow"><div class="background-yellow foreground-yellow">gelb</div></mat-option>
+        <mat-option value="green"><div class="background-green foreground-green">grün</div></mat-option>
+        <mat-option value="blue"><div class="background-blue foreground-blue">blau</div></mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h3 class="mat-h2 priority-caption">Priorität</h3>
+    <mat-slider
+        class="properties-control"
+        [max]="10"
+        [min]="0"
+        [step]="1"
+        [thumb-label]="true"
+        [(ngModel)]="wish.priority"
+        (change)="onPriorityChanged()">
+    </mat-slider>
+
+    <button mat-button *ngIf="!wish.invisible" (click)="toggleVisibility()" matTooltip="Wunsch verstecken">
+      <i class="material-icons">visibility_off</i> Wunsch verstecken
+    </button>
+    <button mat-button *ngIf="wish.invisible" (click)="toggleVisibility()" matTooltip="Wunsch wieder anzeigen">
+      <i class="material-icons">visibility</i> Wunsch anzeigen
+    </button>
+
+  </div>
+</div>

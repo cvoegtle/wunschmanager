@@ -1,0 +1,26 @@
+<mat-card [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
+'background-green': isGreen(), 'background-blue': isBlue()}" *ngIf="wish.caption || wish.description">
+  <div class="wish-form">
+    <div class="wish-full-width">
+      <div class="wish-line">
+        <a *ngIf="wish.link" href="{{targetUrl()}}" target="_blank">
+          <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
+          <div *ngIf="wish.description">{{wish.description}}</div>
+        </a>
+        <div *ngIf="!wish.link">
+          <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
+          <div class="description" *ngIf="wish.description">{{wish.description}}</div>
+        </div>
+      </div>
+      <div matLine *ngIf="wish.donor">
+        <a *ngIf="!isMyPresent()" href="mailto:{{wish.donor}}" class="wish-donor">{{wish.donor}}</a>
+        <span *ngIf="isMyPresent()" class="wish-donor">{{wish.donor}}</span>
+      </div>
+    </div>
+    <button *ngIf="isAvailable() && !restricted" mat-icon-button (click)="reserveClicked()"
+            matTooltip="{{getTooltip()}}">
+      <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
+      <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
+    </button>
+  </div>
+</mat-card>

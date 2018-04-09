@@ -1,0 +1,30 @@
+.background-red {
+    background: lightcoral;
+}
+.foreground-red {
+    color: lightcoral;
+}
+
+.background-yellow {
+    background: lightgoldenrodyellow;
+}
+
+.foreground-yellow {
+    color: lightgoldenrodyellow;
+}
+
+.background-green {
+    background: lightgreen;
+}
+
+.foreground-green {
+    color: lightgreen;
+}
+
+.background-blue {
+    background: lightblue;
+}
+
+.foreground-blue {
+    color: lightblue;
+}

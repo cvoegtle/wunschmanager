@@ -1,0 +1,36 @@
+mat-expansion-panel {
+    margin-top: 4px;
+}
+
+.filler {
+    flex: 1 1 auto;
+    margin-top: 10px;
+}
+
+.add-button {
+    float: right;
+    right: -20px;
+    bottom: 43px;
+}
+
+.event {
+    margin-top: 10px;
+    height: 30px;
+    font-weight: bold;
+}
+
+.managed {
+    margin-top: 10px;
+    margin-left: 5px;
+    color: grey;
+}
+
+.open-list {
+    background: #fffdf4;
+}
+
+.wish-list-info {
+    white-space: pre-line;
+    background: transparent;
+    width: 100%;
+}

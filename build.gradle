@@ -56,7 +56,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '6'
+        version = '8'
         project = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
@@ -66,6 +66,64 @@ appengine {  // App Engine tasks configuration
 task explodedWar(type: Sync) {
     into "${buildDir}/exploded"
     with war
+}
+
+processResources {
+    dependsOn "copyToWebApp"
+}
+
+clean {
+    dependsOn "cleanupWebApp"
+}
+
+def angularOutputDir = "$projectDir/frontend/dist"
+def webappDir = "$projectDir/src/main/webapp"
+
+task copyToWebApp(type:Copy) {
+    dependsOn "buildManifest"
+
+    copy {
+        from "$angularOutputDir"
+        into "$webappDir"
+        include '**'
+    }
+    copy {
+        from "$projectDir/configuration"
+        into "$webappDir"
+        include "configuration.json"
+    }
+}
+
+task cleanupWebApp(type:Delete) {
+    delete fileTree("$webappDir/assets") {
+        include "*"
+    }
+    delete "$webappDir/assets"
+    delete fileTree("$webappDir") {
+        include "*"
+    }
+}
+
+task buildManifest(type:Exec) {
+    dependsOn "buildAngular"
+    commandLine "appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets/*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
+}
+
+task buildAngular(type:Exec) {
+    dependsOn "installAngular"
+
+    workingDir "frontend"
+    inputs.dir "frontend"
+    outputs.dir "$angularOutputDir"
+    group = BasePlugin.BUILD_GROUP
+    commandLine "ng", "build", "--prod", "--output-path=$angularOutputDir"
+}
+
+task installAngular(type:Exec) {
+    workingDir "frontend"
+    inputs.dir "frontend"
+    group = BasePlugin.BUILD_GROUP
+    commandLine "npm", "install"
 }
 
 sourceCompatibility = 1.8  // App Engine Standard uses Java 8

@@ -1,0 +1,28 @@
+<mat-expansion-panel (opened)="panelOpened()" (closed)="panelClosed()" [ngClass]="{'open-list': panelOpenState, 'background-red': isRed(),
+'background-yellow': isYellow(), 'background-green': isGreen(), 'background-blue': isBlue()}">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <span class="event" (click)="editEvent()">{{wishList.event}}</span>
+      <!-- <button mat-icon-button (click)="editEvent()" matTooltip="Wunschlisteneigenschaften bearbeiten">
+        <i class="material-icons">edit</i>
+      </button> -->
+
+    </mat-panel-title>
+    <mat-panel-description>
+      <span class="filler"><span class="managed" *ngIf="wishList.managed">(verwaltet)</span></span>
+
+      <button mat-icon-button (click)="shareClicked()" matTooltip="Liste weitergeben">
+        <i class="material-icons">share</i>
+      </button>
+
+      <button mat-icon-button (click)="deleteClicked()" matTooltip="Wunschliste löschen!">
+        <i class="material-icons">delete</i>
+      </button>
+
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
+  <wish-edit *ngFor="let wish of wishes" [wish]="wish" (wishDeleted)="deleteWish($event)"
+             (wishChange)="wishChanged($event)"></wish-edit>
+  <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i class="material-icons">create</i></button>
+</mat-expansion-panel>

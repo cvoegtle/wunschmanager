@@ -1,0 +1,14 @@
+<mat-accordion>
+  <wish-list-edit *ngFor="let list of wishLists" [wishList]="list" (deleted)="onDeleteList($event)"
+                  (updated)="onUpdateEvent($event)"></wish-list-edit>
+</mat-accordion>
+<form>
+  <mat-form-field class="wish-list-name">
+    <input matInput placeholder="Neue Wunschliste" [(ngModel)]="newWishListEvent" name="newWishListInput">
+  </mat-form-field>
+  <mat-checkbox class="wish-list-managed" [(ngModel)]="newListIsManaged" name="newListIsManagedInput">verwalten
+  </mat-checkbox>
+  <button (click)="createWishList()" color="primary" [disabled]="!isCreatePossible()" mat-raised-button>anlegen</button>
+</form>
+<div class="divider"></div>
+<all-shared></all-shared>

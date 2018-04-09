@@ -1,0 +1,12 @@
+<mat-grid-list cols="1" rowHeight="2:1">
+  <mat-grid-tile>
+    <div class="login-view">
+      <button (click)="loginClicked()" mat-raised-button color='primary'>mit Google anmelden</button>
+      <div class="spacer"></div>
+      <button *ngIf="getUrlParam('share')" (click)="viewClicked()" mat-raised-button >nur ansehen</button>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+

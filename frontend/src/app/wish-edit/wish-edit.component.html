@@ -1,0 +1,32 @@
+<mat-card [ngClass]="{'wish-card': true, 'unavailable': !isAvailable(), 'background-red': isRed(),
+'background-yellow': isYellow(), 'background-green': isGreen(), 'background-blue': isBlue()}">
+  <div class="wish-form">
+    <form class="wish-full-width">
+      <div class="wish-line">
+        <mat-form-field class="wish-full-width">
+          <input matInput placeholder="Wunsch" [value]="wish.caption" (change)="onCaptionChange($event)">
+        </mat-form-field>
+        <button mat-icon-button (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
+          <i class="material-icons">settings</i>
+        </button>
+        <button mat-icon-button (click)="deleteClicked()" matTooltip="Wunsch löschen">
+          <i class="material-icons">delete</i>
+        </button>
+      </div>
+      <mat-form-field class="wish-full-width">
+        <textarea matInput placeholder="Beschreibung" [value]="wish.description" matTextareaAutosize
+                  (change)="onDescriptionChange($event)" matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+      </mat-form-field>
+
+      <div class="wish-line">
+        <mat-form-field class="wish-url">
+          <input matInput placeholder="Link" [value]="wish.link" (change)="onLinkChange($event)">
+        </mat-form-field>
+        <a *ngIf="wish.link" mat-icon-button target="_blank" href="{{targetUrl()}}" matTooltip="Seite öffnen">
+          <i class="material-icons">link</i>
+        </a>
+      </div>
+      <a class="wish-donor" *ngIf="wish.donor" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
+    </form>
+  </div>
+</mat-card>

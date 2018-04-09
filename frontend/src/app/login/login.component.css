@@ -1,0 +1,9 @@
+.login-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.spacer {
+    width: 50px;
+    height: 8px;
+}
