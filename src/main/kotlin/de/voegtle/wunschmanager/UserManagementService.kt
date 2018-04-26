@@ -4,6 +4,7 @@ import com.google.appengine.api.users.UserService
 import com.google.appengine.api.users.UserServiceFactory
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest
 
   var userService = UserServiceFactory.getUserService()
 
-  @RequestMapping("/user/status")
+  @GetMapping("/user/status")
   fun status(@RequestParam() startUrl: String, req: HttpServletRequest): UserStatus {
     val userName = extractUserName(request = req, exceptionIfNull = false)
     val loggedIn = userName != null

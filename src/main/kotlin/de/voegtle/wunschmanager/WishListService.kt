@@ -5,6 +5,7 @@ import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 class WishListService {
-  @RequestMapping("/wishlist/create")
+  @GetMapping("/wishlist/create")
   fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, req: HttpServletRequest): WishList {
     val userName = extractUserName(req, true)
 
@@ -25,11 +26,11 @@ class WishListService {
     return newWishList
   }
 
-  @RequestMapping("/wishlist/get")
+  @GetMapping("/wishlist/get")
   fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList
       = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
-  @RequestMapping("/wishlist/update")
+  @GetMapping("/wishlist/update")
   fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
     val updateCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
 
@@ -43,14 +44,14 @@ class WishListService {
     return updateCandidate
   }
 
-  @RequestMapping("/wishlist/list")
+  @GetMapping("/wishlist/list")
   fun list(req: HttpServletRequest): List<WishList> {
     val userName = extractUserName(req, true)
     return ObjectifyService.ofy().load().type(WishList::class.java).filter("owner ==", userName)
         .order("createTimestamp").list()
   }
 
-  @RequestMapping("/wishlist/delete")
+  @GetMapping("/wishlist/delete")
   fun delete(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
     val deleteCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
@@ -61,7 +62,7 @@ class WishListService {
   }
 
 
-  @RequestMapping("/wishlist/share")
+  @GetMapping("/wishlist/share")
   fun share(@RequestParam() id: Long, req: HttpServletRequest): List<WishList> {
     val result = ArrayList<WishList>()
 
@@ -81,7 +82,7 @@ class WishListService {
     return result
   }
 
-  @RequestMapping("/wishlist/shared")
+  @GetMapping("/wishlist/shared")
   fun shared(req: HttpServletRequest): Collection<WishList> {
     val userName = extractUserName(req)
 
@@ -97,7 +98,7 @@ class WishListService {
     return sortedList
   }
 
-  @RequestMapping("/wishlist/unshare")
+  @GetMapping("/wishlist/unshare")
   fun unshare(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
     val userName = extractUserName(req)
     val sharedLists = ObjectifyService.ofy().load().type(SharedWishList::class.java)

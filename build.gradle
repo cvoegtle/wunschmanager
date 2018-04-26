@@ -1,6 +1,6 @@
 
 buildscript {    // Configuration for building
-    ext.kotlin_version = '1.2.40'
+    ext.kotlin_version = '1.2.31'
     repositories {
         jcenter()    // Bintray's repository - a fast Maven Central mirror & more
         mavenCentral()
