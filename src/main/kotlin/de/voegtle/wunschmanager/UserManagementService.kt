@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest
 
   var userService = UserServiceFactory.getUserService()
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/user/status")
   fun status(@RequestParam() startUrl: String, req: HttpServletRequest): UserStatus {
     val userName = extractUserName(request = req, exceptionIfNull = false)

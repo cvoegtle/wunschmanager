@@ -19,7 +19,6 @@ import java.util.Date
 import javax.servlet.http.HttpServletRequest
 
 @RestController() class WishService {
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/list") fun list(@RequestParam() list: Long, request: HttpServletRequest): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
@@ -45,7 +44,6 @@ import javax.servlet.http.HttpServletRequest
     return wishes
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/create") fun create(@RequestParam() list: Long, request: HttpServletRequest): Wish {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
@@ -56,7 +54,6 @@ import javax.servlet.http.HttpServletRequest
     return newWish
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/update", method = [RequestMethod.POST])
   fun update(@RequestBody() updateRequest: UpdateRequest, request: HttpServletRequest): Boolean {
     val wish = updateRequest.wish
@@ -78,7 +75,6 @@ import javax.servlet.http.HttpServletRequest
     return false
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/delete") fun delete(@RequestParam() listId: Long, @RequestParam() wishId: Long,
                                              request: HttpServletRequest): Boolean {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
@@ -89,7 +85,6 @@ import javax.servlet.http.HttpServletRequest
     return true
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long,
                                                request: HttpServletRequest): Wish {
     val userName = extractUserName(request, true)

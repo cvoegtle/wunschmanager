@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 class WishListService {
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/create")
   fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, req: HttpServletRequest): WishList {
     val userName = extractUserName(req, true)
@@ -26,12 +25,10 @@ class WishListService {
     return newWishList
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/get")
   fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList
       = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/update")
   fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
     val updateCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
@@ -46,7 +43,6 @@ class WishListService {
     return updateCandidate
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/list")
   fun list(req: HttpServletRequest): List<WishList> {
     val userName = extractUserName(req, true)
@@ -54,7 +50,6 @@ class WishListService {
         .order("createTimestamp").list()
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/delete")
   fun delete(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
     val deleteCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
@@ -66,7 +61,6 @@ class WishListService {
   }
 
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/share")
   fun share(@RequestParam() id: Long, req: HttpServletRequest): List<WishList> {
     val result = ArrayList<WishList>()
@@ -87,7 +81,6 @@ class WishListService {
     return result
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/shared")
   fun shared(req: HttpServletRequest): Collection<WishList> {
     val userName = extractUserName(req)
@@ -104,7 +97,6 @@ class WishListService {
     return sortedList
   }
 
-  @CrossOrigin(origins = ["*"])
   @RequestMapping("/wishlist/unshare")
   fun unshare(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
     val userName = extractUserName(req)
@@ -114,6 +106,4 @@ class WishListService {
 
     return !sharedLists.isEmpty()
   }
-
-
 }
