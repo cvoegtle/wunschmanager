@@ -1,6 +1,6 @@
 
 buildscript {    // Configuration for building
-    ext.kotlin_version = '1.2.31'
+    ext.kotlin_version = '1.2.40'
     repositories {
         jcenter()    // Bintray's repository - a fast Maven Central mirror & more
         mavenCentral()
@@ -9,7 +9,7 @@ buildscript {    // Configuration for building
         classpath 'com.google.cloud.tools:appengine-gradle-plugin:+'    // latest App Engine Gradle tasks
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE"
     }
 }
 
@@ -56,7 +56,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '8'
+        version = '9'
         project = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
