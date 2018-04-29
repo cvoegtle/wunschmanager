@@ -6,6 +6,7 @@ import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -30,7 +31,7 @@ class WishListService {
   fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList
       = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
-  @GetMapping("/wishlist/update")
+  @PostMapping("/wishlist/update")
   fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
     val updateCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
 

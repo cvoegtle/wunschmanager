@@ -1,0 +1,45 @@
+
+buildscript {    // Configuration for building
+    repositories {
+        jcenter()    // Bintray's repository - a fast Maven Central mirror & more
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+def angularOutputDir = "$projectDir/dist"
+
+task build(type:Exec) {
+    dependsOn 'compile'
+    commandLine "appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets/*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
+}
+
+task compile(type:Exec) {
+    dependsOn "installAngular"
+
+    workingDir "."
+    inputs.dir "."
+    outputs.dir "$angularOutputDir"
+    group = BasePlugin.BUILD_GROUP
+    commandLine "ng", "build", "--prod", "--output-path=$angularOutputDir"
+}
+
+task clean(type:Delete) {
+    delete fileTree("$angularOutputDir/assets") {
+        include "*"
+    }
+    delete "$angularOutputDir/assets"
+
+    delete fileTree("$angularOutputDir") {
+        include "*"
+    }
+}
+
+task installAngular(type:Exec) {
+    workingDir "."
+    inputs.dir "."
+    group = BasePlugin.BUILD_GROUP
+    commandLine "npm", "install"
+}
+
