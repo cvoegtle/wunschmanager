@@ -6,12 +6,6 @@ allprojects {
         jcenter()
         mavenCentral()
     }
-
-    task hello {
-        doLast { task ->
-            println "I'm $task.project.name"
-        }
-    }
 }
 
 subprojects {
@@ -29,6 +23,10 @@ task appengineDeploy {
 task build(type: GradleBuild) {
     dependsOn 'copyToWebApp'
     finalizedBy ':backend:build'
+}
+
+task explodedWar(type: Sync) {
+    dependsOn ':backend:explodedWar'
 }
 
 task copyToWebApp(type:Copy) {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Configuration } from "./configuration";
 import { ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
 
 const httpOptions = {

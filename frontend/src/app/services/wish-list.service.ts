@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { WishList } from "./wish-list";
-import { Observable } from "rxjs/Observable";
+import { Observable ,  of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { catchError } from 'rxjs/operators';
-import { of } from "rxjs/observable/of";
 import { ConfigurationService } from "./configuration.service";
 import { unique } from "../util/url-helper";
 import { Wish } from "./wish";
