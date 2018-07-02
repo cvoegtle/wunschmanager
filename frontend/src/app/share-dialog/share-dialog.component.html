@@ -2,9 +2,9 @@
 <div mat-dialog-content>
   <div class="share-dialog">
     <mat-form-field class="sharing-url">
-      <input #url_field matInput [value]="data.url" (focus)="selectAll(url_field)"/>
+      <input #url_field matInput [value]="data.url"/>
     </mat-form-field>
-    <button *ngIf="!iOS()" mat-icon-button (click)="copyClicked(url_field)" matTooltip="In die Zwischenablage kopieren">
+    <button mat-icon-button (click)="copyClicked(url_field)" matTooltip="In die Zwischenablage kopieren">
       <i class="material-icons">content_copy</i>
     </button>
   </div>

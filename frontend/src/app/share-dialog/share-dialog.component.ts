@@ -19,10 +19,34 @@ export class ShareDialogComponent {
 
 
   copyClicked(url_field: HTMLInputElement) {
-    url_field.select();
-    document.execCommand('copy');
+    if (this.iOS()) {
+      this.copySafariIOS(url_field);
+    } else {
+      this.copyAllBrowser(url_field);
+    }
     this.snackBar.open("In die Zwischenablage kopiert", null, {duration: 2000});
     this.dialogRef.close();
+  }
+
+  copyAllBrowser(url_field: HTMLInputElement) {
+    url_field.select();
+    document.execCommand('copy');
+  }
+
+  copySafariIOS(url_field: HTMLInputElement) {
+      let range = document.createRange();
+
+      url_field.contentEditable = "true";
+      url_field.readOnly = false;
+      range.selectNodeContents(url_field);
+
+      let s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(range);
+
+      url_field.setSelectionRange(0, 999999); // A big number, to cover anything that could be inside the element.
+
+      document.execCommand('copy');
   }
 
   iOS(): boolean {
