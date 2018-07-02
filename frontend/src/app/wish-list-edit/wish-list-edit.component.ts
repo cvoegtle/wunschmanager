@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
 import { DeleteItemDialogComponent } from '../delete-item-dialog/delete-item-dialog.component';
 import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';
-import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
 import { ErrorHandler } from "../error-handler/error-handler.component";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
@@ -136,7 +135,7 @@ export class WishListEditComponent implements OnInit {
     }
   }
 
-  isRed():boolean {
+  isRed(): boolean {
     return isRed(this.wishList.background);
   }
 

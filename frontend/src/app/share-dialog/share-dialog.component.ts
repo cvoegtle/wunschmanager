@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
 @Component({
@@ -11,10 +11,21 @@ export class ShareDialogComponent {
               private snackBar: MatSnackBar) {
   }
 
+  selectAll(url_field: HTMLInputElement) {
+    if (this.iOS()) {
+      url_field.select();
+    }
+  }
+
+
   copyClicked(url_field: HTMLInputElement) {
     url_field.select();
     document.execCommand('copy');
     this.snackBar.open("In die Zwischenablage kopiert", null, {duration: 2000});
     this.dialogRef.close();
+  }
+
+  iOS(): boolean {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent);
   }
 }
