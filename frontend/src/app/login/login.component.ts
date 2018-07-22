@@ -3,7 +3,6 @@ import { UserStatus } from '../services/user.status';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ConfigurationService } from '../services/configuration.service';
-import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { ErrorHandler } from "../error-handler/error-handler.component";
 
 @Component({
@@ -34,7 +33,13 @@ export class LoginComponent implements OnInit {
   }
 
   loginClicked() {
-    window.location.href = this.userStatus.url;
+    let url = this.userStatus.url;
+    let sharedListId = this.getUrlParam('share');
+    if (sharedListId) {
+      url += `?share=${sharedListId}`;
+    }
+
+    window.location.href = url;
   }
 
   viewClicked() {
