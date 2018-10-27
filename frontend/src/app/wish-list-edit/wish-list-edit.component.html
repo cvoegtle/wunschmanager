@@ -1,24 +1,35 @@
-<mat-expansion-panel (opened)="panelOpened()" (closed)="panelClosed()" [ngClass]="{'open-list': panelOpenState, 'background-red': isRed(),
+<mat-expansion-panel #panel (opened)="panelOpened()" (closed)="panelClosed()" [ngClass]="{'open-list': panelOpenState, 'background-red': isRed(),
 'background-yellow': isYellow(), 'background-green': isGreen(), 'background-blue': isBlue()}">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <span class="event" (click)="editEvent()">{{wishList.event}}</span>
-      <!-- <button mat-icon-button (click)="editEvent()" matTooltip="Wunschlisteneigenschaften bearbeiten">
-        <i class="material-icons">edit</i>
-      </button> -->
-
+      <span class="event" (click)="editEvent()" (click)="panel.toggle()">{{wishList.event}}</span>
     </mat-panel-title>
     <mat-panel-description>
       <span class="filler"><span class="managed" *ngIf="wishList.managed">(verwaltet)</span></span>
 
-      <button mat-icon-button (click)="actionsClicked()" matTooltip="Listenaktionen anzeigen">
+      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="panel.toggle()" matTooltip="Listenaktionen anzeigen">
         <i class="material-icons">more_vert</i>
       </button>
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item  (click)="shareClicked()"
+                  matTooltip="Liste weitergeben">
+            <i class="material-icons">share</i> teilen
+          </button>
+        <button mat-menu-item (click)="duplicateClicked()"
+                matTooltip="Wunschliste kopieren!">
+          <i class="material-icons">file_copy</i> Liste kopieren
+        </button>
+        <button mat-menu-item (click)="deleteClicked()"
+                matTooltip="Wunschliste löschen!">
+          <i class="material-icons">delete_forever</i> löschen!
+        </button>
+      </mat-menu>
 
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
   <wish-edit *ngFor="let wish of wishes" [wish]="wish" (wishDeleted)="deleteWish($event)"
              (wishChange)="wishChanged($event)"></wish-edit>
-  <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i class="material-icons">create</i></button>
+  <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
+      class="material-icons">create</i></button>
 </mat-expansion-panel>

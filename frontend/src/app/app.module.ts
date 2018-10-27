@@ -60,7 +60,6 @@ import { ViewComponent } from './view/view.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ErrorHandler } from './error-handler/error-handler.component';
 import { WishPropertiesComponent } from './wish-properties/wish-properties.component';
-import { WishListActionsDialogComponent } from './wish-list-actions-dialog/wish-list-actions-dialog.component';
 import { WishListDuplicateDialogComponent } from './wish-list-duplicate-dialog/wish-list-duplicate-dialog.component';
 
 @NgModule({
@@ -105,11 +104,11 @@ export class WishMaterialModule {
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
-    ErrorDialogComponent, WishListActionsDialogComponent, WishListDuplicateDialogComponent],
+    ErrorDialogComponent, WishListDuplicateDialogComponent],
   declarations: [
     AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent,
     ShareDialogComponent, WishViewComponent, WishListViewComponent, ShareComponent, AllSharedComponent,
-    DeleteItemDialogComponent, WishListActionsDialogComponent, WishListDuplicateDialogComponent,
+    DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler
   ],
   imports: [
