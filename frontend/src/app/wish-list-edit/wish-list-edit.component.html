@@ -11,12 +11,8 @@
     <mat-panel-description>
       <span class="filler"><span class="managed" *ngIf="wishList.managed">(verwaltet)</span></span>
 
-      <button mat-icon-button (click)="shareClicked()" matTooltip="Liste weitergeben">
-        <i class="material-icons">share</i>
-      </button>
-
-      <button mat-icon-button (click)="deleteClicked()" matTooltip="Wunschliste löschen!">
-        <i class="material-icons">delete</i>
+      <button mat-icon-button (click)="actionsClicked()" matTooltip="Listenaktionen anzeigen">
+        <i class="material-icons">more_vert</i>
       </button>
 
     </mat-panel-description>

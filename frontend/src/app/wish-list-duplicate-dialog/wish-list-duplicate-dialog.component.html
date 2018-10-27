@@ -1,14 +1,14 @@
-<h1 mat-dialog-title>Anlass ändern</h1>
+<h1 mat-dialog-title class="edit-event">{{referenceList.event}} duplizieren</h1>
 <div mat-dialog-content class="edit-event">
   <mat-form-field class="edit-event">
-    <input #event_field matInput [(ngModel)]="wishList.event" (change)="valueChanged()" />
+    <input #event_field matInput [(ngModel)]="newList.event" />
   </mat-form-field>
   <mat-form-field class="edit-event">
-  <textarea matInput placeholder="Beschreibung" [(ngModel)]="wishList.description" matTextareaAutosize
-            matAutosizeMinRows="2" matAutosizeMaxRows="5" (change)="valueChanged()"></textarea>
+  <textarea matInput placeholder="Beschreibung" [(ngModel)]="newList.description" matTextareaAutosize
+            matAutosizeMinRows="2" matAutosizeMaxRows="5" ></textarea>
   </mat-form-field>
   <mat-form-field class="edit-event">
-    <mat-select [(value)]="wishList.background" placeholder="Hintergrundfarbe" (change)="valueChanged()">
+    <mat-select [(value)]="newList.background" placeholder="Hintergrundfarbe">
       <mat-option></mat-option>
       <mat-option value="red"><div class="background-red foreground-red">rot</div></mat-option>
       <mat-option value="yellow"><div class="background-yellow foreground-yellow">gelb</div></mat-option>
@@ -16,5 +16,9 @@
       <mat-option value="blue"><div class="background-blue foreground-blue">blau</div></mat-option>
     </mat-select>
   </mat-form-field>
+
+  <button mat-raised-button class="edit-event" color="primary" [disabled]="!isCreatePossible()" matTooltip="Wunschliste kopieren!" (click)="copyClicked()">
+    <i class="material-icons">file_copy</i> Liste kopieren
+  </button>
 
 </div>

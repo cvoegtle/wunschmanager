@@ -8,6 +8,8 @@ import { DeleteItemDialogComponent } from '../delete-item-dialog/delete-item-dia
 import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';
 import { ErrorHandler } from "../error-handler/error-handler.component";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
+import { WishListActionsDialogComponent } from "../wish-list-actions-dialog/wish-list-actions-dialog.component";
+import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/wish-list-duplicate-dialog.component";
 
 
 @Component({
@@ -19,6 +21,7 @@ export class WishListEditComponent implements OnInit {
   @Input() wishList: WishList;
   @Output() deleted = new EventEmitter<number>();
   @Output() updated = new EventEmitter<WishList>();
+  @Output() duplicate = new EventEmitter<WishList>();
 
   wishes: Wish[];
   panelOpenState: boolean;
@@ -98,7 +101,7 @@ export class WishListEditComponent implements OnInit {
     }
   }
 
-  deleteClicked() {
+  private deleteClicked() {
     let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
       data: {
         item: this.wishList.event,
@@ -111,12 +114,43 @@ export class WishListEditComponent implements OnInit {
     });
   }
 
-  shareClicked() {
+  private shareClicked() {
     this.dialog.open(ShareDialogComponent, {
       data: {
         url: this.createSharingUrl()
       }
     });
+  }
+
+  private duplicateClicked() {
+    let duplicateDialog = this.dialog.open(WishListDuplicateDialogComponent, {
+      data: {
+        wishList: this.wishList
+      }
+    });
+
+    duplicateDialog.afterClosed().subscribe(result => {
+      if (result) this.duplicate.emit(result);
+    });
+  }
+
+  actionsClicked() {
+    let actionDialog = this.dialog.open(WishListActionsDialogComponent, {
+      data: {
+        item: this.wishList.event
+      }
+    });
+
+    actionDialog.afterClosed().subscribe(result => {
+      if (result == "delete") {
+        this.deleteClicked();
+      } else if (result == "share") {
+        this.shareClicked();
+      } else if (result == "copy") {
+        this.duplicateClicked();
+      }
+    });
+
   }
 
   private createSharingUrl(): string {

@@ -17,17 +17,13 @@
           <element id="dir-copy" path="$PROJECT_DIR$/backend/out/production/resources" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.2.50" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.50" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-endpoints:1.9.64" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.2.70" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.70" />
           <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:1.9.63" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-labs:1.9.64" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-endpoints-deps:1.9.64" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-jsr107cache:1.9.64" />
           <element id="library" level="project" name="Gradle: com.googlecode.objectify:objectify:5.1.21" />
           <element id="library" level="project" name="Gradle: com.google.guava:guava:19.0" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.0.1.RELEASE" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.50" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.70" />
           <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-json:2.0.1.RELEASE" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter:2.0.1.RELEASE" />
@@ -59,6 +55,10 @@
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.2.3" />
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-api:2.10.0" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-endpoints/1.9.67/b983626e38a4a893c46ac9a7b630c6e97293f5d0/appengine-endpoints-1.9.67.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-api-labs/1.9.67/fb037f383284f56aecab69d5ec9506f594f15976/appengine-api-labs-1.9.67.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-endpoints-deps/1.9.67/168c64f1148f7d56aa6196f410c35736423ddc7a/appengine-endpoints-deps-1.9.67.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-jsr107cache/1.9.67/ce20e7815ca57b401e6b3653bcd77f37a2608922/appengine-jsr107cache-1.9.67.jar" />
         </element>
       </element>
     </root>

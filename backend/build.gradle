@@ -1,5 +1,5 @@
 buildscript {    // Configuration for building
-    ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.2.70'
     repositories {
         jcenter()    // Bintray's repository - a fast Maven Central mirror & more
         mavenCentral()
@@ -47,7 +47,7 @@ war {
 appengine {  // App Engine tasks configuration
     deploy {
         version = '11'
-        project = 'wunschmanager'
+        projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
     }

@@ -6,6 +6,7 @@ import com.googlecode.objectify.annotation.Entity
 import com.googlecode.objectify.annotation.Id
 import com.googlecode.objectify.annotation.Index
 import com.googlecode.objectify.annotation.Parent
+import java.util.Date
 
 @Entity class Wish(@Id var id: Long? = null,
                    @JsonIgnore @Parent var wishList: Key<WishList>? = null,
@@ -23,4 +24,10 @@ import com.googlecode.objectify.annotation.Parent
     }
     return -1 * this.priority.compareTo(other.priority)
   }
+
+  fun copy(wishlistKey: Key<WishList>): Wish = Wish(wishList = wishlistKey, caption = this.caption,
+                                                    description = this.description, link = this.link,
+                                                    donor = this.donor, createTimestamp = Date().time,
+                                                    priority = this.priority, background = this.background,
+                                                    invisible = this.invisible)
 }

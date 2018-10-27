@@ -3,6 +3,7 @@ package de.voegtle.wunschmanager
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.checkOwnership
+import de.voegtle.wunschmanager.util.duplicateUnusedWishes
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -24,6 +25,20 @@ class WishListService {
 
     val newWishList = WishList(event = event, owner = userName, managed = managed, createTimestamp = Date().time)
     ObjectifyService.ofy().save().entity(newWishList).now()
+    return newWishList
+  }
+
+  @GetMapping("/wishlist/duplicate")
+  fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, templateId: Long, req: HttpServletRequest): WishList {
+    val userName = extractUserName(req, true)
+    val template = ObjectifyService.ofy().load().type(WishList::class.java).id(templateId).now()
+    checkOwnership(req, template, "You do not have the permission to copy this list.")
+
+    val newWishList = WishList(event = event, owner = userName, managed = managed, createTimestamp = Date().time)
+    ObjectifyService.ofy().save().entity(newWishList).now()
+
+    val unusedWishes = duplicateUnusedWishes(template, newWishList)
+    ObjectifyService.ofy().save().entities(unusedWishes).now()
     return newWishList
   }
 
