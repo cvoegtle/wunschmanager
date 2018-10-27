@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { WishList, WishListImpl } from "../services/wish-list";
+import { DuplicateRequest } from "../services/duplicate-request";
 
 @Component({
   selector: 'app-wish-list-duplicate-dialog',
@@ -9,12 +10,14 @@ import { WishList, WishListImpl } from "../services/wish-list";
 })
 export class WishListDuplicateDialogComponent {
   referenceList: WishList;
- newList: WishList = new WishListImpl();
+  newList: WishList = new WishListImpl();
 
   constructor(public dialogRef: MatDialogRef<WishListDuplicateDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.referenceList = data.wishList;
     this.newList.event = "Kopie von " + this.referenceList.event;
     this.newList.background = this.referenceList.background;
+    this.newList.managed = this.referenceList.managed;
+
     this.dialogRef.backdropClick().subscribe(_ => this.doClose());
     this.dialogRef.keydownEvents().subscribe(key => {
       if (key.code == "Escape") this.doClose();
@@ -27,7 +30,10 @@ export class WishListDuplicateDialogComponent {
   }
 
   copyClicked() {
-    this.dialogRef.close(this.newList);
+    let duplicateRequest = new DuplicateRequest();
+    duplicateRequest.templateId = this.referenceList.id;
+    duplicateRequest.wishList = this.newList;
+    this.dialogRef.close(duplicateRequest);
   }
 
   private doClose() {

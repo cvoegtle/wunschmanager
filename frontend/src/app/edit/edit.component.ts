@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserStatus } from "../services/user.status";
 import { ConfigurationService } from '../services/configuration.service';
 import { ErrorHandler } from '../error-handler/error-handler.component';
+import { DuplicateRequest } from "../services/duplicate-request";
 
 @Component({
   selector: 'wish-editor',
@@ -61,6 +62,11 @@ export class EditComponent implements OnInit {
     this.wishListService.update(wishList).subscribe(_ => {
         },
         _ => this.errorHandler.handle('renameList'));
+  }
+
+  onDuplicate(duplicateRequest: DuplicateRequest) {
+    this.wishListService.duplicate(duplicateRequest.wishList, duplicateRequest.templateId)
+        .subscribe(wishList => this.wishLists.push(wishList), _ => this.errorHandler.handle('duplicateList'));
   }
 
 

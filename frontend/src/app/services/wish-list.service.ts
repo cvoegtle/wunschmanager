@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { WishList } from "./wish-list";
-import { Observable ,  of } from "rxjs";
+import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { unique } from "../util/url-helper";
-import { Wish } from "./wish";
 
 const httpOptions = {
   withCredentials: true
@@ -51,6 +50,11 @@ export class WishListService {
   create(event: string, managed: boolean): Observable<WishList> {
     return this.http.get<WishList>(`${this.getBaseUrl()}/wishlist/create?event=${event}&managed=${managed}&unique=${unique()}`,
         httpOptions).pipe(catchError(this.handleError<WishList>('wishlist/create')));
+  }
+
+  duplicate(wishList: WishList, templateId: number): Observable<WishList> {
+    return this.http.post<WishList>(`${this.getBaseUrl()}/wishlist/duplicate?templateId=${templateId}&unique=${unique()}`,
+        wishList, httpOptions).pipe(catchError(this.handleError<WishList>('wishlist/duplicate')));
   }
 
   delete(id: number): Observable<boolean> {

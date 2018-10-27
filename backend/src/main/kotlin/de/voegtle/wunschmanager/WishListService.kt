@@ -5,11 +5,9 @@ import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.duplicateUnusedWishes
 import de.voegtle.wunschmanager.util.extractUserName
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.SharedWishList
@@ -28,13 +26,16 @@ class WishListService {
     return newWishList
   }
 
-  @GetMapping("/wishlist/duplicate")
-  fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, templateId: Long, req: HttpServletRequest): WishList {
+  @PostMapping("/wishlist/duplicate")
+  fun duplicate(@RequestBody() wishList: WishList, @RequestParam() templateId: Long,
+                req: HttpServletRequest): WishList {
     val userName = extractUserName(req, true)
     val template = ObjectifyService.ofy().load().type(WishList::class.java).id(templateId).now()
     checkOwnership(req, template, "You do not have the permission to copy this list.")
 
-    val newWishList = WishList(event = event, owner = userName, managed = managed, createTimestamp = Date().time)
+    val newWishList = WishList(event = wishList.event, owner = userName, managed = wishList.managed,
+                               description = wishList.description, background = wishList.background,
+                               createTimestamp = Date().time)
     ObjectifyService.ofy().save().entity(newWishList).now()
 
     val unusedWishes = duplicateUnusedWishes(template, newWishList)
@@ -43,8 +44,8 @@ class WishListService {
   }
 
   @GetMapping("/wishlist/get")
-  fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList
-      = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
+  fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList = ObjectifyService.ofy().load().type(
+      WishList::class.java).id(id).now()
 
   @PostMapping("/wishlist/update")
   fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
