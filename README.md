@@ -7,3 +7,10 @@ Wie so üblich ist das für mich ein Projekt um für diverse Technologien auszup
 - Spring Boot
 - App Engine
 - Objectify
+
+## Installation
+
+```
+gradle appengineDeploy
+```
+Vorher in der build.gradle ggf. noch die Version hochsetzen 
