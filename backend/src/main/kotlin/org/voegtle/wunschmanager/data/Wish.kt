@@ -25,9 +25,9 @@ import java.util.Date
     return -1 * this.priority.compareTo(other.priority)
   }
 
-  fun copy(wishlistKey: Key<WishList>): Wish = Wish(wishList = wishlistKey, caption = this.caption,
+  fun copy(wishlistKey: Key<WishList>, donor: String? = null): Wish = Wish(wishList = wishlistKey, caption = this.caption,
                                                     description = this.description, link = this.link,
-                                                    donor = this.donor, createTimestamp = Date().time,
+                                                    donor = donor, createTimestamp = Date().time,
                                                     priority = this.priority, background = this.background,
                                                     invisible = this.invisible)
 }

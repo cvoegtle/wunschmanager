@@ -5,7 +5,10 @@ import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.PermissionDenied
 import de.voegtle.wunschmanager.util.checkNotOwnership
 import de.voegtle.wunschmanager.util.checkOwnership
+import de.voegtle.wunschmanager.util.duplicateWishes
 import de.voegtle.wunschmanager.util.extractUserName
+import de.voegtle.wunschmanager.util.loadListOfWishes
+import de.voegtle.wunschmanager.util.reduceWishList
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
+import org.voegtle.wunschmanager.data.WishCopyTask
 import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
 import javax.servlet.http.HttpServletRequest
@@ -21,27 +25,9 @@ import javax.servlet.http.HttpServletRequest
   @GetMapping("/wish/list") fun list(@RequestParam() list: Long, request: HttpServletRequest): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
-    val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList).order(
-        "createTimestamp").list() as MutableList<Wish>
-    wishes.sort()
     val userName = extractUserName(request, false)
 
-    return reduceWishList(userName, wishList, wishes)
-  }
-
-  private fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wish>): MutableList<Wish> {
-    when (userName) {
-      wishList.owner -> {
-        if (!wishList.managed) {
-          wishes.forEach { it.donor = null }
-        }
-      }
-
-      null -> wishes.removeIf { it.invisible == true || it.donor != null }
-
-      else -> wishes.removeIf { it.invisible == true }
-    }
-    return wishes
+    return loadListOfWishes(wishList, userName)
   }
 
   @GetMapping("/wish/create") fun create(@RequestParam() list: Long, request: HttpServletRequest): Wish {
@@ -85,8 +71,7 @@ import javax.servlet.http.HttpServletRequest
     return true
   }
 
-  @GetMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long,
-                                           request: HttpServletRequest): Wish {
+  @GetMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long, request: HttpServletRequest): Wish {
     val userName = extractUserName(request, true)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
@@ -104,5 +89,20 @@ import javax.servlet.http.HttpServletRequest
     return existingWish
   }
 
+  @PostMapping("/wish/copy") fun copy(@RequestBody() copyTask: WishCopyTask, request: HttpServletRequest): List<Wish> {
+    val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(copyTask.destinationListId).now()
+
+    checkOwnership(request, wishList, "You must be owner of the list to add wishes")
+    val userName = extractUserName(request, true)
+
+    val newWishes = ArrayList<Wish>()
+    copyTask.wishes.forEach {
+      val wishes = ObjectifyService.ofy().load().type(Wish::class.java).parent(it.sourceListId).ids(it.wishIds)
+      newWishes.addAll(duplicateWishes(wishes.values, wishList))
+    }
+    ObjectifyService.ofy().save().entities(newWishes).now()
+
+    return loadListOfWishes(wishList, userName)
+  }
 
 }
