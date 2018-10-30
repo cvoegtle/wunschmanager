@@ -6,7 +6,12 @@
     </mat-panel-title>
     <mat-panel-description>
       <span class="filler"><span class="managed" *ngIf="wishList.managed">(verwaltet)</span></span>
-
+      <button mat-icon-button *ngIf="wishIds" (click)="panel.toggle()" (click)="pasteClicked()" matTooltip="markierte Wünsche einfügen">
+        <i class="material-icons">add</i>
+      </button>
+      <button mat-icon-button *ngIf="wishesSelected" (click)="publishSelection()" (click)="panel.toggle()" matTooltip="markierte Wünsche kopieren">
+        <i class="material-icons">file_copy</i>
+      </button>
       <button mat-icon-button [matMenuTriggerFor]="menu" (click)="panel.toggle()" matTooltip="Listenaktionen anzeigen">
         <i class="material-icons">more_vert</i>
       </button>
@@ -29,7 +34,7 @@
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
   <wish-edit *ngFor="let wish of wishes" [wish]="wish" (wishDeleted)="deleteWish($event)"
-             (wishChange)="wishChanged($event)"></wish-edit>
+             (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection($event)"></wish-edit>
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
       class="material-icons">create</i></button>
 </mat-expansion-panel>

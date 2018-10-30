@@ -1,6 +1,6 @@
 export class WishIds {
   sourceListId: number;
-  wishId: number;
+  wishIds: number[];
 }
 
 export class WishCopyTask {

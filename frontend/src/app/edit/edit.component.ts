@@ -7,6 +7,7 @@ import { UserStatus } from "../services/user.status";
 import { ConfigurationService } from '../services/configuration.service';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { DuplicateRequest } from "../services/duplicate-request";
+import { WishIds } from "../services/wish-copy-task";
 
 @Component({
   selector: 'wish-editor',
@@ -17,6 +18,8 @@ export class EditComponent implements OnInit {
   wishLists: WishList[];
   public newWishListEvent: string = "";
   public newListIsManaged: boolean = false;
+
+  currentSelection: WishIds;
 
   constructor(private configurationService: ConfigurationService,
               private userService: UserService,
@@ -88,4 +91,7 @@ export class EditComponent implements OnInit {
     }
   }
 
+  onSelection(selectedWishes: WishIds) {
+    this.currentSelection = selectedWishes;
+  }
 }

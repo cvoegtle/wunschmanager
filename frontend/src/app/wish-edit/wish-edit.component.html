@@ -3,6 +3,12 @@
   <div class="wish-form">
     <form class="wish-full-width">
       <div class="wish-line">
+        <button mat-icon-button *ngIf="!wish.selected" (click)="toggleSelection()" matTooltip="auswählen">
+          <i class="material-icons">radio_button_unchecked</i>
+        </button>
+        <button mat-icon-button *ngIf="wish.selected" (click)="toggleSelection()" matTooltip="ausgewählt">
+          <i class="material-icons">check_circle_outline</i>
+        </button>
         <mat-form-field class="wish-full-width">
           <input matInput placeholder="Wunsch" [value]="wish.caption" (change)="onCaptionChange($event)">
         </mat-form-field>

@@ -9,6 +9,7 @@ import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog
 import { ErrorHandler } from "../error-handler/error-handler.component";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/wish-list-duplicate-dialog.component";
+import { WishIds } from "../services/wish-copy-task";
 
 
 @Component({
@@ -18,12 +19,15 @@ import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/
 })
 export class WishListEditComponent implements OnInit {
   @Input() wishList: WishList;
+  @Input() wishIds: WishIds;
   @Output() deleted = new EventEmitter<number>();
   @Output() updated = new EventEmitter<WishList>();
   @Output() duplicate = new EventEmitter<WishList>();
+  @Output() selection = new EventEmitter<WishIds>();
 
   wishes: Wish[];
   panelOpenState: boolean;
+  wishesSelected: boolean = false;
 
   constructor(private wishService: WishService, private dialog: MatDialog, private errorHandler: ErrorHandler) {
   }
@@ -41,6 +45,7 @@ export class WishListEditComponent implements OnInit {
 
   panelClosed() {
     this.panelOpenState = false;
+    this.wishesSelected = false;
   }
 
   addWish() {
@@ -165,4 +170,38 @@ export class WishListEditComponent implements OnInit {
     return isYellow(this.wishList.background);
   }
 
+  onWishSelection(wish: Wish) {
+    this.wishesSelected = false;
+    if (this.wishes) {
+      for (let index = 0; index < this.wishes.length; index++) {
+        if (this.wishes[index].selected) {
+          this.wishesSelected = true;
+        }
+      }
+    }
+  }
+
+  publishSelection() {
+    let wishIds = new WishIds();
+    wishIds.sourceListId = this.wishList.id;
+    wishIds.wishIds = [];
+
+    for (let index = 0; index < this.wishes.length; index++) {
+      let wish = this.wishes[index];
+      if (wish.selected) {
+        wishIds.wishIds.push(wish.id);
+      }
+    }
+    this.selection.emit(wishIds);
+  }
+
+  pasteClicked() {
+    let copyTask = {
+      destinationListId: this.wishList.id,
+      wishes: [this.wishIds]
+    };
+    this.wishService.copy(copyTask).subscribe(wishes => {
+      this.wishes = wishes;
+    }, _ => this.errorHandler.handle('fetchWishes'));
+  }
 }

@@ -5,6 +5,7 @@ import { Wish } from "./wish";
 import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { unique } from "../util/url-helper";
+import { WishCopyTask } from "./wish-copy-task";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -20,6 +21,11 @@ export class WishService {
   fetchWishes(wishListId: number | string): Observable<Wish[]> {
     return this.http.get<Wish[]>(`${this.getBaseUrl()}/wish/list?list=${wishListId}&unique=${unique()}`, httpOptions).pipe(
         catchError(this.handleError<Wish[]>('wish/list')));
+  }
+
+  copy(copyTask: WishCopyTask): Observable<Wish[]> {
+    return this.http.post<Wish[]>(`${this.getBaseUrl()}/wish/copy`, copyTask, httpOptions).pipe(
+        catchError(this.handleError<Wish[]>('wish/copy')));
   }
 
   add(wishListId: number): Observable<Wish> {
@@ -53,4 +59,5 @@ export class WishService {
   private getBaseUrl() {
     return this.configurationService.configuration.backendUrl;
   }
+
 }

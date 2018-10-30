@@ -14,6 +14,7 @@ export class WishEditComponent implements OnInit {
   @Input() wish: Wish;
   @Output() wishDeleted = new EventEmitter<Wish>();
   @Output() wishChange = new EventEmitter<Wish>();
+  @Output() wishSelection = new EventEmitter<Wish>();
 
   constructor(private dialog: MatDialog) {
   }
@@ -74,5 +75,10 @@ export class WishEditComponent implements OnInit {
 
   targetUrl() {
     return makeValidUrl(this.wish.link);
+  }
+
+  toggleSelection() {
+    this.wish.selected = !this.wish.selected;
+    this.wishSelection.emit(this.wish);
   }
 }

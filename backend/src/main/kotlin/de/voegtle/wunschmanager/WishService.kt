@@ -8,7 +8,6 @@ import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.duplicateWishes
 import de.voegtle.wunschmanager.util.extractUserName
 import de.voegtle.wunschmanager.util.loadListOfWishes
-import de.voegtle.wunschmanager.util.reduceWishList
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -90,19 +89,20 @@ import javax.servlet.http.HttpServletRequest
   }
 
   @PostMapping("/wish/copy") fun copy(@RequestBody() copyTask: WishCopyTask, request: HttpServletRequest): List<Wish> {
-    val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(copyTask.destinationListId).now()
+    val destinationList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(copyTask.destinationListId).now()
 
-    checkOwnership(request, wishList, "You must be owner of the list to add wishes")
+    checkOwnership(request, destinationList, "You must be owner of the list to add wishes")
     val userName = extractUserName(request, true)
 
     val newWishes = ArrayList<Wish>()
     copyTask.wishes.forEach {
-      val wishes = ObjectifyService.ofy().load().type(Wish::class.java).parent(it.sourceListId).ids(it.wishIds)
-      newWishes.addAll(duplicateWishes(wishes.values, wishList))
+      val sourceList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(it.sourceListId).now()
+      val wishes = ObjectifyService.ofy().load().type(Wish::class.java).parent(sourceList).ids(it.wishIds)
+      newWishes.addAll(duplicateWishes(wishes.values, destinationList))
     }
     ObjectifyService.ofy().save().entities(newWishes).now()
 
-    return loadListOfWishes(wishList, userName)
+    return loadListOfWishes(destinationList, userName)
   }
 
 }
