@@ -45,6 +45,7 @@ export class WishListViewComponent implements OnInit {
 
   panelClosed() {
     this.panelOpenState = false;
+    this.wishesSelected = false;
   }
 
   deleteClicked() {
