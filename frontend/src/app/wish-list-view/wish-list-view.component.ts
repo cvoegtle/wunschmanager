@@ -7,7 +7,8 @@ import { UserStatus } from '../services/user.status';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
-import { MatSnackBar } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
+import { DeleteItemDialogComponent } from "../delete-item-dialog/delete-item-dialog.component";
 
 @Component({
   selector: 'wish-list-view',
@@ -28,7 +29,8 @@ export class WishListViewComponent implements OnInit {
 
   panelOpenState: boolean;
 
-  constructor(private wishService: WishService, private userService: UserService, private snackBar: MatSnackBar, private errorHandler: ErrorHandler) {
+  constructor(private wishService: WishService, private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar,
+              private errorHandler: ErrorHandler) {
   }
 
   ngOnInit() {
@@ -49,7 +51,16 @@ export class WishListViewComponent implements OnInit {
   }
 
   deleteClicked() {
-    this.deleted.emit(this.wishList.id);
+    let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
+      data: {
+        item: this.wishList.event,
+        id: this.wishList.id
+      }
+    });
+
+    deleteDialog.afterClosed().subscribe(result => {
+      if (result) this.deleted.emit(result);
+    });
   }
 
   reserveClicked(wish: Wish) {
@@ -68,7 +79,7 @@ export class WishListViewComponent implements OnInit {
     this.selection.emit(wishIds);
   }
 
-  isRed():boolean {
+  isRed(): boolean {
     return isRed(this.wishList.background);
   }
 
