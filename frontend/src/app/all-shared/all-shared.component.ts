@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import { WishListService } from '../services/wish-list.service';
 import { ConfigurationService } from '../services/configuration.service';
 import { ErrorHandler } from '../error-handler/error-handler.component';
+import { WishIds } from "../services/wish-copy-task";
 
 @Component({
   selector: 'all-shared',
@@ -10,6 +11,8 @@ import { ErrorHandler } from '../error-handler/error-handler.component';
   styleUrls: ['./all-shared.component.css']
 })
 export class AllSharedComponent implements OnInit {
+  @Output() selection = new EventEmitter<WishIds>()
+
   wishLists: WishList[];
 
   constructor(private configurationService: ConfigurationService,
@@ -28,6 +31,10 @@ export class AllSharedComponent implements OnInit {
   private fetchSharedWishLists() {
     this.wishListService.fetchShared().subscribe(wishLists => this.wishLists = wishLists,
         _ => this.errorHandler.handle('fetchSharedLists'));
+  }
+
+  publishSelection(wishIds: WishIds) {
+    this.selection.emit(wishIds);
   }
 
   onDeleteList(wishListId: number) {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
-import { Wish } from "../services/wish";
+import { containsSelectedWish, Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
@@ -9,7 +9,7 @@ import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog
 import { ErrorHandler } from "../error-handler/error-handler.component";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/wish-list-duplicate-dialog.component";
-import { WishIds } from "../services/wish-copy-task";
+import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 
 
 @Component({
@@ -170,29 +170,14 @@ export class WishListEditComponent implements OnInit {
     return isYellow(this.wishList.background);
   }
 
-  onWishSelection(wish: Wish) {
-    this.wishesSelected = false;
-    if (this.wishes) {
-      for (let index = 0; index < this.wishes.length; index++) {
-        if (this.wishes[index].selected) {
-          this.wishesSelected = true;
-        }
-      }
-    }
+  onWishSelection() {
+    this.wishesSelected = containsSelectedWish(this.wishes);
   }
 
   publishSelection() {
-    let wishIds = new WishIds();
-    wishIds.sourceListId = this.wishList.id;
-    wishIds.wishIds = [];
+    let wishIds = extractWishIds(this.wishList.id, this.wishes);
 
-    for (let index = 0; index < this.wishes.length; index++) {
-      let wish = this.wishes[index];
-      if (wish.selected) {
-        wishIds.wishIds.push(wish.id);
-      }
-    }
-    this.snackBar.open(`${this.singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
+    this.snackBar.open(`${singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
     this.selection.emit(wishIds);
   }
 
@@ -203,11 +188,8 @@ export class WishListEditComponent implements OnInit {
     };
     this.wishService.copy(copyTask).subscribe(wishes => {
       this.wishes = wishes;
-      this.snackBar.open(`${this.singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
+      this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));
   }
 
-  private singularOrPluralWish(count: number): String {
-    return count == 1 ? "Ein Wunsch" : `${count} Wünsche`;
-  }
 }

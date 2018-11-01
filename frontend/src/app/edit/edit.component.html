@@ -11,4 +11,4 @@
   <button (click)="createWishList()" color="primary" [disabled]="!isCreatePossible()" mat-raised-button>anlegen</button>
 </form>
 <div class="divider"></div>
-<all-shared></all-shared>
+<all-shared (selection)="onSelection($event)"></all-shared>

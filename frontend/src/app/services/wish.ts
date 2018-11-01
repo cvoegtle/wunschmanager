@@ -1,3 +1,5 @@
+import { ifTrue } from "codelyzer/util/function";
+
 export interface Wish {
   id: number;
   caption: string;
@@ -13,4 +15,15 @@ export interface Wish {
 
 export function isAvailable(wish: Wish): boolean {
   return wish.donor == null && !wish.invisible;
+}
+
+export function containsSelectedWish(wishes: Wish[]) {
+  if (wishes) {
+    for (let index = 0; index < wishes.length; index++) {
+      if (wishes[index].selected) {
+        return true;
+      }
+    }
+  }
+  return false
 }

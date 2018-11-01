@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Wish } from '../services/wish';
+import { containsSelectedWish, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
 import { UserService } from '../services/user.service';
 import { UserStatus } from '../services/user.status';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
+import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: 'wish-list-view',
@@ -18,13 +20,15 @@ export class WishListViewComponent implements OnInit {
   @Input() restricted: boolean = false;
   @Input() expanded: boolean = false;
   @Output() deleted = new EventEmitter<number>();
+  @Output() selection = new EventEmitter<WishIds>();
 
   wishes: Wish[];
-  private userStatus: UserStatus;
+  userStatus: UserStatus;
+  wishesSelected: boolean = false;
 
   panelOpenState: boolean;
 
-  constructor(private wishService: WishService, private userService: UserService, private errorHandler: ErrorHandler) {
+  constructor(private wishService: WishService, private userService: UserService, private snackBar: MatSnackBar, private errorHandler: ErrorHandler) {
   }
 
   ngOnInit() {
@@ -50,6 +54,17 @@ export class WishListViewComponent implements OnInit {
   reserveClicked(wish: Wish) {
     this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
         _ => this.errorHandler.handle('reserveWish'));
+  }
+
+  onWishSelection() {
+    this.wishesSelected = containsSelectedWish(this.wishes);
+  }
+
+  publishSelection() {
+    let wishIds = extractWishIds(this.wishList.id, this.wishes);
+
+    this.snackBar.open(`${singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
+    this.selection.emit(wishIds);
   }
 
   isRed():boolean {

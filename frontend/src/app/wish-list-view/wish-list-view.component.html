@@ -1,4 +1,4 @@
-<mat-expansion-panel (opened)="panelOpened()" (closed)="panelClosed()" [expanded]="expanded"
+<mat-expansion-panel #panel (opened)="panelOpened()" (closed)="panelClosed()" [expanded]="expanded"
                      [ngClass]="{'open-list': panelOpenState, 'background-red': isRed(), 'background-yellow': isYellow(),
                      'background-green': isGreen(), 'background-blue': isBlue()}">
   <mat-expansion-panel-header>
@@ -7,7 +7,9 @@
     </mat-panel-title>
     <mat-panel-description>
       <span class="filler">{{wishList.owner | name}} <span *ngIf="wishList.managed">(Verwalter)</span></span>
-
+      <button mat-icon-button *ngIf="wishesSelected" (click)="publishSelection()" (click)="panel.toggle()" matTooltip="markierte Wünsche kopieren">
+        <i class="material-icons">file_copy</i>
+      </button>
       <button *ngIf="deleteEnabled" mat-icon-button (click)="deleteClicked()"
               matTooltip="Wunschliste aus der Ansicht entfernen">
         <i class="material-icons">delete</i>
@@ -16,6 +18,6 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
-  <app-wish-view *ngFor="let wish of wishes" [wish]="wish" [user]="userStatus.name" [restricted]="restricted"
+  <app-wish-view *ngFor="let wish of wishes" [wish]="wish" [user]="userStatus.name" [restricted]="restricted" (wishSelected)="onWishSelection()"
                  (reserved)="reserveClicked($event)"></app-wish-view>
 </mat-expansion-panel>
