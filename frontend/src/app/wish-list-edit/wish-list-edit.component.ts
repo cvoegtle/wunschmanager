@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import { Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
 import { DeleteItemDialogComponent } from '../delete-item-dialog/delete-item-dialog.component';
 import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';
@@ -29,7 +29,7 @@ export class WishListEditComponent implements OnInit {
   panelOpenState: boolean;
   wishesSelected: boolean = false;
 
-  constructor(private wishService: WishService, private dialog: MatDialog, private errorHandler: ErrorHandler) {
+  constructor(private wishService: WishService, private dialog: MatDialog, private snackBar: MatSnackBar, private errorHandler: ErrorHandler) {
   }
 
   ngOnInit() {
@@ -192,6 +192,7 @@ export class WishListEditComponent implements OnInit {
         wishIds.wishIds.push(wish.id);
       }
     }
+    this.snackBar.open(`${this.singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
     this.selection.emit(wishIds);
   }
 
@@ -202,6 +203,11 @@ export class WishListEditComponent implements OnInit {
     };
     this.wishService.copy(copyTask).subscribe(wishes => {
       this.wishes = wishes;
+      this.snackBar.open(`${this.singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));
+  }
+
+  private singularOrPluralWish(count: number): String {
+    return count == 1 ? "Ein Wunsch" : `${count} Wünsche`;
   }
 }

@@ -3,6 +3,7 @@
   <div class="wish-form">
     <div class="wish-full-width">
       <div class="wish-line">
+        <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
         <a *ngIf="wish.link" href="{{targetUrl()}}" target="_blank">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
           <div *ngIf="wish.description">{{wish.description}}</div>
