@@ -6,30 +6,6 @@
     </mat-panel-title>
     <mat-panel-description>
       <span class="filler"><span class="managed" *ngIf="wishList.managed">(verwaltet)</span></span>
-      <button mat-icon-button *ngIf="wishIds" (click)="panel.toggle()" (click)="pasteClicked()" matTooltip="markierte Wünsche einfügen">
-        <i class="material-icons">add</i>
-      </button>
-      <button mat-icon-button *ngIf="wishesSelected" (click)="publishSelection()" (click)="panel.toggle()" matTooltip="markierte Wünsche kopieren">
-        <i class="material-icons">file_copy</i>
-      </button>
-      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="panel.toggle()" matTooltip="Listenaktionen anzeigen">
-        <i class="material-icons">more_vert</i>
-      </button>
-      <mat-menu #menu="matMenu">
-          <button mat-menu-item  (click)="shareClicked()"
-                  matTooltip="Liste weitergeben">
-            <i class="material-icons">share</i> teilen
-          </button>
-        <button mat-menu-item (click)="duplicateClicked()"
-                matTooltip="Wunschliste kopieren!">
-          <i class="material-icons">file_copy</i> Liste kopieren
-        </button>
-        <button mat-menu-item (click)="deleteClicked()"
-                matTooltip="Wunschliste löschen!">
-          <i class="material-icons">delete_forever</i> löschen!
-        </button>
-      </mat-menu>
-
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
@@ -37,4 +13,26 @@
              (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection()"></wish-edit>
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
       class="material-icons">create</i></button>
+  <mat-action-row *ngIf="wishIds || wishesSelected" >
+    <button mat-button *ngIf="wishIds" (click)="pasteClicked()" matTooltip="markierte Wünsche einfügen">
+      <i class="material-icons">add</i>einfügen
+    </button>
+    <button mat-button *ngIf="wishesSelected" (click)="publishSelection()" matTooltip="markierte Wünsche kopieren">
+      <i class="material-icons">file_copy</i>Auswahl kopieren
+    </button>
+  </mat-action-row>
+  <mat-action-row>
+    <button mat-button (click)="shareClicked()"
+            matTooltip="Liste weitergeben">
+      <i class="material-icons">share</i>teilen
+    </button>
+    <button mat-button (click)="duplicateClicked()"
+            matTooltip="Wunschliste kopieren!">
+      <i class="material-icons">file_copy</i>Liste kopieren
+    </button>
+    <button mat-button (click)="deleteClicked()"
+            matTooltip="Wunschliste löschen!">
+      <i class="material-icons">delete_forever</i>löschen
+    </button>
+  </mat-action-row>
 </mat-expansion-panel>

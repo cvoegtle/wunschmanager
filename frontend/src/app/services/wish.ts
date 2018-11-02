@@ -27,3 +27,12 @@ export function containsSelectedWish(wishes: Wish[]) {
   }
   return false
 }
+
+export function removeWishSelection(wishes: Wish[]) {
+  if (wishes) {
+    for (let index = 0; index < wishes.length; index++) {
+      wishes[index].selected = false;
+    }
+  }
+
+}

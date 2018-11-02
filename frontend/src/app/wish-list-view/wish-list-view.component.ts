@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { containsSelectedWish, Wish } from '../services/wish';
+import { containsSelectedWish, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
 import { UserService } from '../services/user.service';
@@ -74,6 +74,9 @@ export class WishListViewComponent implements OnInit {
 
   publishSelection() {
     let wishIds = extractWishIds(this.wishList.id, this.wishes);
+    removeWishSelection(this.wishes);
+    this.wishesSelected = false;
+
 
     this.snackBar.open(`${singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
     this.selection.emit(wishIds);

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
-import { containsSelectedWish, Wish } from "../services/wish";
+import { containsSelectedWish, removeWishSelection, Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
@@ -93,7 +93,10 @@ export class WishListEditComponent implements OnInit {
 
   private doDeleteWish(wishId) {
     this.wishService.delete(this.wishList.id, wishId).subscribe(result => {
-      if (result) this.removeFromList(wishId)
+      if (result) {
+        this.removeFromList(wishId);
+        this.wishesSelected = containsSelectedWish(this.wishes);
+      }
     }, _ => this.errorHandler.handle('deleteWish'))
   }
 
@@ -114,7 +117,9 @@ export class WishListEditComponent implements OnInit {
     });
 
     deleteDialog.afterClosed().subscribe(result => {
-      if (result) this.deleted.emit(result);
+      if (result) {
+        this.deleted.emit(result);
+      }
     });
   }
 
@@ -176,6 +181,8 @@ export class WishListEditComponent implements OnInit {
 
   publishSelection() {
     let wishIds = extractWishIds(this.wishList.id, this.wishes);
+    removeWishSelection(this.wishes);
+    this.wishesSelected = false;
 
     this.snackBar.open(`${singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
     this.selection.emit(wishIds);
