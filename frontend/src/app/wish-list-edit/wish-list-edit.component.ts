@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
-import { containsSelectedWish, removeWishSelection, Wish } from "../services/wish";
+import { containsSelectedWish, countSelection, removeWishSelection, Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
@@ -27,7 +27,7 @@ export class WishListEditComponent implements OnInit {
 
   wishes: Wish[];
   panelOpenState: boolean;
-  wishesSelected: boolean = false;
+  selectionCount: number = 0;
 
   constructor(private wishService: WishService, private dialog: MatDialog, private snackBar: MatSnackBar, private errorHandler: ErrorHandler) {
   }
@@ -45,7 +45,7 @@ export class WishListEditComponent implements OnInit {
 
   panelClosed() {
     this.panelOpenState = false;
-    this.wishesSelected = false;
+    this.selectionCount = 0;
   }
 
   addWish() {
@@ -76,31 +76,39 @@ export class WishListEditComponent implements OnInit {
     })
   }
 
-  deleteWish(wish: Wish) {
+  deleteWishesClicked() {
     let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
       data: {
-        item: this.getWishText(wish),
-        id: wish.id
+        item: singularOrPluralWish(countSelection(this.wishes)),
+        id: countSelection(this.wishes)
       }
     });
 
     deleteDialog.afterClosed().subscribe(dialogRet => {
       if (dialogRet) {
-        this.doDeleteWish(dialogRet);
+        this.deleteSelectedWishes();
       }
     });
   }
 
-  private doDeleteWish(wishId) {
-    this.wishService.delete(this.wishList.id, wishId).subscribe(result => {
+  private deleteSelectedWishes() {
+    let wishIds = extractWishIds(this.wishList.id, this.wishes);
+
+    this.wishService.delete(wishIds).subscribe(result => {
       if (result) {
-        this.removeFromList(wishId);
-        this.wishesSelected = containsSelectedWish(this.wishes);
+        this.removeFromList(wishIds.wishIds);
+        this.selectionCount = countSelection(this.wishes);
       }
     }, _ => this.errorHandler.handle('deleteWish'))
   }
 
-  removeFromList(id: number) {
+  private removeFromList(ids: number[]) {
+    for (let id of ids) {
+      this.removeIdFromList(id);
+    }
+  }
+
+  private removeIdFromList(id) {
     for (let index = 0; index < this.wishes.length; index++) {
       if (this.wishes[index].id == id) {
         this.wishes.splice(index, 1);
@@ -151,14 +159,6 @@ export class WishListEditComponent implements OnInit {
 
   }
 
-  private getWishText(wish: Wish) {
-    if (wish.caption) {
-      return wish.caption;
-    } else {
-      return wish.description;
-    }
-  }
-
   isRed(): boolean {
     return isRed(this.wishList.background);
   }
@@ -176,13 +176,13 @@ export class WishListEditComponent implements OnInit {
   }
 
   onWishSelection() {
-    this.wishesSelected = containsSelectedWish(this.wishes);
+    this.selectionCount = countSelection(this.wishes);
   }
 
   publishSelection() {
     let wishIds = extractWishIds(this.wishList.id, this.wishes);
     removeWishSelection(this.wishes);
-    this.wishesSelected = false;
+    this.selectionCount = 0;
 
     this.snackBar.open(`${singularOrPluralWish(wishIds.wishIds.length)} in der Zwischenablage`, null, {duration: 2000});
     this.selection.emit(wishIds);

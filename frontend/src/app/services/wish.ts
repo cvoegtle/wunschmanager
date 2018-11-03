@@ -1,4 +1,5 @@
 import { ifTrue } from "codelyzer/util/function";
+import { forEach } from "@angular/router/src/utils/collection";
 
 export interface Wish {
   id: number;
@@ -19,8 +20,8 @@ export function isAvailable(wish: Wish): boolean {
 
 export function containsSelectedWish(wishes: Wish[]) {
   if (wishes) {
-    for (let index = 0; index < wishes.length; index++) {
-      if (wishes[index].selected) {
+    for (let wish of wishes) {
+      if (wish.selected) {
         return true;
       }
     }
@@ -30,9 +31,20 @@ export function containsSelectedWish(wishes: Wish[]) {
 
 export function removeWishSelection(wishes: Wish[]) {
   if (wishes) {
-    for (let index = 0; index < wishes.length; index++) {
-      wishes[index].selected = false;
+    for (let wish of wishes) {
+      wish.selected = false;
     }
   }
+}
 
+export function countSelection(wishes: Wish[]): number {
+  let count = 0;
+  if (wishes) {
+    for (let wish of wishes) {
+      if (wish.selected) {
+        count++;
+      }
+    }
+  }
+  return count;
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
 import org.voegtle.wunschmanager.data.WishCopyTask
+import org.voegtle.wunschmanager.data.WishIds
 import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
 import javax.servlet.http.HttpServletRequest
@@ -60,13 +61,12 @@ import javax.servlet.http.HttpServletRequest
     return false
   }
 
-  @GetMapping("/wish/delete") fun delete(@RequestParam() listId: Long, @RequestParam() wishId: Long,
-                                         request: HttpServletRequest): Boolean {
-    val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
+  @PostMapping("/wish/delete") fun delete(@RequestBody wishIds: WishIds, request: HttpServletRequest): Boolean {
+    val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(wishIds.sourceListId).now()
 
     checkOwnership(request, wishList, "You must be owner of the list to delete wishes")
 
-    ObjectifyService.ofy().delete().type(Wish::class.java).parent(wishList).id(wishId).now()
+    ObjectifyService.ofy().delete().type(Wish::class.java).parent(wishList).ids(wishIds.wishIds).now()
     return true
   }
 

@@ -5,7 +5,7 @@ import { Wish } from "./wish";
 import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { unique } from "../util/url-helper";
-import { WishCopyTask } from "./wish-copy-task";
+import { WishCopyTask, WishIds } from "./wish-copy-task";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -33,8 +33,8 @@ export class WishService {
         catchError(this.handleError<Wish>('wish/create')));
   }
 
-  delete(listId: number, wishId: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.getBaseUrl()}/wish/delete?listId=${listId}&wishId=${wishId}&unique=${unique()}`, httpOptions).pipe(
+  delete(wishIds: WishIds): Observable<boolean> {
+    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/delete`, wishIds, httpOptions).pipe(
         catchError(this.handleError<boolean>('wish/delete')));
   }
 

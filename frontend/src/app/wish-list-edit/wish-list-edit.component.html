@@ -9,30 +9,32 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
-  <wish-edit *ngFor="let wish of wishes" [wish]="wish" (wishDeleted)="deleteWish($event)"
-             (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection()"></wish-edit>
+  <wish-edit *ngFor="let wish of wishes" [wish]="wish" (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection()"></wish-edit>
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
       class="material-icons">create</i></button>
-  <mat-action-row *ngIf="wishIds || wishesSelected" >
+  <mat-action-row *ngIf="wishIds || selectionCount" >
     <button mat-button *ngIf="wishIds" (click)="pasteClicked()" matTooltip="markierte Wünsche einfügen">
-      <i class="material-icons">add</i>einfügen
+      <i class="material-icons">add</i> {{wishIds.wishIds.length}} einfügen
     </button>
-    <button mat-button *ngIf="wishesSelected" (click)="publishSelection()" matTooltip="markierte Wünsche kopieren">
-      <i class="material-icons">file_copy</i>Auswahl kopieren
+    <button mat-button *ngIf="selectionCount" (click)="publishSelection()" matTooltip="markierte Wünsche kopieren">
+      <i class="material-icons">file_copy</i> {{selectionCount}} kopieren
+    </button>
+    <button mat-button *ngIf="selectionCount" (click)="deleteWishesClicked()" matTooltip="Auswahl löschen">
+      <i class="material-icons">delete</i> {{selectionCount}} löschen
     </button>
   </mat-action-row>
   <mat-action-row>
     <button mat-button (click)="shareClicked()"
             matTooltip="Liste weitergeben">
-      <i class="material-icons">share</i>teilen
+      <i class="material-icons">share</i> teilen
     </button>
     <button mat-button (click)="duplicateClicked()"
             matTooltip="Wunschliste kopieren!">
-      <i class="material-icons">file_copy</i>Liste kopieren
+      <i class="material-icons">file_copy</i> Liste kopieren
     </button>
     <button mat-button (click)="deleteClicked()"
             matTooltip="Wunschliste löschen!">
-      <i class="material-icons">delete_forever</i>löschen
+      <i class="material-icons">delete_forever</i> löschen
     </button>
   </mat-action-row>
 </mat-expansion-panel>

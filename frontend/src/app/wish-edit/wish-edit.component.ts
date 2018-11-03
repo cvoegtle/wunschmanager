@@ -12,7 +12,6 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 })
 export class WishEditComponent implements OnInit {
   @Input() wish: Wish;
-  @Output() wishDeleted = new EventEmitter<Wish>();
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
 
@@ -40,10 +39,6 @@ export class WishEditComponent implements OnInit {
 
   isBlue() {
     return isAvailable(this.wish) && isBlue(this.wish.background);
-  }
-
-  deleteClicked() {
-    this.wishDeleted.emit(this.wish);
   }
 
   onCaptionChange(event) {
