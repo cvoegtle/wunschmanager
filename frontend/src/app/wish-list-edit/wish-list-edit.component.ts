@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WishList } from '../services/wish-list';
-import { containsSelectedWish, countSelection, removeWishSelection, Wish } from "../services/wish";
+import { countSelection, removeWishSelection, Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
@@ -10,6 +10,7 @@ import { ErrorHandler } from "../error-handler/error-handler.component";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/wish-list-duplicate-dialog.component";
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
+import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
 
 
 @Component({
@@ -17,13 +18,16 @@ import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-
   templateUrl: './wish-list-edit.component.html',
   styleUrls: ['./wish-list.component.css', '../util/color.css']
 })
-export class WishListEditComponent implements OnInit {
+export class WishListEditComponent {
   @Input() wishList: WishList;
   @Input() wishIds: WishIds;
   @Output() deleted = new EventEmitter<number>();
   @Output() updated = new EventEmitter<WishList>();
   @Output() duplicate = new EventEmitter<WishList>();
   @Output() selection = new EventEmitter<WishIds>();
+
+  @ViewChild("wishColumns")
+  wishColumns: WishMultiColumnComponent;
 
   wishes: Wish[];
   panelOpenState: boolean;
@@ -32,13 +36,11 @@ export class WishListEditComponent implements OnInit {
   constructor(private wishService: WishService, private dialog: MatDialog, private snackBar: MatSnackBar, private errorHandler: ErrorHandler) {
   }
 
-  ngOnInit() {
-  }
-
   panelOpened() {
     this.wishService.fetchWishes(this.wishList.id).subscribe(wishes => {
           this.wishes = wishes;
           this.panelOpenState = this.wishList.background == null;
+          this.wishColumns.render(wishes);
         },
         _ => this.errorHandler.handle('fetchWishes'))
   }
@@ -49,8 +51,11 @@ export class WishListEditComponent implements OnInit {
   }
 
   addWish() {
-    this.wishService.add(this.wishList.id).subscribe(wish => this.wishes.push(wish),
-        _ => this.errorHandler.handle('addWish'))
+    this.wishService.add(this.wishList.id).subscribe(wish => {
+          this.wishes.push(wish);
+          this.wishColumns.render();
+        }, _ => this.errorHandler.handle('addWish')
+    )
   }
 
   wishChanged(wish: Wish) {
@@ -97,6 +102,7 @@ export class WishListEditComponent implements OnInit {
     this.wishService.delete(wishIds).subscribe(result => {
       if (result) {
         this.removeFromList(wishIds.wishIds);
+        this.wishColumns.render();
         this.selectionCount = countSelection(this.wishes);
       }
     }, _ => this.errorHandler.handle('deleteWish'))
