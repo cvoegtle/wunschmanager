@@ -64,6 +64,8 @@ import { WishListDuplicateDialogComponent } from './wish-list-duplicate-dialog/w
 import { SelectToggleComponent } from './select-toggle/select-toggle.component';
 import { WishMultiColumnComponent } from './wish-multi-column/wish-multi-column.component';
 import { WishColumnComponent } from "./wish-multi-column/wish-column.component";
+import { WishViewColumnComponent } from "./wish-view-multi-column/wish-view-column.component";
+import { WishViewMultiColumnComponent } from "./wish-view-multi-column/wish-view-multi-column.component";
 
 @NgModule({
   exports: [
@@ -109,8 +111,10 @@ export class WishMaterialModule {
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
     ErrorDialogComponent, WishListDuplicateDialogComponent],
   declarations: [
-    AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent, WishViewComponent, WishListViewComponent, ShareComponent, AllSharedComponent,
+    AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent, WishViewComponent,
+    WishListViewComponent, ShareComponent, AllSharedComponent,
     DeleteItemDialogComponent, WishListDuplicateDialogComponent, SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent,
+    WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler
   ],
   imports: [

@@ -2,19 +2,21 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Wish } from "../services/wish";
 
 @Component({
-  selector: 'wish-column',
-  templateUrl: './wish-column.component.html'
+  selector: 'wish-view-column',
+  templateUrl: './wish-view-column.component.html'
 })
-export class WishColumnComponent {
+export class WishViewColumnComponent {
   @Input() wishes: Wish[];
-  @Output() wishChange = new EventEmitter<Wish>();
+  @Input() user: string;
+
   @Output() wishSelection = new EventEmitter<Wish>();
+  @Output() reserved = new EventEmitter<Wish>();
 
   constructor() {
   }
 
-  wishChanged(wish: Wish) {
-    this.wishChange.emit(wish);
+  reserveClicked(wish: Wish) {
+    this.reserved.emit(wish);
   }
 
   onWishSelection(wish: Wish) {

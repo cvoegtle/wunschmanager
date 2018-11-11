@@ -1,0 +1,14 @@
+.content-area {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.content-column {
+    width: 510px;
+    margin-left: 10px;
+}
+
+.content-column:first-child {
+    margin-left: 0px;
+}

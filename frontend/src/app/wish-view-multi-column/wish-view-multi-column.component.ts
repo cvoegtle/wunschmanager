@@ -3,14 +3,15 @@ import { Wish } from "../services/wish";
 import { splitIntoColumns } from "../util/wishlist-helper";
 
 @Component({
-  selector: 'wish-multi-column',
-  templateUrl: './wish-multi-column.component.html',
-  styleUrls: ['./wish-multi-column.component.css']
+  selector: 'wish-view-multi-column',
+  templateUrl: './wish-view-multi-column.component.html',
+  styleUrls: ['./wish-view-multi-column.component.css']
 })
-export class WishMultiColumnComponent {
+export class WishViewMultiColumnComponent {
   @Input() wishes: Wish[];
-  @Output() wishChange = new EventEmitter<Wish>();
+  @Input() user: string;
   @Output() wishSelection = new EventEmitter<Wish>();
+  @Output() reserved = new EventEmitter<Wish>();
 
   wishLists: Wish[][];
 
@@ -30,8 +31,8 @@ export class WishMultiColumnComponent {
     this.wishLists = splitIntoColumns(this.wishes);
   }
 
-  wishChanged(wish: Wish) {
-    this.wishChange.emit(wish);
+  reserveClicked(wish: Wish) {
+    this.reserved.emit(wish);
   }
 
   onWishSelection(wish: Wish) {

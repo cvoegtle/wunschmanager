@@ -48,16 +48,3 @@ export function countSelection(wishes: Wish[]): number {
   }
   return count;
 }
-
-export function sliceColumn(wishes: Wish[], columns: number, selectedIndex: number): Wish[] {
-  if (!wishes) return [];
-
-  let filteredWishes = [];
-  for (let index = 0; index < wishes.length; index++) {
-    if ((index % columns) == selectedIndex) {
-      filteredWishes.push(wishes[index]);
-    }
-  }
-  return filteredWishes;
-}
-

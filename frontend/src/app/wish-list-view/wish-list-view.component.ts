@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { containsSelectedWish, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
@@ -9,6 +9,8 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { DeleteItemDialogComponent } from "../delete-item-dialog/delete-item-dialog.component";
+import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
+import { WishViewMultiColumnComponent } from "../wish-view-multi-column/wish-view-multi-column.component";
 
 @Component({
   selector: 'wish-list-view',
@@ -29,6 +31,9 @@ export class WishListViewComponent implements OnInit {
 
   panelOpenState: boolean;
 
+  @ViewChild("wishColumns")
+  wishColumns: WishViewMultiColumnComponent;
+
   constructor(private wishService: WishService, private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar,
               private errorHandler: ErrorHandler) {
   }
@@ -41,6 +46,7 @@ export class WishListViewComponent implements OnInit {
     this.wishService.fetchWishes(this.wishList.id).subscribe(wishes => {
           this.wishes = wishes;
           this.panelOpenState = this.wishList.background == null;
+          this.wishColumns.render(wishes);
         },
         _ => this.errorHandler.handle('fetchWishes'))
   }

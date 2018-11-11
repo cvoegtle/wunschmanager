@@ -1,0 +1,3 @@
+<div>
+  <wish-view *ngFor="let wish of wishes" [wish]="wish" [user]="user" (reserved)="reserveClicked($event)" (wishSelection)="onWishSelection($event)"></wish-view>
+</div>

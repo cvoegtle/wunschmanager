@@ -4,7 +4,7 @@ import { makeValidUrl } from "../util/url-helper";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
 @Component({
-  selector: 'app-wish-view',
+  selector: 'wish-view',
   templateUrl: './wish-view.component.html',
   styleUrls: ['../wish-edit/wish.component.css', '../util/color.css']
 })
