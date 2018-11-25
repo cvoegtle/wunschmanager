@@ -14,10 +14,14 @@ export class WishPropertiesComponent {
   constructor(public dialogRef: MatDialogRef<WishPropertiesComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.wish = data.wish;
-    this.dialogRef.backdropClick().subscribe(result => dialogRef.close(this.changed));
+    this.dialogRef.backdropClick().subscribe(result => this.closeDialog())
     this.dialogRef.keydownEvents().subscribe(key => {
-      if (key.code == "Escape") dialogRef.close(this.changed);
+      if (key.code == "Escape") this.closeDialog();
     });
+  }
+
+  closeDialog() {
+    this.dialogRef.close(this.changed);
   }
 
   toggleVisibility() {

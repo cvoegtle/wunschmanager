@@ -8,7 +8,7 @@
             matAutosizeMinRows="2" matAutosizeMaxRows="5" (change)="valueChanged()"></textarea>
   </mat-form-field>
   <mat-form-field class="edit-event">
-    <mat-select [(value)]="wishList.background" placeholder="Hintergrundfarbe" (change)="valueChanged()">
+    <mat-select [(value)]="wishList.background" placeholder="Hintergrundfarbe" (selectionChange)="valueChanged()">
       <mat-option></mat-option>
       <mat-option value="red"><div class="background-red foreground-red">rot</div></mat-option>
       <mat-option value="yellow"><div class="background-yellow foreground-yellow">gelb</div></mat-option>
