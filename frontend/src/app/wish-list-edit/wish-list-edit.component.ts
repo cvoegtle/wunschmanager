@@ -201,7 +201,7 @@ export class WishListEditComponent {
     };
     this.wishService.copy(copyTask).subscribe(wishes => {
       this.wishes = wishes;
-      this.wishColumns.render();
+      this.wishColumns.render(wishes);
       this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));
   }
