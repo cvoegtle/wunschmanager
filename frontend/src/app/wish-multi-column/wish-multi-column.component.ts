@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
 import { Wish } from "../services/wish";
-import { splitIntoColumns } from "../util/wishlist-helper";
+import { sort, splitIntoColumns } from "../util/wishlist-helper";
 
 @Component({
   selector: 'wish-multi-column',
@@ -36,5 +36,10 @@ export class WishMultiColumnComponent {
 
   onWishSelection(wish: Wish) {
     this.wishSelection.emit(wish);
+  }
+
+  onOrderChanged() {
+    sort(this.wishes);
+    this.render();
   }
 }

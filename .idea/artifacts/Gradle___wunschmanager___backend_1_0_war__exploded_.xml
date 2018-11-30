@@ -19,11 +19,7 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.3.0" />
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.0" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-endpoints:1.9.67" />
           <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:1.9.67" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-labs:1.9.67" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-endpoints-deps:1.9.67" />
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-jsr107cache:1.9.67" />
           <element id="library" level="project" name="Gradle: com.googlecode.objectify:objectify:5.1.21" />
           <element id="library" level="project" name="Gradle: com.google.guava:guava:19.0" />
           <element id="library" level="project" name="Gradle: org.springframework.boot:spring-boot-starter-web:2.1.0.RELEASE" />
@@ -59,6 +55,10 @@
           <element id="library" level="project" name="Gradle: ch.qos.logback:logback-core:1.2.3" />
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.7.25" />
           <element id="library" level="project" name="Gradle: org.apache.logging.log4j:log4j-api:2.11.1" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-endpoints/1.9.68/bb355d4e524e90fef8eb0571a806d973c2282a97/appengine-endpoints-1.9.68.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-api-labs/1.9.68/6081025f75761fec02c4f98fa66f8fd06d307402/appengine-api-labs-1.9.68.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-endpoints-deps/1.9.68/c9f65e0af45a5ffdf57ebe9a4f163b885238a0f4/appengine-endpoints-deps-1.9.68.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-jsr107cache/1.9.68/6654e0901131e1c8acfc0058a2b075ae7ec896c/appengine-jsr107cache-1.9.68.jar" />
         </element>
       </element>
     </root>

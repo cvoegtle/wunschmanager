@@ -1,5 +1,15 @@
 import { Wish } from "../services/wish";
 
+export function sort(wishes: Wish[]) {
+  wishes.sort(function (a: Wish, b: Wish): number {
+    if (a.priority == b.priority) {
+      return a.createTimestamp - b.createTimestamp
+    } else {
+      return b.priority - a.priority;
+    }
+  })
+}
+
 export function splitIntoColumns(wishes: Wish[]) {
   let columnCount = calculateNumberOfColumns();
   let wishLists = [];
@@ -44,8 +54,6 @@ function calculateIndices(length: number, columns: number, selectedIndex: number
     end: Math.min(selectedIndex*columnWidth+columnWidth, length)
   }
 }
-
-
 
 function calculateNumberOfColumns(): number {
   let columns = Math.trunc(window.innerWidth / 500);

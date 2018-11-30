@@ -9,6 +9,7 @@ export class WishColumnComponent {
   @Input() wishes: Wish[];
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
+  @Output() orderChanged = new EventEmitter<void>();
 
   constructor() {
   }
@@ -19,5 +20,9 @@ export class WishColumnComponent {
 
   onWishSelection(wish: Wish) {
     this.wishSelection.emit(wish);
+  }
+
+  onOrderChange() {
+    this.orderChanged.emit();
   }
 }

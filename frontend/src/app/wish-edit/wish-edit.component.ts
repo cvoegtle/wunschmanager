@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { isAvailable, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
-import { WishPropertiesComponent } from "../wish-properties/wish-properties.component";
+import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
@@ -14,6 +14,7 @@ export class WishEditComponent implements OnInit {
   @Input() wish: Wish;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
+  @Output() orderChanged = new EventEmitter<void>();
 
   constructor(private dialog: MatDialog) {
   }
@@ -64,7 +65,12 @@ export class WishEditComponent implements OnInit {
     });
 
     settingsDialog.afterClosed().subscribe(result => {
-      if (result) this.wishChange.emit(this.wish);
+      if (result != Change.UNCHANGED) {
+        this.wishChange.emit(this.wish);
+      }
+      if (result == Change.ORDERCHANGE) {
+        this.orderChanged.emit();
+      }
     });
   }
 

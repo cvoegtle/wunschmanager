@@ -1,12 +1,10 @@
-import { ifTrue } from "codelyzer/util/function";
-import { forEach } from "@angular/router/src/utils/collection";
-
 export interface Wish {
   id: number;
   caption: string;
   description: string;
   link: string;
   donor: string;
+  createTimestamp: number;
   priority: number; // higher is better
   background: string;
   invisible: boolean;

@@ -2,14 +2,19 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Wish } from "../services/wish";
 
+export enum Change {
+  UNCHANGED, CHANGED, ORDERCHANGE
+}
+
 @Component({
   selector: 'app-wish-properties',
   templateUrl: './wish-properties.component.html',
   styleUrls: ['../wish-edit/wish.component.css']
 })
+
 export class WishPropertiesComponent {
   wish: Wish;
-  changed: boolean = false;
+  changed: Change = Change.UNCHANGED;
 
   constructor(public dialogRef: MatDialogRef<WishPropertiesComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -26,15 +31,21 @@ export class WishPropertiesComponent {
 
   toggleVisibility() {
     this.wish.invisible = !this.wish.invisible;
-    this.changed = true;
+    this.updateChange(Change.CHANGED) ;
   }
 
   onPriorityChanged() {
-    this.changed = true;
+    this.updateChange(Change.ORDERCHANGE);
   }
 
   onBackgroundChanged() {
-    this.changed = true;
+    this.updateChange(Change.CHANGED);
+  }
+
+  updateChange(newStatus: Change) {
+    if (this.changed != Change.ORDERCHANGE) {
+      this.changed = newStatus;
+    }
   }
 
 }
