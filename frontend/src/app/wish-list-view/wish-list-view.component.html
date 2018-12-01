@@ -10,7 +10,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
-  <wish-view-multi-column  #wishColumns [wishes]="wishes" [user]="userStatus.name" (wishSelected)="onWishSelection()"
+  <wish-view-multi-column  #wishColumns [wishes]="wishes" [user]="userStatus.name" (wishSelection)="onWishSelection()"
                           (reserved)="reserveClicked($event)"></wish-view-multi-column>
   <mat-action-row>
     <button mat-button *ngIf="wishesSelected" (click)="publishSelection()" matTooltip="markierte Wünsche kopieren">
