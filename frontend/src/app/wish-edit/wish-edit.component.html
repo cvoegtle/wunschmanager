@@ -5,20 +5,20 @@
       <div class="wish-line">
         <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
         <mat-form-field class="wish-full-width">
-          <input matInput placeholder="Wunsch" [value]="wish.caption" (change)="onCaptionChange($event)">
+          <input matInput placeholder="Wunsch" [value]="wish.caption" (change)="onCaptionChange($event)" (focus)="onFocus('wish')">
         </mat-form-field>
-        <button mat-icon-button (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
+        <button #settings mat-icon-button (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
           <i class="material-icons">settings</i>
         </button>
       </div>
       <mat-form-field class="wish-full-width">
         <textarea matInput placeholder="Beschreibung" [value]="wish.description" matTextareaAutosize
-                  (change)="onDescriptionChange($event)" matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+                  (change)="onDescriptionChange($event)" matAutosizeMinRows="2" matAutosizeMaxRows="5" (focus)="onFocus('description')"></textarea>
       </mat-form-field>
 
       <div class="wish-line">
         <mat-form-field class="wish-url">
-          <input matInput placeholder="Link" [value]="wish.link" (change)="onLinkChange($event)">
+          <input matInput placeholder="Link" [value]="wish.link" (change)="onLinkChange($event)" (focus)="onFocus('link')">
         </mat-form-field>
         <a *ngIf="wish.link" mat-icon-button target="_blank" href="{{targetUrl()}}" matTooltip="Seite öffnen">
           <i class="material-icons">link</i>

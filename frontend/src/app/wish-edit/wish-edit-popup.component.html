@@ -1,0 +1,16 @@
+<h1 mat-dialog-title >Wunsch bearbeiten</h1>
+<div mat-dialog-content>
+    <div class="edit-event">
+      <mat-form-field class="edit-event">
+        <input matInput #wishInput placeholder="Wunsch" [value]="wish.caption" (change)="onCaptionChange($event)">
+      </mat-form-field>
+    </div>
+    <mat-form-field class="edit-event" >
+        <textarea #description matInput placeholder="Beschreibung" [value]="wish.description" matTextareaAutosize
+                  (change)="onDescriptionChange($event)" matAutosizeMinRows="2" matAutosizeMaxRows="5" ></textarea>
+    </mat-form-field>
+
+    <mat-form-field class="edit-event">
+      <input #link matInput placeholder="Link" [value]="wish.link" (change)="onLinkChange($event)" christian [christianfocus]="editItem == 'link'">
+    </mat-form-field>
+</div>

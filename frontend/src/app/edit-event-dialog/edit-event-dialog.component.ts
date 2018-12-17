@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { WishListService } from "../services/wish-list.service";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { WishList } from "../services/wish-list";
 
 @Component({
