@@ -68,9 +68,9 @@ export class WishEditComponent implements OnInit {
   }
 
   onFocus(item: string) {
-//    if (this.usePopup) {
-//      this.openEditPopup(item);
-//    }
+    if (this.usePopup) {
+      this.openEditPopup(item);
+    }
   }
 
 
