@@ -32,18 +32,7 @@ export class WishEditPopupComponent {
     this.dialogRef.close(this.changed);
   }
 
-  onCaptionChange(event) {
-    this.wish.caption = event.target.value;
-    this.changed = true;
-  }
-
-  onDescriptionChange(event) {
-    this.wish.description = event.target.value;
-    this.changed = true;
-  }
-
-  onLinkChange(event) {
-    this.wish.link = event.target.value;
+  onWishChange() {
     this.changed = true;
   }
 

@@ -46,18 +46,7 @@ export class WishEditComponent implements OnInit {
     return isAvailable(this.wish) && isBlue(this.wish.background);
   }
 
-  onCaptionChange(event) {
-    this.wish.caption = event.target.value;
-    this.wishChange.emit(this.wish)
-  }
-
-  onDescriptionChange(event) {
-    this.wish.description = event.target.value;
-    this.wishChange.emit(this.wish)
-  }
-
-  onLinkChange(event) {
-    this.wish.link = event.target.value;
+  onWishChange() {
     this.wishChange.emit(this.wish)
   }
 
@@ -79,9 +68,9 @@ export class WishEditComponent implements OnInit {
   }
 
   onFocus(item: string) {
-    if (this.usePopup) {
-      this.openEditPopup(item);
-    }
+//    if (this.usePopup) {
+//      this.openEditPopup(item);
+//    }
   }
 
 

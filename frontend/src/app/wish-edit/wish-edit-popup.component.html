@@ -2,15 +2,15 @@
 <div mat-dialog-content>
     <div class="edit-event">
       <mat-form-field class="edit-event">
-        <input matInput #wishInput placeholder="Wunsch" [value]="wish.caption" (change)="onCaptionChange($event)">
+        <input matInput #wishInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()">
       </mat-form-field>
     </div>
     <mat-form-field class="edit-event" >
-        <textarea #description matInput placeholder="Beschreibung" [value]="wish.description" matTextareaAutosize
-                  (change)="onDescriptionChange($event)" matAutosizeMinRows="2" matAutosizeMaxRows="5" ></textarea>
+        <textarea #description matInput placeholder="Beschreibung" [(ngModel)]="wish.description" matTextareaAutosize
+                  (change)="onWishChange()" matAutosizeMinRows="2" matAutosizeMaxRows="5" ></textarea>
     </mat-form-field>
 
     <mat-form-field class="edit-event">
-      <input #link matInput placeholder="Link" [value]="wish.link" (change)="onLinkChange($event)" christian [christianfocus]="editItem == 'link'">
+      <input #link matInput placeholder="Link" [(ngModel)]="wish.link" (change)="onWishChange()">
     </mat-form-field>
 </div>
