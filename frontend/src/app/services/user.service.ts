@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { UserStatus } from "./user.status";
 import { ConfigurationService } from "./configuration.service";
-import { unique } from "../util/url-helper";
+import { handleError, unique } from "../util/url-helper";
 
 const httpOptions = {
   withCredentials: true
@@ -20,7 +20,7 @@ export class UserService {
   fetchStatus(): Observable<UserStatus> {
     if (this.lastUserStatus == null) {
       this.lastUserStatus = this.http.get<UserStatus>(`${this.getBaseUrl()}/user/status?startUrl=${this.getApplicationUrl()}&unique=${unique()}`, httpOptions).pipe(
-          catchError(this.handleError<UserStatus>('user/status')));
+          catchError(handleError<UserStatus>('user/status')));
     }
     return this.lastUserStatus
   }
@@ -39,13 +39,6 @@ export class UserService {
 
   clearStatus() {
     this.lastUserStatus = null;
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error); // log to console instead
-      return null;
-    };
   }
 
   private getBaseUrl() {
