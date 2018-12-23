@@ -5,7 +5,8 @@
       <div class="wish-line">
         <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
         <mat-form-field class="wish-full-width">
-          <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" (focus)="onFocus('wish')" name="editCaption">
+          <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" (focus)="onFocus('wish')" name="editCaption"
+          (focusout)="onBlur('wish')">
         </mat-form-field>
         <button #settings mat-icon-button (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
           <i class="material-icons">settings</i>

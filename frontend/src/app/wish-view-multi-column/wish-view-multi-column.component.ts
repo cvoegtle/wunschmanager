@@ -15,9 +15,6 @@ export class WishViewMultiColumnComponent {
 
   wishLists: Wish[][];
 
-  @ViewChild("content")
-  contentPanel: HTMLDivElement;
-
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.render();

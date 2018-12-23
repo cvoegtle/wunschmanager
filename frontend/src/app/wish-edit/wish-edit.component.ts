@@ -68,9 +68,10 @@ export class WishEditComponent implements OnInit {
   }
 
   onFocus(item: string) {
-    if (this.usePopup) {
-      this.openEditPopup(item);
-    }
+    window.console.log(`focus ${item}`)
+//    if (this.usePopup) {
+//      this.openEditPopup(item);
+//    }
   }
 
 
@@ -100,5 +101,9 @@ export class WishEditComponent implements OnInit {
   toggleSelection() {
     this.wish.selected = !this.wish.selected;
     this.wishSelection.emit(this.wish);
+  }
+
+  onBlur(item: string) {
+    window.console.log(`blur ${item}`)
   }
 }
