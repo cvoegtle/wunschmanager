@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Configuration } from "./configuration";
-import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 const httpOptions = {
   withCredentials: true
@@ -14,7 +13,7 @@ export class ConfigurationService {
 
   configuration: Configuration = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient) {
   }
 
   load(): Observable<Configuration> {
