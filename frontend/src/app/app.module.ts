@@ -13,13 +13,8 @@ import {
   MatCheckboxModule,
   MatChipsModule,
   MatDatepickerModule,
-  MatDialogModule,
-  MatExpansionModule,
-  MatGridListModule,
-  MatIconModule,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
+  MatDialogModule, MatExpansionModule, MatGridListModule, MatIconModule, MatInputModule,
+  MatListModule, MatMenuModule,
   MatNativeDateModule,
   MatPaginatorModule,
   MatProgressBarModule,
@@ -39,7 +34,6 @@ import {
   MatTooltipModule,
 } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
-import { CdkTableModule } from '@angular/cdk/table';
 import { WishListEditComponent } from './wish-list-edit/wish-list-edit.component';
 import { WishService } from "./services/wish.service";
 import { WishEditComponent } from './wish-edit/wish-edit.component';
@@ -70,25 +64,26 @@ import { WishEditPopupComponent } from './wish-edit/wish-edit-popup.component';
 import { FocusDirective } from "./util/focus.directive";
 
 @NgModule({
-  exports: [
-    CdkTableModule,
-    MatAutocompleteModule,
+  entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
+    ErrorDialogComponent, WishListDuplicateDialogComponent, WishEditPopupComponent],
+  declarations: [
+    AppComponent, EditComponent, WishListEditComponent, WishEditComponent, WishEditPopupComponent, LoginComponent, ShareDialogComponent,
+    WishViewComponent, WishListViewComponent, ShareComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
+    SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
+    WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective
+  ],
+  imports: [
+    BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
+    ReactiveFormsModule, AppRoutingModule, MatListModule, MatDialogModule, MatAutocompleteModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,
     MatChipsModule,
-    MatStepperModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
+    MatDatepickerModule, MatExpansionModule,
     MatGridListModule,
     MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
+    MatInputModule, MatMenuModule, MatPaginatorModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatRadioModule,
@@ -99,28 +94,11 @@ import { FocusDirective } from "./util/focus.directive";
     MatSlideToggleModule,
     MatSnackBarModule,
     MatSortModule,
+    MatStepperModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
-    MatTooltipModule,
-  ],
-  declarations: []
-})
-export class WishMaterialModule {
-}
-
-@NgModule({
-  entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
-    ErrorDialogComponent, WishListDuplicateDialogComponent, WishEditPopupComponent],
-  declarations: [
-    AppComponent, EditComponent, WishListEditComponent, WishEditComponent, WishEditPopupComponent, LoginComponent, ShareDialogComponent,
-    WishViewComponent, WishListViewComponent, ShareComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
-    SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
-    WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective
-  ],
-  imports: [
-    BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, WishMaterialModule, MatNativeDateModule,
-    ReactiveFormsModule, AppRoutingModule, MatListModule, MatDialogModule
+    MatTooltipModule
   ],
   providers: [WishService, WishListService, UserService, ConfigurationService, ErrorHandler],
   bootstrap: [AppComponent]
