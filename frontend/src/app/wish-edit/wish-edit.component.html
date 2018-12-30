@@ -5,8 +5,7 @@
       <div class="wish-line">
         <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
         <mat-form-field class="wish-full-width">
-          <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" (focus)="onFocus('wish')" name="editCaption"
-          (focusout)="onBlur('wish')">
+          <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
         </mat-form-field>
         <button #settings mat-icon-button (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
           <i class="material-icons">settings</i>
@@ -14,12 +13,12 @@
       </div>
       <mat-form-field class="wish-full-width">
         <textarea matInput placeholder="Beschreibung" [(ngModel)]="wish.description" matTextareaAutosize
-                  (change)="onWishChange()" matAutosizeMinRows="2" matAutosizeMaxRows="5" name="editDescription" (focus)="onFocus('description')"></textarea>
+                  (change)="onWishChange()" matAutosizeMinRows="2" matAutosizeMaxRows="5" name="editDescription" ></textarea>
       </mat-form-field>
 
       <div class="wish-line">
         <mat-form-field class="wish-url">
-          <input matInput placeholder="Link" [(ngModel)]="wish.link" (change)="onWishChange()" name="editLink" (focus)="onFocus('link')">
+          <input matInput placeholder="Link" [(ngModel)]="wish.link" (change)="onWishChange()" name="editLink">
         </mat-form-field>
         <a *ngIf="wish.link" mat-icon-button target="_blank" href="{{targetUrl()}}" matTooltip="Seite öffnen">
           <i class="material-icons">link</i>

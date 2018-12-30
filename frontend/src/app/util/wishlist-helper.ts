@@ -19,18 +19,6 @@ export function splitIntoColumns(wishes: Wish[]) {
   return wishLists;
 }
 
-function sliceColumn(wishes: Wish[], columns: number, selectedIndex: number): Wish[] {
-  if (!wishes) return [];
-
-  let filteredWishes = [];
-  for (let index = 0; index < wishes.length; index++) {
-    if ((index % columns) == selectedIndex) {
-      filteredWishes.push(wishes[index]);
-    }
-  }
-  return filteredWishes;
-}
-
 function sliceColumnVertically(wishes: Wish[], columns: number, selectedIndex: number): Wish[] {
   if (!wishes) return [];
 

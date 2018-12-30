@@ -12,11 +12,17 @@ export class WishMultiColumnComponent {
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
 
-  wishLists: Wish[][];
+  wishLists: Wish[][] = [];
+
+  lastWidth: number = window.innerWidth;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.render();
+    let currentWidth = window.innerWidth;
+    if (currentWidth != this.lastWidth) {
+      this.render();
+    }
+    this.lastWidth = currentWidth;
   }
 
   constructor() {

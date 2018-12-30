@@ -7,7 +7,6 @@ import { Wish } from "../services/wish";
 })
 export class WishColumnComponent {
   @Input() wishes: Wish[];
-  @Input() columnCount: number;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() orderChanged = new EventEmitter<void>();

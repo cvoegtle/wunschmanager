@@ -13,7 +13,7 @@ export class WishViewMultiColumnComponent {
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
 
-  wishLists: Wish[][];
+  @Input() wishLists: Wish[][] = [];
 
   @HostListener('window:resize', ['$event'])
   onResize() {

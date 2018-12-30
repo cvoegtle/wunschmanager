@@ -60,14 +60,13 @@ import { WishMultiColumnComponent } from './wish-multi-column/wish-multi-column.
 import { WishColumnComponent } from "./wish-multi-column/wish-column.component";
 import { WishViewColumnComponent } from "./wish-view-multi-column/wish-view-column.component";
 import { WishViewMultiColumnComponent } from "./wish-view-multi-column/wish-view-multi-column.component";
-import { WishEditPopupComponent } from './wish-edit/wish-edit-popup.component';
 import { FocusDirective } from "./util/focus.directive";
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
-    ErrorDialogComponent, WishListDuplicateDialogComponent, WishEditPopupComponent],
+    ErrorDialogComponent, WishListDuplicateDialogComponent],
   declarations: [
-    AppComponent, EditComponent, WishListEditComponent, WishEditComponent, WishEditPopupComponent, LoginComponent, ShareDialogComponent,
+    AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
     WishViewComponent, WishListViewComponent, ShareComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective
