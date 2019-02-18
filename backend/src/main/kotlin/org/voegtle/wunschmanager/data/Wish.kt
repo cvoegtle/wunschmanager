@@ -15,7 +15,7 @@ import java.util.Date
                    var link: String? = null,
                    @Index var donor: String? = null,
                    @Index var createTimestamp: Long = 0,
-                   @Index var priority: Int = 5,
+                   @Index var priority: Int = 0,
                    var background: Color? = null,
                    var invisible: Boolean? = null) : Comparable<Wish> {
   override fun compareTo(other: Wish): Int {

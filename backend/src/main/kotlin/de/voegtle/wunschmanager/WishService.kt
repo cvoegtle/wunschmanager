@@ -8,16 +8,19 @@ import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.duplicateWishes
 import de.voegtle.wunschmanager.util.extractUserName
 import de.voegtle.wunschmanager.util.loadListOfWishes
+import de.voegtle.wunschmanager.util.updatePriorities
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.voegtle.wunschmanager.data.UpdateOrderRequest
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
 import org.voegtle.wunschmanager.data.WishCopyTask
 import org.voegtle.wunschmanager.data.WishIds
 import org.voegtle.wunschmanager.data.WishList
+import org.voegtle.wunschmanager.data.WishOrder
 import java.util.Date
 import javax.servlet.http.HttpServletRequest
 
@@ -60,6 +63,21 @@ import javax.servlet.http.HttpServletRequest
     }
     return false
   }
+
+  @PostMapping("/wish/update_order")
+  fun update(@RequestBody() updateOrderRequest: UpdateOrderRequest, request: HttpServletRequest): Boolean {
+    val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(updateOrderRequest.listId).now()
+
+    checkOwnership(request, wishList, "You must be the owner of the list to update a wishes")
+
+    val userName = extractUserName(request, false)
+
+    val wishes = loadListOfWishes(wishList, userName)
+    updatePriorities(wishes, updateOrderRequest.wishOrders)
+    ObjectifyService.ofy().save().entities(wishes).now()
+    return true
+  }
+
 
   @PostMapping("/wish/delete") fun delete(@RequestBody wishIds: WishIds, request: HttpServletRequest): Boolean {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(wishIds.sourceListId).now()

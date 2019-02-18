@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { handleError, unique } from "../util/url-helper";
 import { WishCopyTask, WishIds } from "./wish-copy-task";
+import { WishOrder } from "./wish.order";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -42,6 +43,12 @@ export class WishService {
     let updateRequest = {listId: listId, wish: wish};
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions).pipe(
         catchError(handleError<boolean>('wish/update')));
+  }
+
+  updateOrder(listId: number, wishOrders: WishOrder[]): Observable<boolean> {
+    let updateRequest = {listId: listId, wishOrders: wishOrders};
+    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions).pipe(
+        catchError(handleError<boolean>('wish/update_order')));
   }
 
   reserve(listId: number, wishId: number): Observable<Wish> {

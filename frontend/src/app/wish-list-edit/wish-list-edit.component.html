@@ -12,7 +12,8 @@
 
   <wish-multi-column #wishColumns [wishes]="wishes" [orderMode]="orderMode"
                      (wishChange)="wishChanged($event)"
-                     (wishSelection)="onWishSelection()">
+                     (wishSelection)="onWishSelection()"
+                     (orderChange)="onOrderChange()">
   </wish-multi-column>
 
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i

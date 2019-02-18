@@ -12,6 +12,7 @@ export class WishMultiColumnComponent {
   @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
+  @Output() orderChange = new EventEmitter<void>();
 
   wishLists: Wish[][] = [];
 
@@ -29,13 +30,9 @@ export class WishMultiColumnComponent {
   constructor() {
   }
 
-  public orderChanged(orderMode: boolean) {
-    this.orderMode = orderMode;
-    this.render();
-  }
-
-  public render(wishes?: Wish[]) {
+  public render(wishes?: Wish[], orderMode?: boolean) {
     if (wishes) this.wishes = wishes;
+    if (orderMode != null) this.orderMode = orderMode;
 
     if (this.orderMode) {
       this.wishLists = [];
@@ -51,5 +48,9 @@ export class WishMultiColumnComponent {
 
   onWishSelection(wish: Wish) {
     this.wishSelection.emit(wish);
+  }
+
+  onOrderChange() {
+    this.orderChange.emit();
   }
 }

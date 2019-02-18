@@ -11,6 +11,7 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/wish-list-duplicate-dialog.component";
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
+import { convertToWishOrder } from "../services/wish.order";
 
 
 @Component({
@@ -39,9 +40,10 @@ export class WishListEditComponent {
 
   panelOpened() {
     this.wishService.fetchWishes(this.wishList.id).subscribe(wishes => {
+          this.orderMode = false;
           this.wishes = wishes;
           this.panelOpenState = this.wishList.background == null;
-          this.wishColumns.render(wishes);
+          this.wishColumns.render(wishes, this.orderMode);
         },
         _ => this.errorHandler.handle('fetchWishes'))
   }
@@ -66,6 +68,15 @@ export class WishListEditComponent {
           }
         }, _ => this.errorHandler.handle('updateWish')
     )
+  }
+
+  onOrderChange() {
+    let wishOrders = convertToWishOrder(this.wishes);
+    this.wishService.updateOrder(this.wishList.id, wishOrders).subscribe(result => {
+      if (!result) {
+        alert('Update der Reihenfolge fehlgeschlagen')
+      }
+    }, _ => this.errorHandler.handle('update Order'));
   }
 
   editEvent() {
@@ -148,7 +159,7 @@ export class WishListEditComponent {
 
   orderClicked() {
     this.orderMode = !this.orderMode;
-    this.wishColumns.orderChanged(this.orderMode);
+    this.wishColumns.render(null, this.orderMode);
   }
 
   duplicateClicked() {

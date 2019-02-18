@@ -35,6 +35,15 @@ export function removeWishSelection(wishes: Wish[]) {
   }
 }
 
+export function adjustPriority2Order(wishes: Wish[]) {
+  if (wishes) {
+    let currentPriority = wishes.length;
+    for (let wish of wishes) {
+      wish.priority = currentPriority--;
+    }
+  }
+}
+
 export function countSelection(wishes: Wish[]): number {
   let count = 0;
   if (wishes) {

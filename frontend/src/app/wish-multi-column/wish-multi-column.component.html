@@ -1,6 +1,7 @@
 <div class="content-area">
   <wish-column class="content-column" *ngFor="let wishList of wishLists" [wishes]="wishList"  [orderMode]="orderMode"
                (wishChange)="wishChanged($event)"
-               (wishSelection)="onWishSelection($event)">
+               (wishSelection)="onWishSelection($event)"
+                (orderChange)="onOrderChange()">
   </wish-column>
 </div>
