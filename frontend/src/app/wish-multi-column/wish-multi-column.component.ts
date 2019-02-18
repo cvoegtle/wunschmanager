@@ -52,9 +52,4 @@ export class WishMultiColumnComponent {
   onWishSelection(wish: Wish) {
     this.wishSelection.emit(wish);
   }
-
-  onOrderChanged() {
-    sort(this.wishes);
-    this.render();
-  }
 }

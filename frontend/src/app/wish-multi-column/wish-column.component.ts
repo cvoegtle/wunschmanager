@@ -11,7 +11,6 @@ export class WishColumnComponent {
   @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
-  @Output() orderChanged = new EventEmitter<void>();
 
   constructor() {
   }
@@ -22,10 +21,6 @@ export class WishColumnComponent {
 
   onWishSelection(wish: Wish) {
     this.wishSelection.emit(wish);
-  }
-
-  onOrderChange() {
-    this.orderChanged.emit();
   }
 
   drop(event: CdkDragDrop<string[]>) {

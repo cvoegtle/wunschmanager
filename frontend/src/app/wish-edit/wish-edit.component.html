@@ -33,7 +33,7 @@
       <div *ngIf="orderMode" class="wish-full-width">{{wish.link}}</div>
 
       <a class="wish-donor" *ngIf="wish.donor && !orderMode" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
-      <div class="wish-donor" *ngIf="wish.donor && orderMode"4>{{wish.donor}}</div>
+      <div class="wish-donor" *ngIf="wish.donor && orderMode">{{wish.donor}}</div>
     </form>
   </div>
 </mat-card>

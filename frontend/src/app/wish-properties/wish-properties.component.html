@@ -11,17 +11,6 @@
       </mat-select>
     </mat-form-field>
 
-    <h3 class="mat-h2 priority-caption">Priorität</h3>
-    <mat-slider
-        class="properties-control"
-        [max]="10"
-        [min]="0"
-        [step]="1"
-        [thumbLabel]="true"
-        [(ngModel)]="wish.priority"
-        (change)="onPriorityChanged()">
-    </mat-slider>
-
     <button mat-button *ngIf="!wish.invisible" (click)="toggleVisibility()" matTooltip="Wunsch verstecken">
       <i class="material-icons">visibility_off</i> Wunsch verstecken
     </button>

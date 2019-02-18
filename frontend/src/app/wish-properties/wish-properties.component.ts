@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Wish } from "../services/wish";
 
 export enum Change {
-  UNCHANGED, CHANGED, ORDERCHANGE
+  UNCHANGED, CHANGED
 }
 
 @Component({
@@ -31,21 +31,11 @@ export class WishPropertiesComponent {
 
   toggleVisibility() {
     this.wish.invisible = !this.wish.invisible;
-    this.updateChange(Change.CHANGED) ;
-  }
-
-  onPriorityChanged() {
-    this.updateChange(Change.ORDERCHANGE);
+    this.changed  = Change.CHANGED;
   }
 
   onBackgroundChanged() {
-    this.updateChange(Change.CHANGED);
-  }
-
-  updateChange(newStatus: Change) {
-    if (this.changed != Change.ORDERCHANGE) {
-      this.changed = newStatus;
-    }
+    this.changed  = Change.CHANGED;
   }
 
 }

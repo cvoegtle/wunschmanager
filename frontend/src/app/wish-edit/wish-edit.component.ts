@@ -15,7 +15,6 @@ export class WishEditComponent implements OnInit {
   @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
-  @Output() orderChanged = new EventEmitter<void>();
 
   @ViewChild("settings") settings: HTMLElement;
 
@@ -57,11 +56,8 @@ export class WishEditComponent implements OnInit {
     });
 
     settingsDialog.afterClosed().subscribe(result => {
-      if (result != Change.UNCHANGED) {
+      if (result == Change.CHANGED) {
         this.wishChange.emit(this.wish);
-      }
-      if (result == Change.ORDERCHANGE) {
-        this.orderChanged.emit();
       }
     });
   }

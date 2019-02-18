@@ -10,7 +10,10 @@
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
 
-  <wish-multi-column #wishColumns [wishes]="wishes" [orderMode]="orderMode" (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection()"></wish-multi-column>
+  <wish-multi-column #wishColumns [wishes]="wishes" [orderMode]="orderMode"
+                     (wishChange)="wishChanged($event)"
+                     (wishSelection)="onWishSelection()">
+  </wish-multi-column>
 
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
       class="material-icons">create</i></button>
