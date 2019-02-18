@@ -1,4 +1,16 @@
-<div>
-  <wish-edit *ngFor="let wish of wishes" [wish]="wish" (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection($event)"
-    (orderChanged)="onOrderChange()"></wish-edit>
+<div *ngIf="orderMode" cdkDropList (cdkDropListDropped)="drop($event)">
+  <wish-edit *ngFor="let wish of wishes" [wish]="wish" [orderMode]="orderMode"
+             (wishChange)="wishChanged($event)"
+             (wishSelection)="onWishSelection($event)"
+             (orderChanged)="onOrderChange()" cdkDrag>
+
+  </wish-edit>
+</div>
+<div *ngIf="!orderMode">
+  <wish-edit *ngFor="let wish of wishes" [wish]="wish" [orderMode]="orderMode"
+             (wishChange)="wishChanged($event)"
+             (wishSelection)="onWishSelection($event)"
+             (orderChanged)="onOrderChange()">
+
+  </wish-edit>
 </div>

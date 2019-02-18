@@ -12,6 +12,7 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 })
 export class WishEditComponent implements OnInit {
   @Input() wish: Wish;
+  @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() orderChanged = new EventEmitter<void>();

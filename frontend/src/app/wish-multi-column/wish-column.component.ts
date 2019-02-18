@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Wish } from "../services/wish";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'wish-column',
@@ -7,6 +8,7 @@ import { Wish } from "../services/wish";
 })
 export class WishColumnComponent {
   @Input() wishes: Wish[];
+  @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() orderChanged = new EventEmitter<void>();
@@ -24,5 +26,9 @@ export class WishColumnComponent {
 
   onOrderChange() {
     this.orderChanged.emit();
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.wishes, event.previousIndex, event.currentIndex);
   }
 }

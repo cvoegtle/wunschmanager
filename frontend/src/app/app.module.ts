@@ -62,6 +62,13 @@ import { WishViewColumnComponent } from "./wish-view-multi-column/wish-view-colu
 import { WishViewMultiColumnComponent } from "./wish-view-multi-column/wish-view-multi-column.component";
 import { FocusDirective } from "./util/focus.directive";
 
+import {A11yModule} from '@angular/cdk/a11y';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {CdkStepperModule} from '@angular/cdk/stepper';
+import {CdkTableModule} from '@angular/cdk/table';
+import {CdkTreeModule} from '@angular/cdk/tree';
+
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
     ErrorDialogComponent, WishListDuplicateDialogComponent],
@@ -74,6 +81,11 @@ import { FocusDirective } from "./util/focus.directive";
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
     ReactiveFormsModule, AppRoutingModule, MatListModule, MatDialogModule, MatAutocompleteModule,
+    A11yModule,
+    CdkStepperModule,
+    CdkTableModule,
+    CdkTreeModule,
+    DragDropModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
