@@ -2,23 +2,27 @@
 'background-yellow': isYellow(), 'background-green': isGreen(), 'background-blue': isBlue()}">
   <div class="wish-form">
     <form class="wish-full-width">
-      <div class="wish-line">
-        <select-toggle [selected]="wish.selected" [hidden]="orderMode"
+      <div *ngIf="!orderMode" class="wish-line">
+        <select-toggle [selected]="wish.selected"
                        (selectionChange)="toggleSelection()"></select-toggle>
         <mat-form-field class="wish-full-width">
-          <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" [disabled]="orderMode" (change)="onWishChange()" name="editCaption">
+          <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
         </mat-form-field>
         <button #settings mat-icon-button [disabled]="orderMode"
                 (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
           <i class="material-icons">settings</i>
         </button>
       </div>
-      <mat-form-field class="wish-full-width">
+      <div *ngIf="orderMode" class="wish-full-width">{{wish.caption}}</div>
+
+      <mat-form-field *ngIf="!orderMode" class="wish-full-width">
         <textarea matInput placeholder="Beschreibung" [(ngModel)]="wish.description" [disabled]="orderMode" matTextareaAutosize
                   (change)="onWishChange()" matAutosizeMinRows="2" matAutosizeMaxRows="5" name="editDescription" ></textarea>
       </mat-form-field>
+      <div *ngIf="orderMode" class="description">{{wish.description}}</div>
 
-      <div class="wish-line">
+
+      <div *ngIf="!orderMode" class="wish-line">
         <mat-form-field class="wish-url">
           <input matInput placeholder="Link" [(ngModel)]="wish.link" [disabled]="orderMode" (change)="onWishChange()" name="editLink">
         </mat-form-field>
@@ -26,7 +30,10 @@
           <i class="material-icons">link</i>
         </a>
       </div>
-      <a class="wish-donor" *ngIf="wish.donor" [hidden]="orderMode" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
+      <div *ngIf="orderMode" class="wish-full-width">{{wish.link}}</div>
+
+      <a class="wish-donor" *ngIf="wish.donor && !orderMode" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
+      <div class="wish-donor" *ngIf="wish.donor && orderMode"4>{{wish.donor}}</div>
     </form>
   </div>
 </mat-card>
