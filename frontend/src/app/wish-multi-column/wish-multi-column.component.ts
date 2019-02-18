@@ -9,6 +9,7 @@ import { sort, splitIntoColumns } from "../util/wishlist-helper";
 })
 export class WishMultiColumnComponent {
   @Input() wishes: Wish[];
+  @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
 
@@ -28,9 +29,20 @@ export class WishMultiColumnComponent {
   constructor() {
   }
 
+  public orderChanged(orderMode: boolean) {
+    this.orderMode = orderMode;
+    this.render();
+  }
+
   public render(wishes?: Wish[]) {
     if (wishes) this.wishes = wishes;
-    this.wishLists = splitIntoColumns(this.wishes);
+
+    if (this.orderMode) {
+      this.wishLists = [];
+      this.wishLists.push(this.wishes);
+    } else {
+      this.wishLists = splitIntoColumns(this.wishes);
+    }
   }
 
   wishChanged(wish: Wish) {

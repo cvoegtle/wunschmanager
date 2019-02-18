@@ -9,9 +9,12 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
-  <wish-multi-column #wishColumns [wishes]="wishes" (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection()"></wish-multi-column>
+
+  <wish-multi-column #wishColumns [wishes]="wishes" [orderMode]="orderMode" (wishChange)="wishChanged($event)" (wishSelection)="onWishSelection()"></wish-multi-column>
+
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
       class="material-icons">create</i></button>
+
   <mat-action-row *ngIf="wishIds || selectionCount">
     <button mat-button *ngIf="wishIds" (click)="pasteClicked()" matTooltip="markierte Wünsche einfügen">
       <i class="material-icons">add</i> {{wishIds.wishIds.length}} einfügen
@@ -23,10 +26,20 @@
       <i class="material-icons">delete</i> {{selectionCount}} löschen
     </button>
   </mat-action-row>
+
   <mat-action-row>
     <button mat-button (click)="shareClicked()"
             matTooltip="Liste weitergeben">
-      <i class="material-icons">share</i> teilen
+      <i class="material-icons">share</i>
+    </button>
+    <button *ngIf="!orderMode" mat-button (click)="orderClicked()"
+            matTooltip="Liste anordnen">
+      <i class="material-icons">import_export</i>
+      <i *ngIf="orderMode" class="material-icons">edit</i>
+    </button>
+    <button *ngIf="orderMode" mat-button (click)="orderClicked()"
+            matTooltip="Liste bearbeiten">
+      <i *ngIf="orderMode" class="material-icons">edit</i>
     </button>
     <button mat-button (click)="duplicateClicked()"
             matTooltip="Wunschliste kopieren!">

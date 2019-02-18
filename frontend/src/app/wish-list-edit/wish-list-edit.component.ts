@@ -31,6 +31,7 @@ export class WishListEditComponent {
 
   wishes: Wish[];
   panelOpenState: boolean;
+  orderMode: boolean;
   selectionCount: number = 0;
 
   constructor(private wishService: WishService, private dialog: MatDialog, private snackBar: MatSnackBar, private errorHandler: ErrorHandler) {
@@ -143,6 +144,11 @@ export class WishListEditComponent {
         url: this.createSharingUrl()
       }
     });
+  }
+
+  orderClicked() {
+    this.orderMode = !this.orderMode;
+    this.wishColumns.orderChanged(this.orderMode);
   }
 
   duplicateClicked() {
