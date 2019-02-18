@@ -19,7 +19,7 @@
   <button (click)="addWish()" mat-fab matTooltip="Wunsch hinzufügen" class="add-button"><i
       class="material-icons">create</i></button>
 
-  <mat-action-row *ngIf="wishIds || selectionCount">
+  <mat-action-row *ngIf="(wishIds || selectionCount) && !orderMode">
     <button mat-button *ngIf="wishIds" (click)="pasteClicked()" matTooltip="markierte Wünsche einfügen">
       <i class="material-icons">add</i> {{wishIds.wishIds.length}} einfügen
     </button>
