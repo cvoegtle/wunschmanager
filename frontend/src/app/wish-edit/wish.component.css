@@ -45,6 +45,7 @@ mat-card {
 
 .description {
     white-space: pre-line;
+    word-break: break-word;
 }
 
 .wish-donor {
