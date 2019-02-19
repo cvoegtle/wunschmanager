@@ -30,10 +30,9 @@
           <i class="material-icons">link</i>
         </a>
       </div>
-      <div *ngIf="orderMode" class="description">{{wish.link}}</div>
+      <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
 
       <a class="wish-donor" *ngIf="wish.donor && !orderMode" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
-      <div class="wish-donor" *ngIf="wish.donor && orderMode">{{wish.donor}}</div>
     </form>
   </div>
 </mat-card>

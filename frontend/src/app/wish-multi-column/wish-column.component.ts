@@ -24,9 +24,10 @@ export class WishColumnComponent {
     this.wishSelection.emit(wish);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Wish[]>) {
     moveItemInArray(this.wishes, event.previousIndex, event.currentIndex);
-    adjustPriority2Order(this.wishes)
+
+    adjustPriority2Order(this.wishes);
     this.orderChange.emit();
   }
 }
