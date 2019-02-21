@@ -10,6 +10,7 @@ export interface Wish {
   invisible: boolean;
 
   selected: boolean;
+  highlighted: boolean;
 }
 
 export function isAvailable(wish: Wish): boolean {
@@ -36,11 +37,15 @@ export function removeWishSelection(wishes: Wish[]) {
 }
 
 export function adjustPriority2Order(wishes: Wish[]) {
-  if (wishes) {
-    let currentPriority = wishes.length;
-    for (let wish of wishes) {
-      wish.priority = currentPriority--;
-    }
+  let currentPriority = wishes.length;
+  for (let wish of wishes) {
+    wish.priority = currentPriority--;
+  }
+}
+
+export function highlight(wishes: Wish[], index: number) {
+  for (let i = 0; i < wishes.length; i++) {
+    wishes[i].highlighted = i == index;
   }
 }
 

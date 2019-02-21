@@ -63,3 +63,11 @@ mat-card {
 .properties-dialog {
     width: 320px;
 }
+
+.highlight {
+    background-color: chocolate;
+    transition-property: background-color;
+    transition-duration: 2s;
+    transition-delay: 0.5s;
+    transition-timing-function: linear;
+}

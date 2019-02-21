@@ -1,4 +1,4 @@
-<mat-card [ngClass]="{'wish-card': true, 'unavailable': !isAvailable(), 'background-red': isRed(),
+<mat-card [ngClass]="{'wish-card': true, 'highlight': isHighlighted(), 'unavailable': !isAvailable(), 'background-red': isRed(),
 'background-yellow': isYellow(), 'background-green': isGreen(), 'background-blue': isBlue()}">
   <div class="wish-form">
     <form class="wish-full-width">
