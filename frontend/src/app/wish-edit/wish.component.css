@@ -64,10 +64,12 @@ mat-card {
     width: 320px;
 }
 
+@keyframes mymove {
+    0%   {background-color: lightgoldenrodyellow}
+    10%  {background-color: coral}
+    100% {}
+}
+
 .highlight {
-    background-color: chocolate;
-    transition-property: background-color;
-    transition-duration: 2s;
-    transition-delay: 0.5s;
-    transition-timing-function: linear;
+    animation: mymove 700ms ease-out;
 }

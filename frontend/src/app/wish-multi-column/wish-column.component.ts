@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { adjustPriority2Order, highlight, Wish } from "../services/wish";
+import { adjustPriority2Order, clearHighlight, highlight, Wish } from "../services/wish";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
@@ -29,6 +29,8 @@ export class WishColumnComponent {
 
     adjustPriority2Order(this.wishes);
     highlight(this.wishes, event.currentIndex);
+    window.setTimeout(clearHighlight, 1000, this.wishes);
     this.orderChange.emit();
   }
+
 }

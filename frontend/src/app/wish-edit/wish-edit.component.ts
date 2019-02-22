@@ -29,19 +29,19 @@ export class WishEditComponent implements OnInit {
   }
 
   isRed() {
-    return this.isAvailable() && !this.isHighlighted() && isRed(this.wish.background);
+    return this.isAvailable() && isRed(this.wish.background);
   }
 
   isYellow() {
-    return this.isAvailable() && !this.isHighlighted() &&  isYellow(this.wish.background);
+    return this.isAvailable() &&  isYellow(this.wish.background);
   }
 
   isGreen() {
-    return this.isAvailable() && !this.isHighlighted() &&  isGreen(this.wish.background);
+    return this.isAvailable() && isGreen(this.wish.background);
   }
 
   isBlue() {
-    return this.isAvailable() && !this.isHighlighted() &&  isBlue(this.wish.background);
+    return this.isAvailable() && isBlue(this.wish.background);
   }
 
   isHighlighted() {

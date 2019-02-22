@@ -43,9 +43,15 @@ export function adjustPriority2Order(wishes: Wish[]) {
   }
 }
 
-export function highlight(wishes: Wish[], index: number) {
+export function highlight(wishes: Wish[], index: number): void {
   for (let i = 0; i < wishes.length; i++) {
     wishes[i].highlighted = i == index;
+  }
+}
+
+export function clearHighlight(wishes: Wish[]) {
+  for (let i = 0; i < wishes.length; i++) {
+    wishes[i].highlighted = false;
   }
 }
 
