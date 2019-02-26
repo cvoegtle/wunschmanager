@@ -159,6 +159,10 @@ export class WishListEditComponent {
 
   orderClicked() {
     this.orderMode = !this.orderMode;
+    if (this.orderMode) {
+      this.snackBar.open('Sortieren: Wünsche einfach an die richtige Stelle ziehen.\n mit 🖋 weiter bearbeiten.',
+          null, {duration: 3000});
+    }
     this.wishColumns.render(null, this.orderMode);
   }
 
