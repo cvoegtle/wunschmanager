@@ -11,7 +11,6 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 export class WishViewComponent implements OnInit {
   @Input() wish: Wish;
   @Input() user: string;
-  @Input() restricted: boolean = false;
   @Output() reserved = new EventEmitter<Wish>();
   @Output() wishSelected = new EventEmitter<Wish>();
 
@@ -44,6 +43,10 @@ export class WishViewComponent implements OnInit {
 
   isMyPresent(): boolean {
     return this.wish.donor == this.user;
+  }
+
+  isRestricted(): boolean {
+    return this.user == null;
   }
 
   getTooltip() {
