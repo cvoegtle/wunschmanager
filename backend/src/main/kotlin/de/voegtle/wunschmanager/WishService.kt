@@ -7,7 +7,8 @@ import de.voegtle.wunschmanager.util.checkNotOwnership
 import de.voegtle.wunschmanager.util.checkOwnership
 import de.voegtle.wunschmanager.util.duplicateWishes
 import de.voegtle.wunschmanager.util.extractUserName
-import de.voegtle.wunschmanager.util.loadListOfWishes
+import de.voegtle.wunschmanager.util.loadFullListOfWishes
+import de.voegtle.wunschmanager.util.loadReducedListOfWishes
 import de.voegtle.wunschmanager.util.updatePriorities
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,7 +21,6 @@ import org.voegtle.wunschmanager.data.Wish
 import org.voegtle.wunschmanager.data.WishCopyTask
 import org.voegtle.wunschmanager.data.WishIds
 import org.voegtle.wunschmanager.data.WishList
-import org.voegtle.wunschmanager.data.WishOrder
 import java.util.Date
 import javax.servlet.http.HttpServletRequest
 
@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletRequest
 
     val userName = extractUserName(request, false)
 
-    return loadListOfWishes(wishList, userName)
+    return loadReducedListOfWishes(wishList, userName)
   }
 
   @GetMapping("/wish/create") fun create(@RequestParam() list: Long, request: HttpServletRequest): Wish {
@@ -70,9 +70,7 @@ import javax.servlet.http.HttpServletRequest
 
     checkOwnership(request, wishList, "You must be the owner of the list to update a wishes")
 
-    val userName = extractUserName(request, false)
-
-    val wishes = loadListOfWishes(wishList, userName)
+    val wishes = loadFullListOfWishes(wishList)
     updatePriorities(wishes, updateOrderRequest.wishOrders)
     ObjectifyService.ofy().save().entities(wishes).now()
     return true
@@ -120,7 +118,7 @@ import javax.servlet.http.HttpServletRequest
     }
     ObjectifyService.ofy().save().entities(newWishes).now()
 
-    return loadListOfWishes(destinationList, userName)
+    return loadReducedListOfWishes(destinationList, userName)
   }
 
 }

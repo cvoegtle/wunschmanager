@@ -1,7 +1,8 @@
 <mat-card [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
 'background-green': isGreen(), 'background-blue': isBlue()}" *ngIf="wish.caption || wish.description">
   <div class="wish-form">
-    <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
+    <select-toggle *ngIf="!isRestricted()" [selected]="wish.selected" (selectionChange)="toggleSelection()">
+    </select-toggle>
     <div class="wish-full-width">
       <div class="wish-line">
         <a *ngIf="wish.link" href="{{targetUrl()}}" target="_blank">
