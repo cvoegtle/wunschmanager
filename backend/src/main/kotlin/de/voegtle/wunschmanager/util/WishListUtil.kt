@@ -24,8 +24,6 @@ fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wi
       }
     }
 
-    null -> wishes.removeIf { it.invisible == true || it.donor != null }
-
     else -> wishes.removeIf { it.invisible == true }
   }
   return wishes
