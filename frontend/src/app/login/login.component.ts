@@ -42,23 +42,31 @@ export class LoginComponent implements OnInit {
     window.location.href = url;
   }
 
-  viewClicked() {
-    this.router.navigate(['/view/' + this.getUrlParam('share')]);
-  }
-
-
   updateStatus(status: UserStatus) {
     this.userStatus = status;
-    if (status != null && status.loggedIn) {
-      if (this.getUrlParam('share')) {
-        this.router.navigate(['/share/' + this.getUrlParam('share')]);
-      } else {
-        this.router.navigate(['/edit']);
-      }
+    let sharedList = this.getUrlParam('share');
+    if (sharedList) {
+      this.navigateToSharing(sharedList);
+    } else {
+      this.navigateToMainModule();
     }
   }
 
-  getUrlParam(prop: string) {
+  private navigateToMainModule() {
+    if (this.userStatus.loggedIn) {
+      this.router.navigate(['/edit']);
+    }
+  }
+
+  private navigateToSharing(sharedList: string) {
+    if (this.userStatus.loggedIn) {
+      this.router.navigate(['/share/' + sharedList]);
+    } else {
+      this.router.navigate(['/view/' + sharedList]);
+    }
+  }
+
+  getUrlParam(prop: string): string {
     let params = {};
     let search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
     let definitions = search.split('&');
