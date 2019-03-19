@@ -1,7 +1,7 @@
 <mat-card [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
 'background-green': isGreen(), 'background-blue': isBlue()}" *ngIf="wish.caption || wish.description">
   <div class="wish-form">
-    <select-toggle *ngIf="!isRestricted()" [selected]="wish.selected" (selectionChange)="toggleSelection()">
+    <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()">
     </select-toggle>
     <div class="wish-full-width">
       <div class="wish-line">
@@ -19,8 +19,7 @@
         <span *ngIf="isMyPresent()" class="wish-donor">{{wish.donor}}</span>
       </div>
     </div>
-    <button *ngIf="(isAvailable() || isMyPresent()) && !isRestricted()" mat-icon-button (click)="reserveClicked()"
-            matTooltip="{{getTooltip()}}">
+    <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()"  matTooltip="{{getTooltip()}}">
       <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
       <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
     </button>

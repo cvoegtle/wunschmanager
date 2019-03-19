@@ -9,8 +9,8 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 import { MatDialog, MatSnackBar } from "@angular/material";
 import { DeleteItemDialogComponent } from "../delete-item-dialog/delete-item-dialog.component";
-import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
 import { WishViewMultiColumnComponent } from "../wish-view-multi-column/wish-view-multi-column.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'wish-list-view',
@@ -34,7 +34,11 @@ export class WishListViewComponent implements OnInit {
   @ViewChild("wishColumns")
   wishColumns: WishViewMultiColumnComponent;
 
-  constructor(private wishService: WishService, private userService: UserService, private dialog: MatDialog, private snackBar: MatSnackBar,
+  constructor(private wishService: WishService,
+              private userService: UserService,
+              private router: Router,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar,
               private errorHandler: ErrorHandler) {
   }
 
@@ -70,8 +74,12 @@ export class WishListViewComponent implements OnInit {
   }
 
   reserveClicked(wish: Wish) {
-    this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
-        _ => this.errorHandler.handle('reserveWish'));
+    if (this.userStatus.loggedIn) {
+      this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
+          _ => this.errorHandler.handle('reserveWish'));
+    } else {
+      this.askForLogin();
+    }
   }
 
   onWishSelection() {
@@ -102,6 +110,13 @@ export class WishListViewComponent implements OnInit {
 
   isYellow(): boolean {
     return isYellow(this.wishList.background);
+  }
+
+  private askForLogin() {
+    let snackBarRef = this.snackBar.open('für eine Reservierung musst Du Dich anmelden', 'anmelden', {duration: 3000});
+    snackBarRef.onAction().subscribe(() => {
+      this.router.navigate(['/'], {queryParams: {share: this.wishList.id, force: true}});
+    });
   }
 
 }

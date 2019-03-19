@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { isAvailable, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: 'wish-view',
@@ -42,11 +43,7 @@ export class WishViewComponent implements OnInit {
 
 
   isMyPresent(): boolean {
-    return this.wish.donor == this.user;
-  }
-
-  isRestricted(): boolean {
-    return this.user == null;
+    return this.wish.donor && this.wish.donor == this.user;
   }
 
   getTooltip() {

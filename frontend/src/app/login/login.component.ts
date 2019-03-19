@@ -44,6 +44,11 @@ export class LoginComponent implements OnInit {
 
   updateStatus(status: UserStatus) {
     this.userStatus = status;
+    let force = this.getUrlParam('force');
+    if (force) {
+      return; // stay on login page
+    }
+
     let sharedList = this.getUrlParam('share');
     if (sharedList) {
       this.navigateToSharing(sharedList);
