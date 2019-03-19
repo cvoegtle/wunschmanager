@@ -28,13 +28,12 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private fetchStatus() {
-    return this.userService.fetchStatus().subscribe(status => this.userStatus = status,
-        _ => this.errorHandler.handle('fetchStatus'));
-  }
-
   isAwayFromHome() {
     return window.location.pathname.indexOf("share") >= 0;
+  }
+
+  isViewer() {
+    return window.location.pathname.indexOf("view") >= 0;
   }
 
   homeClicked() {
@@ -49,5 +48,19 @@ export class AppComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return this.userStatus != null && this.userStatus.loggedIn;
+  }
+
+  loginClicked() {
+    let url = window.location.pathname;
+    let indexOfListId = url.indexOf("view/") + 5;
+    let wishListId = url.substr(indexOfListId);
+
+
+    this.router.navigate(['/'], {queryParams: {share: wishListId, force: true}});
+  }
+
+  private fetchStatus() {
+    return this.userService.fetchStatus().subscribe(status => this.userStatus = status,
+        _ => this.errorHandler.handle('fetchStatus'));
   }
 }

@@ -6,9 +6,10 @@
   <span>Wunsch Manager</span>
   <span class="fill-remaining-space"></span>
   <button *ngIf="isLoggedIn()" (click)="logoutClicked()" mat-raised-button color='accent'>{{userStatus?.name | name}}  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
+  <button *ngIf="isViewer()" (click)="loginClicked()" mat-raised-button color='accent'>anmelden  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
 </mat-toolbar>
 <div class='working-area'>
 <router-outlet></router-outlet>
 </div>
 <hr>
-<span class="mat-body-1 app-footer">Wunschmanager Version 60 - 13.3.2019</span>
+<span class="mat-body-1 app-footer">Wunschmanager Version 61 - 19.3.2019</span>
