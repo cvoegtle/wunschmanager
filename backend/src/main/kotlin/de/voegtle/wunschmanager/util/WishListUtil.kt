@@ -5,7 +5,7 @@ import org.voegtle.wunschmanager.data.Wish
 import org.voegtle.wunschmanager.data.WishList
 
 fun loadReducedListOfWishes(wishList: WishList, userName: String?): MutableList<Wish> {
-   val wishes = loadFullListOfWishes(wishList)
+  val wishes = loadFullListOfWishes(wishList)
   return reduceWishList(userName, wishList, wishes)
 }
 
@@ -21,6 +21,15 @@ fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wi
     wishList.owner -> {
       if (!wishList.managed) {
         wishes.forEach { it.donor = null }
+      }
+    }
+
+    null -> {
+      wishes.removeIf { it.invisible == true }
+      wishes.forEach {
+        if (it.donor != null) {
+          it.donor = "wunschmanager@voegtle.org"
+        }
       }
     }
 
