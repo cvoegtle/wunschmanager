@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WishList } from '../services/wish-list';
-import { countSelection, removeWishSelection, Wish } from "../services/wish";
+import { countSelection, extractIds, highlightNewIds, removeWishSelection, Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
@@ -179,7 +179,7 @@ export class WishListEditComponent {
   }
 
   private createSharingUrl(): string {
-    let baseUrl = window.location.href
+    let baseUrl = window.location.href;
     let endIndex = baseUrl.lastIndexOf('/');
     baseUrl = baseUrl.substr(0, endIndex);
     return baseUrl + '/?share=' + this.wishList.id;
@@ -221,7 +221,9 @@ export class WishListEditComponent {
       wishes: [this.wishIds]
     };
     this.wishService.copy(copyTask).subscribe(wishes => {
+      let oldWishIds = extractIds(this.wishes);
       this.wishes = wishes;
+      highlightNewIds(this.wishes, oldWishIds);
       this.wishColumns.render(wishes);
       this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));

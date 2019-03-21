@@ -1,3 +1,5 @@
+import { WishIds } from "./wish-copy-task";
+
 export interface Wish {
   id: number;
   caption: string;
@@ -43,10 +45,24 @@ export function adjustPriority2Order(wishes: Wish[]) {
   }
 }
 
-export function highlight(wishes: Wish[], index: number): void {
+export function highlightByIndex(wishes: Wish[], index: number): void {
   for (let i = 0; i < wishes.length; i++) {
     wishes[i].highlighted = i == index;
   }
+}
+
+export function highlightNewIds(wishes: Wish[], oldIds: number[]): void {
+  for (let i = 0; i < wishes.length; i++) {
+    wishes[i].highlighted = !oldIds.includes(wishes[i].id);
+  }
+}
+
+export function extractIds(wishes: Wish[]): number[] {
+  let ids: number[] = [];
+  for (let i = 0; i < wishes.length; i++) {
+    ids.push(wishes[i].id);
+  }
+  return ids;
 }
 
 export function clearHighlight(wishes: Wish[]) {
