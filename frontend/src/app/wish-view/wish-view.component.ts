@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { isAvailable, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
-import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: 'wish-view',
@@ -12,6 +11,7 @@ import { MatSnackBar } from "@angular/material";
 export class WishViewComponent implements OnInit {
   @Input() wish: Wish;
   @Input() user: string;
+  @Input() restricted: boolean;
   @Output() reserved = new EventEmitter<Wish>();
   @Output() wishSelected = new EventEmitter<Wish>();
 
@@ -19,6 +19,10 @@ export class WishViewComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  isLoggedIn() {
+    return this.user;
   }
 
   isAvailable() {

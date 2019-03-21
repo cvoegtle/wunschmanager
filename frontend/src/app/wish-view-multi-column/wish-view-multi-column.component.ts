@@ -10,6 +10,7 @@ import { splitIntoColumns } from "../util/wishlist-helper";
 export class WishViewMultiColumnComponent {
   @Input() wishes: Wish[];
   @Input() user: string;
+  @Input() restricted: boolean;
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
 

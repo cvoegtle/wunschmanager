@@ -1,5 +1,6 @@
 <div class="content-area">
-  <wish-view-column class="content-column" *ngFor="let wishList of wishLists" [wishes]="wishList" [user]="user" (reserved)="reserveClicked($event)"
-               (wishSelection)="onWishSelection($event)">
+  <wish-view-column class="content-column" *ngFor="let wishList of wishLists" [wishes]="wishList" [user]="user" [restricted]="restricted"
+                    (reserved)="reserveClicked($event)"
+                    (wishSelection)="onWishSelection($event)">
   </wish-view-column>
 </div>

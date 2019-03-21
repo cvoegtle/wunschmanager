@@ -8,6 +8,7 @@ import { Wish } from "../services/wish";
 export class WishViewColumnComponent {
   @Input() wishes: Wish[];
   @Input() user: string;
+  @Input() restricted: boolean;
 
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
