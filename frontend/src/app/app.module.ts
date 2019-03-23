@@ -44,7 +44,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import { WishViewComponent } from './wish-view/wish-view.component';
 import { WishListViewComponent } from './wish-list-view/wish-list-view.component';
-import { ShareComponent } from './share/shared.component';
 import { AllSharedComponent } from './all-shared/all-shared.component';
 import { ConfigurationService } from "./services/configuration.service";
 import { DeleteItemDialogComponent } from './delete-item-dialog/delete-item-dialog.component';
