@@ -68,13 +68,14 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
+import { LocalStorageService } from "./services/local-storage.service";
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
     ErrorDialogComponent, WishListDuplicateDialogComponent],
   declarations: [
     AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
-    WishViewComponent, WishListViewComponent, ShareComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
+    WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective
   ],
@@ -111,7 +112,7 @@ import {CdkTreeModule} from '@angular/cdk/tree';
     MatToolbarModule,
     MatTooltipModule
   ],
-  providers: [WishService, WishListService, UserService, ConfigurationService, ErrorHandler],
+  providers: [WishService, WishListService, LocalStorageService, UserService, ConfigurationService, ErrorHandler],
   bootstrap: [AppComponent]
 })
 export class AppModule {

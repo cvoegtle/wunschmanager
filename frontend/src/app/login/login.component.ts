@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { ConfigurationService } from '../services/configuration.service';
 import { ErrorHandler } from "../error-handler/error-handler.component";
+import { LocalStorageService } from "../services/local-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -11,12 +12,14 @@ import { ErrorHandler } from "../error-handler/error-handler.component";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  userStatus: UserStatus;
+  private userStatus: UserStatus;
+
 
   constructor(private configurationService: ConfigurationService,
               private userService: UserService,
               private router: Router,
-              private errorHandler: ErrorHandler) {
+              private errorHandler: ErrorHandler,
+              private localStorage: LocalStorageService) {
   }
 
   ngOnInit() {
@@ -25,11 +28,6 @@ export class LoginComponent implements OnInit {
     } else {
       this.configurationService.load().subscribe(_ => this.fetchStatus());
     }
-  }
-
-  private fetchStatus() {
-    this.userService.fetchStatus().subscribe(status => this.updateStatus(status),
-        _ => this.errorHandler.handle('fetchStatus'));
   }
 
   loginClicked() {
@@ -42,8 +40,22 @@ export class LoginComponent implements OnInit {
     window.location.href = url;
   }
 
-  updateStatus(status: UserStatus) {
+  private fetchStatus() {
+    this.userService.fetchStatus().subscribe(status => {
+          this.updateStatus(status);
+          this.navigate();
+        },
+        _ => this.errorHandler.handle('fetchStatus'));
+  }
+
+  private updateStatus(status : UserStatus) {
     this.userStatus = status;
+    if (status.name) {
+      this.localStorage.store(LocalStorageService.lastLogin, status.name);
+    }
+  }
+
+  private navigate() {
     let force = this.getUrlParam('force');
     if (force) {
       return; // stay on login page
@@ -55,6 +67,7 @@ export class LoginComponent implements OnInit {
     } else {
       this.navigateToMainModule();
     }
+
   }
 
   private navigateToMainModule() {
@@ -83,4 +96,5 @@ export class LoginComponent implements OnInit {
 
     return (prop in params) ? params[prop] : null;
   }
+
 }

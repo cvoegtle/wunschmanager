@@ -1,3 +1,4 @@
 <mat-accordion>
   <wish-list-view *ngIf="wishList" [wishList]="wishList" [deleteEnabled]="false" [restricted]="true" [expanded]="true"></wish-list-view>
+  <p *ngIf="ownWishList" class="mat-body-1 wish-list-hint" >Diese Wunschliste ist nicht für Dich bestimmt.</p>
 </mat-accordion>
