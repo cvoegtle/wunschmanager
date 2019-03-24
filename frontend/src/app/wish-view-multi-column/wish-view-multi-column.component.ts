@@ -13,6 +13,7 @@ export class WishViewMultiColumnComponent {
   @Input() restricted: boolean;
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
+  @Output() showDonor = new EventEmitter<Wish>();
 
   @Input() wishLists: Wish[][] = [];
 
@@ -35,5 +36,9 @@ export class WishViewMultiColumnComponent {
 
   onWishSelection(wish: Wish) {
     this.wishSelection.emit(wish);
+  }
+
+  showDonorClicked(wish: Wish) {
+    this.showDonor.emit(wish);
   }
 }

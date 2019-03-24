@@ -78,9 +78,14 @@ export class WishListViewComponent implements OnInit {
       this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
           _ => this.errorHandler.handle('reserveWish'));
     } else {
-      this.askForLogin();
+      this.askForLogin('für eine Reservierung musst Du Dich anmelden.');
     }
   }
+
+  showDonorClicked(wish: Wish) {
+    this.askForLogin('um den Schenker zu sehen, musst Du Dich anmelden.');
+  }
+
 
   onWishSelection() {
     this.wishesSelected = containsSelectedWish(this.wishes);
@@ -112,8 +117,8 @@ export class WishListViewComponent implements OnInit {
     return isYellow(this.wishList.background);
   }
 
-  private askForLogin() {
-    let snackBarRef = this.snackBar.open('für eine Reservierung musst Du Dich anmelden', 'anmelden', {duration: 3000});
+  private askForLogin(message: string) {
+    let snackBarRef = this.snackBar.open(message, 'anmelden', {duration: 3000});
     snackBarRef.onAction().subscribe(() => {
       this.router.navigate(['/'], {queryParams: {share: this.wishList.id, force: true}});
     });

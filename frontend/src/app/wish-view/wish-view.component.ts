@@ -12,6 +12,7 @@ export class WishViewComponent implements OnInit {
   @Input() wish: Wish;
   @Input() user: string;
   @Input() restricted: boolean;
+  @Output() showDonor = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
   @Output() wishSelected = new EventEmitter<Wish>();
 
@@ -60,6 +61,10 @@ export class WishViewComponent implements OnInit {
 
   reserveClicked() {
     this.reserved.emit(this.wish);
+  }
+
+  handleDonorClick() {
+    this.showDonor.emit(this.wish);
   }
 
   toggleSelection() {

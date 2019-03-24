@@ -15,11 +15,14 @@
         </div>
       </div>
       <div matLine *ngIf="wish.donor">
-        <a *ngIf="!isMyPresent()" href="mailto:{{wish.donor}}" class="wish-donor">{{wish.donor}}</a>
+        <a *ngIf="!isMyPresent() && isLoggedIn()" href="mailto:{{wish.donor}}" class="wish-donor">{{wish.donor}}</a>
+        <a *ngIf="!isMyPresent() && !isLoggedIn()"
+           class="wish-donor"
+           (click)="handleDonorClick()">Reservierung anzeigen</a>
         <span *ngIf="isMyPresent()" class="wish-donor">{{wish.donor}}</span>
       </div>
     </div>
-    <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()"  matTooltip="{{getTooltip()}}">
+    <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">
       <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
       <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
     </button>
