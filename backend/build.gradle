@@ -47,7 +47,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '32'
+        version = '33'
         projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
