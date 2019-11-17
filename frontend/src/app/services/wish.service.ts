@@ -11,7 +11,7 @@ import { WishOrder } from "./wish.order";
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
   withCredentials: true
-}
+};
 
 @Injectable()
 export class WishService {
@@ -25,35 +25,29 @@ export class WishService {
   }
 
   copy(copyTask: WishCopyTask): Observable<Wish[]> {
-    return this.http.post<Wish[]>(`${this.getBaseUrl()}/wish/copy`, copyTask, httpOptions).pipe(
-        catchError(handleError<Wish[]>('wish/copy')));
+    return this.http.post<Wish[]>(`${this.getBaseUrl()}/wish/copy`, copyTask, httpOptions);
   }
 
   add(wishListId: number): Observable<Wish> {
-    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/create?list=${wishListId}&unique=${unique()}`, httpOptions).pipe(
-        catchError(handleError<Wish>('wish/create')));
+    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/create?list=${wishListId}&unique=${unique()}`, httpOptions);
   }
 
   delete(wishIds: WishIds): Observable<boolean> {
-    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/delete`, wishIds, httpOptions).pipe(
-        catchError(handleError<boolean>('wish/delete')));
+    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/delete`, wishIds, httpOptions);
   }
 
   update(listId: number, wish: Wish): Observable<boolean> {
     let updateRequest = {listId: listId, wish: wish};
-    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions).pipe(
-        catchError(handleError<boolean>('wish/update')));
+    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions);
   }
 
   updateOrder(listId: number, wishOrders: WishOrder[]): Observable<boolean> {
     let updateRequest = {listId: listId, wishOrders: wishOrders};
-    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions).pipe(
-        catchError(handleError<boolean>('wish/update_order')));
+    return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions);
   }
 
   reserve(listId: number, wishId: number): Observable<Wish> {
-    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, httpOptions).pipe(
-        catchError(handleError<Wish>('wish/reserve')));
+    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, httpOptions);
   }
 
   private getBaseUrl() {

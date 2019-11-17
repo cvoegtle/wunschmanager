@@ -8,7 +8,7 @@ import { handleError, unique } from "../util/url-helper";
 
 const httpOptions = {
   withCredentials: true
-}
+};
 
 @Injectable()
 export class WishListService {
@@ -27,8 +27,7 @@ export class WishListService {
 
 
   update(wishList: WishList): Observable<WishList> {
-    return this.http.post<WishList>(`${this.getBaseUrl()}/wishlist/update?`, wishList, httpOptions)
-        .pipe(catchError(handleError<WishList>('wishlist/update')));
+    return this.http.post<WishList>(`${this.getBaseUrl()}/wishlist/update?`, wishList, httpOptions);
 
   }
 
@@ -54,12 +53,11 @@ export class WishListService {
 
   duplicate(wishList: WishList, templateId: number): Observable<WishList> {
     return this.http.post<WishList>(`${this.getBaseUrl()}/wishlist/duplicate?templateId=${templateId}&unique=${unique()}`,
-        wishList, httpOptions).pipe(catchError(handleError<WishList>('wishlist/duplicate')));
+        wishList, httpOptions);
   }
 
   delete(id: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.getBaseUrl()}/wishlist/delete?id=${id}&unique=${unique()}`, httpOptions).pipe(
-        catchError(handleError<boolean>('wishlist/delete')));
+    return this.http.get<boolean>(`${this.getBaseUrl()}/wishlist/delete?id=${id}&unique=${unique()}`, httpOptions);
   }
 
   private getBaseUrl() {
