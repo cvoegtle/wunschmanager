@@ -27,7 +27,7 @@ export class WishListEditComponent {
   @Output() duplicate = new EventEmitter<WishList>();
   @Output() selection = new EventEmitter<WishIds>();
 
-  @ViewChild("wishColumns")
+  @ViewChild("wishColumns", {static: true})
   wishColumns: WishMultiColumnComponent;
 
   wishes: Wish[];

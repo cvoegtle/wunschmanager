@@ -16,7 +16,7 @@ export class WishEditComponent implements OnInit {
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
 
-  @ViewChild("settings") settings: HTMLElement;
+  @ViewChild("settings", {static: true}) settings: HTMLElement;
 
   constructor(private dialog: MatDialog) {
   }

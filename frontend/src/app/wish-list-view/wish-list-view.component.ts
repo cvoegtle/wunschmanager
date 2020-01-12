@@ -31,7 +31,7 @@ export class WishListViewComponent implements OnInit {
 
   panelOpenState: boolean;
 
-  @ViewChild("wishColumns")
+  @ViewChild("wishColumns", {static: true})
   wishColumns: WishViewMultiColumnComponent;
 
   constructor(private wishService: WishService,
