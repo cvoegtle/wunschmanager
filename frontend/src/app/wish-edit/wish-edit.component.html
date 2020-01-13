@@ -8,6 +8,10 @@
         <mat-form-field class="wish-full-width">
           <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
         </mat-form-field>
+        <button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">
+          <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
+          <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
+        </button>
         <button #settings mat-icon-button [disabled]="orderMode"
                 (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
           <i class="material-icons">settings</i>

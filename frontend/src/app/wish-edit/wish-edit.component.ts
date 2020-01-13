@@ -12,7 +12,9 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 })
 export class WishEditComponent implements OnInit {
   @Input() wish: Wish;
+  @Input() user: string;
   @Input() orderMode: boolean;
+  @Output() reserved = new EventEmitter<Wish>();
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
 
@@ -28,6 +30,14 @@ export class WishEditComponent implements OnInit {
     return isAvailable(this.wish);
   }
 
+  isMyPresent(): boolean {
+    return this.wish.donor && this.wish.donor == this.user;
+  }
+  
+  isManagedList(): boolean {
+    return this.user != null;  
+  }
+  
   isRed() {
     return this.isAvailable() && isRed(this.wish.background);
   }
@@ -64,6 +74,18 @@ export class WishEditComponent implements OnInit {
         this.wishChange.emit(this.wish);
       }
     });
+  }
+
+  reserveClicked() {
+    this.reserved.emit(this.wish);
+  }
+
+  getTooltip() {
+    if (this.isMyPresent()) {
+      return 'Geschenk wieder freigeben';
+    } else {
+      return 'Ich möchte das schenken';
+    }
   }
 
   targetUrl() {

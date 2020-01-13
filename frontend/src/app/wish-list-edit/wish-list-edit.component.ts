@@ -22,6 +22,7 @@ import { convertToWishOrder } from "../services/wish.order";
 export class WishListEditComponent {
   @Input() wishList: WishList;
   @Input() wishIds: WishIds;
+  @Input() user: string;
   @Output() deleted = new EventEmitter<number>();
   @Output() updated = new EventEmitter<WishList>();
   @Output() duplicate = new EventEmitter<WishList>();
@@ -93,6 +94,12 @@ export class WishListEditComponent {
     })
   }
 
+  reserveClicked(wish: Wish) {
+    this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
+        _ => this.errorHandler.handle('reserveWish'));
+  }
+
+
   deleteWishesClicked() {
     let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
       data: {
@@ -106,32 +113,6 @@ export class WishListEditComponent {
         this.deleteSelectedWishes();
       }
     });
-  }
-
-  private deleteSelectedWishes() {
-    let wishIds = extractWishIds(this.wishList.id, this.wishes);
-
-    this.wishService.delete(wishIds).subscribe(result => {
-      if (result) {
-        this.removeFromList(wishIds.wishIds);
-        this.wishColumns.render();
-        this.selectionCount = countSelection(this.wishes);
-      }
-    }, _ => this.errorHandler.handle('deleteWish'))
-  }
-
-  private removeFromList(ids: number[]) {
-    for (let id of ids) {
-      this.removeIdFromList(id);
-    }
-  }
-
-  private removeIdFromList(id) {
-    for (let index = 0; index < this.wishes.length; index++) {
-      if (this.wishes[index].id == id) {
-        this.wishes.splice(index, 1);
-      }
-    }
   }
 
   deleteClicked() {
@@ -178,14 +159,6 @@ export class WishListEditComponent {
     });
   }
 
-  private createSharingUrl(): string {
-    let baseUrl = window.location.href;
-    let endIndex = baseUrl.lastIndexOf('/');
-    baseUrl = baseUrl.substr(0, endIndex);
-    return baseUrl + '/?share=' + this.wishList.id;
-
-  }
-
   isRed(): boolean {
     return isRed(this.wishList.background);
   }
@@ -227,6 +200,40 @@ export class WishListEditComponent {
       this.wishColumns.render(wishes);
       this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));
+  }
+
+  private deleteSelectedWishes() {
+    let wishIds = extractWishIds(this.wishList.id, this.wishes);
+
+    this.wishService.delete(wishIds).subscribe(result => {
+      if (result) {
+        this.removeFromList(wishIds.wishIds);
+        this.wishColumns.render();
+        this.selectionCount = countSelection(this.wishes);
+      }
+    }, _ => this.errorHandler.handle('deleteWish'))
+  }
+
+  private removeFromList(ids: number[]) {
+    for (let id of ids) {
+      this.removeIdFromList(id);
+    }
+  }
+
+  private removeIdFromList(id) {
+    for (let index = 0; index < this.wishes.length; index++) {
+      if (this.wishes[index].id == id) {
+        this.wishes.splice(index, 1);
+      }
+    }
+  }
+
+  private createSharingUrl(): string {
+    let baseUrl = window.location.href;
+    let endIndex = baseUrl.lastIndexOf('/');
+    baseUrl = baseUrl.substr(0, endIndex);
+    return baseUrl + '/?share=' + this.wishList.id;
+
   }
 
 }

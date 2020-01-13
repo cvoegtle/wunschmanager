@@ -10,9 +10,10 @@
   </mat-expansion-panel-header>
   <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
 
-  <wish-multi-column #wishColumns [wishes]="wishes" [orderMode]="orderMode"
+  <wish-multi-column #wishColumns [wishes]="wishes" [orderMode]="orderMode" [user]="user"
                      (wishChange)="wishChanged($event)"
                      (wishSelection)="onWishSelection()"
+                     (reserved)="reserveClicked($event)"
                      (orderChange)="onOrderChange()">
   </wish-multi-column>
 

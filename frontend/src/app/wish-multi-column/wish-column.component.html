@@ -1,13 +1,15 @@
 <div *ngIf="orderMode" cdkDropList (cdkDropListDropped)="drop($event)">
-  <wish-edit *ngFor="let wish of wishes" [wish]="wish" [orderMode]="orderMode"
+  <wish-edit *ngFor="let wish of wishes" [wish]="wish" [orderMode]="orderMode" [user]="user"
              (wishChange)="wishChanged($event)"
+             (reserved)="reserveClicked($event)"
              (wishSelection)="onWishSelection($event)" cdkDrag>
 
   </wish-edit>
 </div>
 <div *ngIf="!orderMode">
-  <wish-edit *ngFor="let wish of wishes" [wish]="wish" [orderMode]="orderMode"
+  <wish-edit *ngFor="let wish of wishes" [wish]="wish" [orderMode]="orderMode" [user]="user"
              (wishChange)="wishChanged($event)"
+             (reserved)="reserveClicked($event)"
              (wishSelection)="onWishSelection($event)">
   </wish-edit>
 </div>

@@ -16,6 +16,7 @@ import { WishIds } from "../services/wish-copy-task";
 })
 export class EditComponent implements OnInit {
   wishLists: WishList[];
+  user: string;
   public newWishListEvent: string = "";
   public newListIsManaged: boolean = false;
 
@@ -36,24 +37,6 @@ export class EditComponent implements OnInit {
     }
   }
 
-  private fetchStatus() {
-    this.userService.fetchStatus().subscribe(status => this.checkStatus(status),
-        _ => this.errorHandler.handle('fetchStatus'))
-  }
-
-  private checkStatus(userStatus: UserStatus) {
-    if (userStatus == null || !userStatus.loggedIn) {
-      this.router.navigate(['/']);
-    } else {
-      this.fetchWishLists()
-    }
-  }
-
-  private fetchWishLists(): void {
-    this.wishListService.fetch().subscribe(wishLists => this.wishLists = wishLists,
-        _ => this.errorHandler.handle('fetchLists'));
-  }
-
   createWishList() {
     this.wishListService.create(this.newWishListEvent, this.newListIsManaged)
         .subscribe(wishList => this.wishLists.push(wishList), _ => this.errorHandler.handle('createList'));
@@ -71,7 +54,6 @@ export class EditComponent implements OnInit {
     this.wishListService.duplicate(duplicateRequest.wishList, duplicateRequest.templateId)
         .subscribe(wishList => this.wishLists.push(wishList), _ => this.errorHandler.handle('duplicateList'));
   }
-
 
   isCreatePossible(): boolean {
     return this.newWishListEvent.length > 0;
@@ -93,5 +75,26 @@ export class EditComponent implements OnInit {
 
   onSelection(selectedWishes: WishIds) {
     this.currentSelection = selectedWishes;
+  }
+
+  private fetchStatus() {
+    this.userService.fetchStatus().subscribe(status => {
+          this.checkStatus(status);
+        },
+        _ => this.errorHandler.handle('fetchStatus'))
+  }
+
+  private checkStatus(userStatus: UserStatus) {
+    if (userStatus == null || !userStatus.loggedIn) {
+      this.router.navigate(['/']);
+    } else {
+      this.user = userStatus.name;
+      this.fetchWishLists()
+    }
+  }
+
+  private fetchWishLists(): void {
+    this.wishListService.fetch().subscribe(wishLists => this.wishLists = wishLists,
+        _ => this.errorHandler.handle('fetchLists'));
   }
 }

@@ -8,9 +8,11 @@ import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 })
 export class WishColumnComponent {
   @Input() wishes: Wish[];
+  @Input() user: string;
   @Input() orderMode: boolean;
   @Output() wishChange = new EventEmitter<Wish>();
   @Output() wishSelection = new EventEmitter<Wish>();
+  @Output() reserved = new EventEmitter<Wish>();
   @Output() orderChange = new EventEmitter<void>();
 
   constructor() {
@@ -24,6 +26,10 @@ export class WishColumnComponent {
     this.wishSelection.emit(wish);
   }
 
+  reserveClicked(wish: Wish) {
+    this.reserved.emit(wish);
+  }
+  
   drop(event: CdkDragDrop<Wish[]>) {
     moveItemInArray(this.wishes, event.previousIndex, event.currentIndex);
 

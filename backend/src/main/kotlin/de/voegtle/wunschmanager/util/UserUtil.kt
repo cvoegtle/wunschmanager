@@ -22,7 +22,7 @@ fun checkOwnership(request: HttpServletRequest, wishList: WishList, message: Str
 }
 
 fun checkNotOwnership(userName: String?, wishList: WishList, message: String) {
-  if (wishList.owner == userName) {
+  if (wishList.owner == userName && !wishList.managed) {
     logException("$userName: $message")
     throw PermissionDenied(message= message)
   }

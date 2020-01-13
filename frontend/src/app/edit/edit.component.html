@@ -1,5 +1,6 @@
 <mat-accordion>
-  <wish-list-edit *ngFor="let list of wishLists" [wishList]="list" [wishIds]="currentSelection" (deleted)="onDeleteList($event)"
+  <wish-list-edit *ngFor="let list of wishLists" [wishList]="list" [wishIds]="currentSelection" [user]="list.managed ? user : null"
+                  (deleted)="onDeleteList($event)"
                   (updated)="onUpdateEvent($event)" (duplicate)="onDuplicate($event)" (selection)="onSelection($event)"></wish-list-edit>
 </mat-accordion>
 <form>
