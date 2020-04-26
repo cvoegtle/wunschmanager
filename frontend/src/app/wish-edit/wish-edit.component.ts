@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { isAvailable, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
 @Component({
@@ -33,11 +33,11 @@ export class WishEditComponent implements OnInit {
   isMyPresent(): boolean {
     return this.wish.donor && this.wish.donor == this.user;
   }
-  
+
   isManagedList(): boolean {
-    return this.user != null;  
+    return this.user != null;
   }
-  
+
   isRed() {
     return this.isAvailable() && isRed(this.wish.background);
   }

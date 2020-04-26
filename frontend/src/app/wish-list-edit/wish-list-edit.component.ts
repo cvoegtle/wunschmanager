@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { WishList } from '../services/wish-list';
 import { countSelection, extractIds, highlightNewIds, removeWishSelection, Wish } from "../services/wish";
 import { WishService } from "../services/wish.service";
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareDialogComponent } from "../share-dialog/share-dialog.component";
 import { DeleteItemDialogComponent } from '../delete-item-dialog/delete-item-dialog.component';
 import { EditEventDialogComponent } from '../edit-event-dialog/edit-event-dialog.component';

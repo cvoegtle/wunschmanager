@@ -5,7 +5,7 @@ import { WishListService } from '../services/wish-list.service';
 import { WishList } from '../services/wish-list';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { LocalStorageService } from "../services/local-storage.service";
-import { MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { UserService } from "../services/user.service";
 import { UserStatus } from "../services/user.status";
 
