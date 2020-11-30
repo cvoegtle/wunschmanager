@@ -12,7 +12,7 @@ def angularOutputDir = "$projectDir/dist"
 
 task build(type:Exec) {
     dependsOn 'compile'
-    commandLine "appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets/*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
+    commandLine "appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets//*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
 }
 
 task compile(type:Exec) {
