@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WishListDuplicateDialogComponent } from './wish-list-duplicate-dialog.component';
 
@@ -6,7 +6,7 @@ describe('WishListDuplicateDialogComponent', () => {
   let component: WishListDuplicateDialogComponent;
   let fixture: ComponentFixture<WishListDuplicateDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishListDuplicateDialogComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { WishViewMultiColumnComponent } from './wish-view-multi-column.component';
 
@@ -6,7 +6,7 @@ describe('WishViewMultiColumnComponent', () => {
   let component: WishViewMultiColumnComponent;
   let fixture: ComponentFixture<WishViewMultiColumnComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ WishViewMultiColumnComponent ]
     })

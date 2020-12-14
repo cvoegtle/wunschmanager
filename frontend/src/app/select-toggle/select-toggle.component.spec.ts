@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SelectToggleComponent } from './select-toggle.component';
 
@@ -6,7 +6,7 @@ describe('SelectToggleComponent', () => {
   let component: SelectToggleComponent;
   let fixture: ComponentFixture<SelectToggleComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SelectToggleComponent ]
     })
