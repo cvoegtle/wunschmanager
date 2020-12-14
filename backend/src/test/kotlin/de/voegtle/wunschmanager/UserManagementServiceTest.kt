@@ -1,9 +1,9 @@
 package de.voegtle.wunschmanager
 
 import com.google.appengine.api.users.UserService
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -14,8 +14,8 @@ class UserManagementServiceTest {
   @Mock val userService: UserService? = null
   @InjectMocks val userManagementService = UserManagementService()
 
-  @Before fun init() {
-    MockitoAnnotations.initMocks(this)
+  @BeforeEach fun init() {
+    MockitoAnnotations.openMocks(this)
   }
 
 
