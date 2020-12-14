@@ -1,0 +1,16 @@
+/.idea/
+/build/
+/frontend/dist/
+/node_modules/
+/backend/build/
+/backend/dev_server/
+/backend/out/
+/backend/src/main/webapp/assets/wunschmanager.png
+/backend/src/main/webapp/.htaccess
+/backend/src/main/webapp/3rdpartylicenses.txt
+/backend/src/main/webapp/configuration.json
+/backend/src/main/webapp/favicon.png
+/backend/src/main/webapp/index.html
+/backend/src/main/webapp/wm.appcache
+/frontend/node_modules/
+/frontend/package-lock.json
