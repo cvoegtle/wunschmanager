@@ -37,6 +37,7 @@
       <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
 
       <a class="wish-donor" *ngIf="wish.donor && !orderMode" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
+      <span *ngIf="wish.proxyDonor && !orderMode"> (durch <a href="mailto:{{wish.proxyDonor}}">{{wish.proxyDonor}}</a>)</span>
     </form>
   </div>
 </mat-card>

@@ -20,6 +20,7 @@
            class="wish-donor"
            (click)="handleDonorClick()">Reservierung anzeigen</a>
         <span *ngIf="isMyPresent()" class="wish-donor">{{wish.donor}}</span>
+        <span *ngIf="wish.proxyDonor && isLoggedIn()"> (durch <a href="mailto:{{wish.proxyDonor}}">{{wish.proxyDonor}}</a>)</span>
       </div>
     </div>
     <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">

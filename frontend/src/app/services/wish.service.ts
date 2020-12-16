@@ -50,6 +50,11 @@ export class WishService {
     return this.http.get<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, httpOptions);
   }
 
+  proxyReserve(listId: number, wishId: number, donor: string): Observable<Wish> {
+    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/proxy_reserve?listId=${listId}&wishId=${wishId}&donor=${donor}&unique=${unique()}`,
+        httpOptions);
+  }
+
   private getBaseUrl() {
     return this.configurationService.configuration.backendUrl;
   }

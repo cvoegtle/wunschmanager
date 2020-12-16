@@ -13,20 +13,36 @@ fun extractUserName(request: HttpServletRequest, exceptionIfNull: Boolean = true
   return userName
 }
 
-fun checkOwnership(request: HttpServletRequest, wishList: WishList, message: String) {
+fun assertOwnership(request: HttpServletRequest, wishList: WishList, message: String) {
   val userName = extractUserName(request, true)
   if (wishList.owner != userName) {
     logException("$userName: $message")
-    throw PermissionDenied(message = message)
+    throw PermissionDenied(message)
   }
 }
 
-fun checkNotOwnership(userName: String?, wishList: WishList, message: String) {
+fun assertNotOwnership(userName: String?, wishList: WishList, message: String) {
   if (wishList.owner == userName && !wishList.managed) {
     logException("$userName: $message")
-    throw PermissionDenied(message= message)
+    throw PermissionDenied(message)
   }
 }
+
+fun assertManagedOwnership(userName: String?, wishList: WishList, message: String) {
+  if (wishList.owner != userName || !wishList.managed) {
+    logException("$userName: $message")
+    throw PermissionDenied(message)
+  }
+}
+
+fun assertNotEmpty(donor: String, message: String) {
+  if (donor.isEmpty()) {
+    logException(message)
+    throw PermissionDenied(message)
+  }
+}
+
+
 
 private fun logException(message: String) {
   val log = Logger.getLogger("UserUtil")

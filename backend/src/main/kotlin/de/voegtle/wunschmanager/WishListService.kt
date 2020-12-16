@@ -2,7 +2,7 @@ package de.voegtle.wunschmanager
 
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
-import de.voegtle.wunschmanager.util.checkOwnership
+import de.voegtle.wunschmanager.util.assertOwnership
 import de.voegtle.wunschmanager.util.duplicateUnusedWishes
 import de.voegtle.wunschmanager.util.extractUserName
 import org.springframework.web.bind.annotation.GetMapping
@@ -31,7 +31,7 @@ class WishListService {
                 req: HttpServletRequest): WishList {
     val userName = extractUserName(req, true)
     val template = ObjectifyService.ofy().load().type(WishList::class.java).id(templateId).now()
-    checkOwnership(req, template, "You do not have the permission to copy this list.")
+    assertOwnership(req, template, "You do not have the permission to copy this list.")
 
     val newWishList = WishList(event = wishList.event, owner = userName, managed = wishList.managed,
                                description = wishList.description, background = wishList.background,
@@ -51,7 +51,7 @@ class WishListService {
   fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
     val updateCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
 
-    checkOwnership(req, updateCandidate, "You do not have the permission to change the list.")
+    assertOwnership(req, updateCandidate, "You do not have the permission to change the list.")
 
     updateCandidate.event = wishList.event
     updateCandidate.description = wishList.description
@@ -72,7 +72,7 @@ class WishListService {
   fun delete(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
     val deleteCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
-    checkOwnership(req, deleteCandidate, "You do not have the permission to delete the list.")
+    assertOwnership(req, deleteCandidate, "You do not have the permission to delete the list.")
 
     ObjectifyService.ofy().delete().type(WishList::class.java).id(id).now()
     return true

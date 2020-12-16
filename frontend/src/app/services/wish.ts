@@ -6,6 +6,7 @@ export interface Wish {
   description: string;
   link: string;
   donor: string;
+  proxyDonor: string
   createTimestamp: number;
   priority: number; // higher is better
   background: string;

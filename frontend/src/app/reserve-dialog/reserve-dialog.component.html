@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{wish.caption}} reservieren</h1>
+<div mat-dialog-content>
+  <div class="reserve-dialog">
+    <mat-form-field class="reserve-donor">
+      <input #client_input placeholder="für wen" matInput  [(ngModel)]="dialogResult.donor" cdkFocusInitial/>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="reserveForSomeoneElse()" [disabled]="isDonorEmpty()">im Auftrag</button>
+  <button mat-raised-button (click)="reserveForMe()" >für mich</button>
+</div>

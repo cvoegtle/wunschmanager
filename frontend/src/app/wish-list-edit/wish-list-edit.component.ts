@@ -13,6 +13,7 @@ import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
 import { convertToWishOrder } from "../services/wish.order";
+import { ReserveDialogComponent } from "../reserve-dialog/reserve-dialog.component";
 
 
 @Component({
@@ -96,10 +97,12 @@ export class WishListEditComponent {
   }
 
   reserveClicked(wish: Wish) {
-    this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
-        _ => this.errorHandler.handle('reserveWish'));
+    if (wish.donor) {
+      this.runReservationInMyName(wish);
+    } else {
+      this.doProxyReservation(wish);
+    }
   }
-
 
   deleteWishesClicked() {
     let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
@@ -201,6 +204,36 @@ export class WishListEditComponent {
       this.wishColumns.render(wishes);
       this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));
+  }
+
+  private runReservationInMyName(wish: Wish) {
+    this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => {
+          wish.donor = updatedWish.donor;
+          wish.proxyDonor = updatedWish.proxyDonor;
+        },
+        _ => this.errorHandler.handle('reserveWish'));
+  }
+
+  private doProxyReservation(wish: Wish) {
+    let reserveDialog = this.dialog.open(ReserveDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    reserveDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet) {
+        if (dialogRet.donor) {
+          this.wishService.proxyReserve(this.wishList.id, wish.id, dialogRet.donor).subscribe(updatedWish => {
+                wish.donor = updatedWish.donor;
+                wish.proxyDonor = updatedWish.proxyDonor;
+              },
+              _ => this.errorHandler.handle('reserveWish'));
+        } else {
+          this.runReservationInMyName(wish)
+        }
+      }
+    })
   }
 
   private deleteSelectedWishes() {

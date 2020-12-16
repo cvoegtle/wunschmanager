@@ -31,7 +31,7 @@ export class WishEditComponent implements OnInit {
   }
 
   isMyPresent(): boolean {
-    return this.wish.donor && this.wish.donor == this.user;
+    return this.wish.donor && (this.wish.donor == this.user || this.wish.proxyDonor == this.user);
   }
 
   isManagedList(): boolean {
