@@ -96,14 +96,6 @@ export class WishListEditComponent {
     })
   }
 
-  reserveClicked(wish: Wish) {
-    if (wish.donor) {
-      this.runReservationInMyName(wish);
-    } else {
-      this.doProxyReservation(wish);
-    }
-  }
-
   deleteWishesClicked() {
     let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
       data: {
@@ -204,6 +196,14 @@ export class WishListEditComponent {
       this.wishColumns.render(wishes);
       this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
     }, _ => this.errorHandler.handle('fetchWishes'));
+  }
+
+  reserveClicked(wish: Wish) {
+    if (wish.donor) {
+      this.runReservationInMyName(wish);
+    } else {
+      this.doProxyReservation(wish);
+    }
   }
 
   private runReservationInMyName(wish: Wish) {
