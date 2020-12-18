@@ -19,6 +19,7 @@ import java.util.Date
                    @Index var priority: Int = 0,
                    var background: Color? = null,
                    var invisible: Boolean? = null) : Comparable<Wish> {
+
   override fun compareTo(other: Wish): Int {
     if (this.priority == other.priority) {
       return this.createTimestamp.compareTo(other.createTimestamp)
@@ -35,4 +36,9 @@ import java.util.Date
     donor = null
     proxyDonor = null
   }
+
+  fun isAvailable() = donor == null
+
+  fun isReservedForMe(userName: String) = userName == donor || userName == proxyDonor
+
 }
