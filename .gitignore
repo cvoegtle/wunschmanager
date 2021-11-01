@@ -14,3 +14,8 @@
 /backend/src/main/webapp/wm.appcache
 /frontend/node_modules/
 /frontend/package-lock.json
+/.gradle/
+/package-lock.json
+/backend/src/main/webapp/manifest.webapp
+/backend/src/main/webapp/*.js
+/backend/src/main/webapp/*.css
