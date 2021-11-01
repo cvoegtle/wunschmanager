@@ -29,7 +29,7 @@ dependencies {
     implementation 'com.google.appengine:appengine-endpoints:1.9.86'
     implementation 'com.google.appengine:appengine-endpoints-deps:1.9.86'
     implementation 'com.google.appengine:appengine-jsr107cache:1.9.91'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
 
     implementation 'com.google.guava:guava:19.0'
     implementation 'com.googlecode.objectify:objectify:5.1.21'
