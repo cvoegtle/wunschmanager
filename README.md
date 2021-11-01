@@ -14,3 +14,12 @@ Wie so üblich ist das für mich ein Projekt um für diverse Technologien auszup
 gradle appengineDeploy
 ```
 Vorher in der build.gradle ggf. noch die Version hochsetzen 
+
+## Lokal testen
+
+Server starten mit
+```
+jdk 1.8
+./start_devserver.sh
+```
+
