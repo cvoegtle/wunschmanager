@@ -1,5 +1,5 @@
 buildscript {    // Configuration for building
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.5.31'
     ext.spring_boot_version = '2.5.6'
     repositories {
         mavenCentral()
@@ -20,23 +20,23 @@ apply plugin: 'war'
 apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
-    compile 'com.google.appengine:appengine:1.9.91'
-    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.91'
-    compile 'com.google.appengine:appengine-api-labs:1.9.88'
-    compile 'com.google.appengine:appengine-endpoints:1.9.86'
-    compile 'com.google.appengine:appengine-endpoints-deps:1.9.86'
-    compile 'com.google.appengine:appengine-jsr107cache:1.9.91'
-    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0'
+    implementation 'com.google.appengine:appengine:1.9.91'
+    implementation 'com.google.appengine:appengine-api-1.0-sdk:1.9.91'
+    implementation 'com.google.appengine:appengine-api-labs:1.9.88'
+    implementation 'com.google.appengine:appengine-endpoints:1.9.86'
+    implementation 'com.google.appengine:appengine-endpoints-deps:1.9.86'
+    implementation 'com.google.appengine:appengine-jsr107cache:1.9.91'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.0'
 
-    compile 'com.google.guava:guava:19.0'
-    compile 'com.googlecode.objectify:objectify:5.1.21'
+    implementation 'com.google.guava:guava:19.0'
+    implementation 'com.googlecode.objectify:objectify:5.1.21'
 
-    compile 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 war {
@@ -75,7 +75,3 @@ task cleanupWebApp(type:Delete) {
         include "*"
     }
 }
-
-
-sourceCompatibility = 1.8  // App Engine Standard uses Java 8
-targetCompatibility = 1.8 // App Engine Standard uses Java 8
