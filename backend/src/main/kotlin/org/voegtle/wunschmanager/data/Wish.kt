@@ -11,6 +11,9 @@ import java.util.Date
 @Entity class Wish(@Id var id: Long? = null,
                    @JsonIgnore @Parent var wishList: Key<WishList>? = null,
                    @Index var caption: String = "",
+                   var groupGift: Boolean = false,
+                   var estimatedPrice: Double? = null,
+                   var suggestedParticipation: Double? = null,
                    @Index var description: String = "",
                    var link: String? = null,
                    @Index var donor: String? = null,
@@ -28,6 +31,8 @@ import java.util.Date
   }
 
   fun copy(wishlistKey: Key<WishList>): Wish = Wish(wishList = wishlistKey, caption = this.caption,
+                                                    groupGift = this.groupGift, estimatedPrice= this.estimatedPrice,
+                                                    suggestedParticipation = this.suggestedParticipation,
                                                     description = this.description, link = this.link,
                                                     donor = null, proxyDonor = null, createTimestamp = Date().time,
                                                     priority = this.priority, background = this.background,
@@ -40,5 +45,4 @@ import java.util.Date
   fun isAvailable() = donor == null
 
   fun isReservedForMe(userName: String) = userName == donor || userName == proxyDonor
-
 }

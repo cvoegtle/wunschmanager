@@ -3,6 +3,9 @@ import { WishIds } from "./wish-copy-task";
 export interface Wish {
   id: number;
   caption: string;
+  groupGift: boolean;
+  estimatedPrice: number,
+  suggestedParticipation: number,
   description: string;
   link: string;
   donor: string;

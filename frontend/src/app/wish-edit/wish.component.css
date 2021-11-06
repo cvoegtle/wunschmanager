@@ -19,6 +19,11 @@
     width: 100%;
 }
 
+.wish-half-width {
+    max-width: 230px;
+    width: 50%;
+}
+
 .wish-line {
     width: 100%;
     display: flex;

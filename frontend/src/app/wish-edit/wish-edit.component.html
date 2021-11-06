@@ -8,21 +8,42 @@
         <mat-form-field class="wish-full-width">
           <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
         </mat-form-field>
-        <button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">
-          <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
-          <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
+        <button mat-icon-button (click)="groupGiftClicked()" matTooltip="{{getGroupGiftTooltip()}}">
+          <mat-icon *ngIf="!isGroupGift()">group</mat-icon>
+          <mat-icon *ngIf="isGroupGift()">group_off</mat-icon>
+        </button>
+        <button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button (click)="reserveClicked()"
+                matTooltip="{{getPresentTooltip()}}">
+          <mat-icon *ngIf="!isMyPresent()">shopping_cart</mat-icon>
+          <mat-icon *ngIf="isMyPresent()">remove_shopping_cart</mat-icon>
         </button>
         <button #settings mat-icon-button [disabled]="orderMode"
                 (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
-          <i class="material-icons">settings</i>
+          <mat-icon>settings</mat-icon>
         </button>
       </div>
       <div *ngIf="orderMode" class="description">{{wish.caption}}</div>
 
-      <mat-form-field *ngIf="!orderMode" class="wish-full-width">
+      <div *ngIf="!orderMode && isGroupGift()" class="wish-line">
+        <div class="wish-half-width">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Wert in Euro" [(ngModel)]="wish.estimatedPrice" (change)="onWishChange()" name="editPrice">
+          </mat-form-field>
+        </div>
+        <div class="wish-half-width">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Vorgeschlag Beteiligung" [(ngModel)]="wish.suggestedParticipation"
+                   (change)="onWishChange()" name="editSuggestion">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div *ngIf="!orderMode" class="wish-line">
+        <mat-form-field *ngIf="!orderMode" class="wish-full-width">
         <textarea matInput placeholder="Beschreibung" [(ngModel)]="wish.description" [disabled]="orderMode" matTextareaAutosize
-                  (change)="onWishChange()" matAutosizeMinRows="2" matAutosizeMaxRows="5" name="editDescription" ></textarea>
-      </mat-form-field>
+                  (change)="onWishChange()" matAutosizeMinRows="2" matAutosizeMaxRows="5" name="editDescription"></textarea>
+        </mat-form-field>
+      </div>
       <div *ngIf="orderMode" class="description">{{wish.description}}</div>
 
 

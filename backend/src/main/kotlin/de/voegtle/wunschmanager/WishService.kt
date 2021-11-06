@@ -55,6 +55,9 @@ import javax.servlet.http.HttpServletRequest
 
       val existingWish = loadWish(wishList, it.id!!)
       existingWish.caption = it.caption
+      existingWish.groupGift = it.groupGift
+      existingWish.estimatedPrice = it.estimatedPrice
+      existingWish.suggestedParticipation = it.suggestedParticipation
       existingWish.description = it.description
       existingWish.link = it.link
       existingWish.priority = it.priority
