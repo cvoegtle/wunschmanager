@@ -17,10 +17,19 @@ export interface Wish {
 
   selected: boolean;
   highlighted: boolean;
+
+  donations: Donation[];
+}
+
+export interface Donation {
+  donor: string,
+  proxyDonor: string,
+  organiser: boolean,
+  amount: number
 }
 
 export function isAvailable(wish: Wish): boolean {
-  return wish.donor == null && !wish.invisible;
+  return wish.donations.length == 0 && !wish.invisible;
 }
 
 export function containsSelectedWish(wishes: Wish[]) {

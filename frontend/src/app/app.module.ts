@@ -72,6 +72,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { LocalStorageService } from "./services/local-storage.service";
 import { ReserveDialogComponent } from './reserve-dialog/reserve-dialog.component';
+import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
@@ -81,7 +82,7 @@ import { ReserveDialogComponent } from './reserve-dialog/reserve-dialog.componen
     WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-    ReserveDialogComponent
+    ReserveDialogComponent, DonorViewerComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,

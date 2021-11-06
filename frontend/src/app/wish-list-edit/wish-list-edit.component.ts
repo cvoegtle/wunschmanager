@@ -199,7 +199,7 @@ export class WishListEditComponent {
   }
 
   reserveClicked(wish: Wish) {
-    if (wish.donor) {
+    if (wish.donations.length) {
       this.runReservationInMyName(wish);
     } else {
       this.doProxyReservation(wish);
@@ -208,8 +208,7 @@ export class WishListEditComponent {
 
   private runReservationInMyName(wish: Wish) {
     this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => {
-          wish.donor = updatedWish.donor;
-          wish.proxyDonor = updatedWish.proxyDonor;
+          wish.donations = updatedWish.donations;
         },
         _ => this.errorHandler.handle('reserveWish'));
   }
@@ -225,8 +224,7 @@ export class WishListEditComponent {
       if (dialogRet) {
         if (dialogRet.donor) {
           this.wishService.proxyReserve(this.wishList.id, wish.id, dialogRet.donor).subscribe(updatedWish => {
-                wish.donor = updatedWish.donor;
-                wish.proxyDonor = updatedWish.proxyDonor;
+                wish.donations = updatedWish.donations;
               },
               _ => this.errorHandler.handle('reserveWish'));
         } else {

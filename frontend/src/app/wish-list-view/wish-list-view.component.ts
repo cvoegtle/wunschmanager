@@ -76,7 +76,7 @@ export class WishListViewComponent implements OnInit {
 
   reserveClicked(wish: Wish) {
     if (this.userStatus.loggedIn) {
-      this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donor = updatedWish.donor,
+      this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donations = updatedWish.donations,
           _ => this.errorHandler.handle('reserveWish'));
     } else {
       this.askForLogin('für eine Reservierung musst Du Dich anmelden.');

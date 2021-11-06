@@ -1,0 +1,6 @@
+<div matLine>
+  <a *ngIf="!myPresent && loggedIn" href="mailto:{{donation.donor}}" class="wish-donor">{{donation.donor}}</a>
+  <a *ngIf="!myPresent && !loggedIn" class="wish-donor" (click)="handleDonorClick()">Reservierung anzeigen</a>
+  <span *ngIf="myPresent" class="wish-donor">{{donation.donor}}</span>
+  <span *ngIf="donation.proxyDonor && loggedIn"> (durch <a href="mailto:{{donation.proxyDonor}}">{{donation.proxyDonor}}</a>)</span>
+</div>

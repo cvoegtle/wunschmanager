@@ -14,18 +14,13 @@
           <div class="description" *ngIf="wish.description">{{wish.description}}</div>
         </div>
       </div>
-      <div matLine *ngIf="wish.donor">
-        <a *ngIf="!isMyPresent() && isLoggedIn()" href="mailto:{{wish.donor}}" class="wish-donor">{{wish.donor}}</a>
-        <a *ngIf="!isMyPresent() && !isLoggedIn()"
-           class="wish-donor"
-           (click)="handleDonorClick()">Reservierung anzeigen</a>
-        <span *ngIf="isMyPresent()" class="wish-donor">{{wish.donor}}</span>
-        <span *ngIf="wish.proxyDonor && isLoggedIn()"> (durch <a href="mailto:{{wish.proxyDonor}}">{{wish.proxyDonor}}</a>)</span>
-      </div>
+      <donor-viewer *ngFor="let donation of wish.donations" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="isLoggedIn()"
+                    (donorClicked)="handleDonorClick()"></donor-viewer>
     </div>
     <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">
       <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
       <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
     </button>
   </div>
+
 </mat-card>

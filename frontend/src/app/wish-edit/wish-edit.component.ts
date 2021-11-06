@@ -31,7 +31,13 @@ export class WishEditComponent implements OnInit {
   }
 
   isMyPresent(): boolean {
-    return this.wish.donor && (this.wish.donor == this.user || this.wish.proxyDonor == this.user);
+    let donations = this.wish.donations;
+    for (let index in donations) {
+      if (donations[index].donor && (donations[index].donor == this.user || donations[index].proxyDonor == this.user)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   isGroupGift(): boolean {

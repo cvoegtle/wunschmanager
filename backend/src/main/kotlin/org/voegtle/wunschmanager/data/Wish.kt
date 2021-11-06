@@ -7,6 +7,7 @@ import com.googlecode.objectify.annotation.Id
 import com.googlecode.objectify.annotation.Index
 import com.googlecode.objectify.annotation.Parent
 import java.util.Date
+import java.util.TreeSet
 
 @Entity class Wish(@Id var id: Long? = null,
                    @JsonIgnore @Parent var wishList: Key<WishList>? = null,
@@ -21,7 +22,9 @@ import java.util.Date
                    @Index var createTimestamp: Long = 0,
                    @Index var priority: Int = 0,
                    var background: Color? = null,
-                   var invisible: Boolean? = null) : Comparable<Wish> {
+                   var invisible: Boolean? = null,
+                   var donations: TreeSet<Donation> = TreeSet(DonationComparator())
+) : Comparable<Wish> {
 
   override fun compareTo(other: Wish): Int {
     if (this.priority == other.priority) {
@@ -34,15 +37,29 @@ import java.util.Date
                                                     groupGift = this.groupGift, estimatedPrice= this.estimatedPrice,
                                                     suggestedParticipation = this.suggestedParticipation,
                                                     description = this.description, link = this.link,
-                                                    donor = null, proxyDonor = null, createTimestamp = Date().time,
+                                                    createTimestamp = Date().time,
                                                     priority = this.priority, background = this.background,
                                                     invisible = this.invisible)
-  fun resetDonor() {
-    donor = null
-    proxyDonor = null
+
+  fun removeDonor(donor: String) {
+    donations.removeIf { it.donor == donor || it.proxyDonor == donor }
   }
 
-  fun isAvailable() = donor == null
+  fun isAvailable() = donations.isEmpty() || groupGift
 
-  fun isReservedForMe(userName: String) = userName == donor || userName == proxyDonor
+  fun isReservedForMe(userName: String) = donations.stream().anyMatch {  userName == it.donor || userName == it.proxyDonor }
+
+  fun addDonation(donor: String, proxyDonor: String? = null) {
+    donations.add(Donation(donor, proxyDonor))
+  }
+
+  fun firstDonor() = donations.first()!!.donor
+
+  fun migrateDonor() {
+    donor?.let {
+      addDonation(it, proxyDonor)
+      donor = null
+      proxyDonor = null
+    }
+  }
 }

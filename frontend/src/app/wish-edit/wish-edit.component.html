@@ -32,7 +32,7 @@
         </div>
         <div class="wish-half-width">
           <mat-form-field>
-            <input matInput type="number" placeholder="Vorgeschlag Beteiligung" [(ngModel)]="wish.suggestedParticipation"
+            <input matInput type="number" placeholder="Vorschlag für Beteiligung" [(ngModel)]="wish.suggestedParticipation"
                    (change)="onWishChange()" name="editSuggestion">
           </mat-form-field>
         </div>
@@ -57,8 +57,7 @@
       </div>
       <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
 
-      <a class="wish-donor" *ngIf="wish.donor && !orderMode" href="mailto:{{wish.donor}}">{{wish.donor}}</a>
-      <span *ngIf="wish.proxyDonor && !orderMode"> (durch <a href="mailto:{{wish.proxyDonor}}">{{wish.proxyDonor}}</a>)</span>
+      <donor-viewer *ngFor="let donation of wish.donations" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="true"></donor-viewer>
     </form>
   </div>
 </mat-card>

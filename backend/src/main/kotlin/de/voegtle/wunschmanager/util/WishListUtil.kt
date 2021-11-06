@@ -12,6 +12,7 @@ fun loadReducedListOfWishes(wishList: WishList, userName: String?): MutableList<
 fun loadFullListOfWishes(wishList: WishList): MutableList<Wish> {
   val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList).order("createTimestamp").list() as MutableList<Wish>
   wishes.sort()
+  wishes.stream().forEach { it.migrateDonor() }
   return wishes
 }
 
@@ -20,15 +21,15 @@ fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wi
   when (userName) {
     wishList.owner -> {
       if (!wishList.managed) {
-        wishes.forEach { it.donor = null }
+        wishes.forEach { it.donations.clear() }
       }
     }
 
     null -> {
       wishes.removeIf { it.invisible == true }
       wishes.forEach {
-        if (it.donor != null) {
-          it.donor = "wunschmanager@voegtle.org"
+        if (it.donations.isNotEmpty()) {
+          it.addDonation("wunschmanager@voegtle.org")
         }
       }
     }

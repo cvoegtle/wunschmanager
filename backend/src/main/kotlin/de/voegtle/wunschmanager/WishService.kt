@@ -100,9 +100,9 @@ import javax.servlet.http.HttpServletRequest
     val existingWish = loadWish(wishList, wishId)
 
     when {
-      existingWish.isAvailable() -> existingWish.donor = userName
-      existingWish.isReservedForMe(userName!!) -> existingWish.resetDonor()
-      else -> throw PermissionDenied("This wish is reserved by ${existingWish.donor}")
+      existingWish.isAvailable() -> existingWish.addDonation(userName!!)
+      existingWish.isReservedForMe(userName!!) -> existingWish.removeDonor(userName)
+      else -> throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
 
     saveWish(existingWish)
@@ -124,10 +124,9 @@ import javax.servlet.http.HttpServletRequest
     val existingWish = loadWish(wishList, wishId)
 
     if (existingWish.isAvailable()) {
-      existingWish.donor = donor
-      existingWish.proxyDonor = userName
+      existingWish.addDonation(donor, userName)
     } else {
-      throw PermissionDenied("This wish is reserved by ${existingWish.donor}")
+      throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
 
     saveWish(existingWish)
@@ -151,8 +150,11 @@ import javax.servlet.http.HttpServletRequest
     return loadReducedListOfWishes(destinationList, userName)
   }
 
-  private fun loadWish(wishList: WishList, wishId: Long) =
-    ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).id(wishId).now()
+  private fun loadWish(wishList: WishList, wishId: Long): Wish {
+    val wish = ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).id(wishId).now()
+    wish.migrateDonor()
+    return wish
+  }
 
   private fun saveWish(existingWish: Wish?) {
     ObjectifyService.ofy().save().entity(existingWish).now()

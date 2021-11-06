@@ -48,7 +48,13 @@ export class WishViewComponent implements OnInit {
 
 
   isMyPresent(): boolean {
-    return this.wish.donor && this.wish.donor == this.user;
+    let donations = this.wish.donations;
+    for (let index in donations) {
+      if (donations[index].donor && donations[index].donor == this.user) {
+        return true;
+      }
+    }
+    return false;
   }
 
   getTooltip() {
