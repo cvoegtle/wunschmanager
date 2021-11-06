@@ -4,8 +4,8 @@ export interface Wish {
   id: number;
   caption: string;
   groupGift: boolean;
-  estimatedPrice: number,
-  suggestedParticipation: number,
+  estimatedPrice: number;
+  suggestedParticipation: number;
   description: string;
   link: string;
   donor: string;
@@ -22,10 +22,52 @@ export interface Wish {
 }
 
 export interface Donation {
-  donor: string,
-  proxyDonor: string,
-  organiser: boolean,
+  donor: string;
+  proxyDonor: string;
+  organiser: boolean;
   amount: number
+}
+
+export class DonationImpl implements Donation{
+  donor: string;
+  proxyDonor: string;
+  organiser: boolean;
+  amount: number
+}
+
+export class WishImpl implements Wish {
+  constructor(wish: Wish) {
+    this.id = wish.id;
+    this.caption = wish.caption;
+    this.groupGift = wish.groupGift;
+    this.estimatedPrice = wish.estimatedPrice;
+    this.suggestedParticipation = wish.estimatedPrice;
+    this.description = wish.description;
+    this.link = wish.link;
+    this.createTimestamp = wish.createTimestamp;
+    this.priority = wish.priority;
+    this.background = wish.background;
+    this.invisible = wish.invisible
+  }
+
+  id: number;
+  caption: string;
+  groupGift: boolean;
+  estimatedPrice: number;
+  suggestedParticipation: number;
+  description: string;
+  link: string;
+  donor: string;
+  proxyDonor: string
+  createTimestamp: number;
+  priority: number; // higher is better
+  background: string;
+  invisible: boolean;
+
+  selected: boolean;
+  highlighted: boolean;
+
+  donations: Donation[] = [];
 }
 
 export function isAvailable(wish: Wish): boolean {

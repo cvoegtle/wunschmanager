@@ -2,7 +2,10 @@
 <div mat-dialog-content>
   <div class="reserve-dialog">
     <mat-form-field class="reserve-donor">
-      <input #client_input placeholder="für wen" matInput  [(ngModel)]="dialogResult.donor" cdkFocusInitial/>
+      <input #real_donor placeholder="für wen" matInput [(ngModel)]="dialogResult.donor" cdkFocusInitial/>
+    </mat-form-field>
+    <mat-form-field *ngIf="wish.groupGift" class="reserve-donor">
+      <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="dialogResult.amount"/>
     </mat-form-field>
   </div>
 </div>

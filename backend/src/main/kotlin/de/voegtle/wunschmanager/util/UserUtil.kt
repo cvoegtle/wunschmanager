@@ -13,6 +13,8 @@ fun extractUserName(request: HttpServletRequest, exceptionIfNull: Boolean = true
   return userName
 }
 
+fun extractUserNameNotNull(request: HttpServletRequest):String = extractUserName(request)!!
+
 fun assertOwnership(request: HttpServletRequest, wishList: WishList, message: String) {
   val userName = extractUserName(request, true)
   if (wishList.owner != userName) {

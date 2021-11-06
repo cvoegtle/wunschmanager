@@ -45,12 +45,16 @@ import java.util.TreeSet
     donations.removeIf { it.donor == donor || it.proxyDonor == donor }
   }
 
-  fun isAvailable() = donations.isEmpty() || groupGift
+  fun isAvailable(userName: String) = donations.isEmpty() || (groupGift && !isReservedForMe(userName))
 
   fun isReservedForMe(userName: String) = donations.stream().anyMatch {  userName == it.donor || userName == it.proxyDonor }
 
   fun addDonation(donor: String, proxyDonor: String? = null) {
-    donations.add(Donation(donor, proxyDonor))
+    addDonation(Donation(donor, proxyDonor))
+  }
+
+  fun addDonation(donation: Donation) {
+    donations.add(donation)
   }
 
   fun firstDonor() = donations.first()!!.donor

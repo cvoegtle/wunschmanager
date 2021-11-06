@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Wish } from "./wish";
+import { Donation, Wish, WishImpl } from "./wish";
 import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { handleError, unique } from "../util/url-helper";
@@ -37,7 +37,7 @@ export class WishService {
   }
 
   update(listId: number, wish: Wish): Observable<boolean> {
-    let updateRequest = {listId: listId, wish: wish};
+    let updateRequest = {listId: listId, wish: new WishImpl(wish)};
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions);
   }
 
@@ -50,9 +50,8 @@ export class WishService {
     return this.http.get<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, httpOptions);
   }
 
-  proxyReserve(listId: number, wishId: number, donor: string): Observable<Wish> {
-    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/proxy_reserve?listId=${listId}&wishId=${wishId}&donor=${donor}&unique=${unique()}`,
-        httpOptions);
+  proxyReserve(listId: number, wishId: number, donation: Donation): Observable<Wish> {
+    return this.http.post<Wish>(`${this.getBaseUrl()}/wish/proxy_reserve?listId=${listId}&wishId=${wishId}`, donation, httpOptions);
   }
 
   private getBaseUrl() {

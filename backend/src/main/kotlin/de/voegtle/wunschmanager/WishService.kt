@@ -9,6 +9,7 @@ import de.voegtle.wunschmanager.util.assertNotOwnership
 import de.voegtle.wunschmanager.util.assertOwnership
 import de.voegtle.wunschmanager.util.duplicateWishes
 import de.voegtle.wunschmanager.util.extractUserName
+import de.voegtle.wunschmanager.util.extractUserNameNotNull
 import de.voegtle.wunschmanager.util.loadFullListOfWishes
 import de.voegtle.wunschmanager.util.loadReducedListOfWishes
 import de.voegtle.wunschmanager.util.updatePriorities
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.voegtle.wunschmanager.data.Donation
 import org.voegtle.wunschmanager.data.UpdateOrderRequest
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
@@ -92,7 +94,7 @@ import javax.servlet.http.HttpServletRequest
   }
 
   @GetMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long, request: HttpServletRequest): Wish {
-    val userName = extractUserName(request, true)
+    val userName = extractUserNameNotNull(request)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
     assertNotOwnership(userName, wishList, "You cannot make reservations to your own wishes")
@@ -100,8 +102,8 @@ import javax.servlet.http.HttpServletRequest
     val existingWish = loadWish(wishList, wishId)
 
     when {
-      existingWish.isAvailable() -> existingWish.addDonation(userName!!)
-      existingWish.isReservedForMe(userName!!) -> existingWish.removeDonor(userName)
+      existingWish.isAvailable(userName) -> existingWish.addDonation(userName)
+      existingWish.isReservedForMe(userName) -> existingWish.removeDonor(userName)
       else -> throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
 
@@ -109,22 +111,23 @@ import javax.servlet.http.HttpServletRequest
     return existingWish
   }
 
-  @GetMapping("wish/proxy_reserve") fun proxyReserve(
+  @PostMapping("wish/proxy_reserve") fun proxyReserve(
     @RequestParam() listId: Long,
     @RequestParam() wishId: Long,
-    @RequestParam() donor: String,
+    @RequestBody() donation: Donation,
     request: HttpServletRequest
   ): Wish {
-    val userName = extractUserName(request, true)
+    val userName = extractUserNameNotNull(request)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
     assertManagedOwnership(userName, wishList, "You have to own the list and the list has to be a managed list")
-    assertNotEmpty(donor, "The donor must not be empty")
+    assertNotEmpty(donation.donor, "The donor must not be empty")
 
     val existingWish = loadWish(wishList, wishId)
 
-    if (existingWish.isAvailable()) {
-      existingWish.addDonation(donor, userName)
+    if (existingWish.isAvailable(userName)) {
+      donation.proxyDonor = userName
+      existingWish.addDonation(donation)
     } else {
       throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
@@ -137,7 +140,7 @@ import javax.servlet.http.HttpServletRequest
     val destinationList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(copyTask.destinationListId).now()
 
     assertOwnership(request, destinationList, "You must be owner of the list to add wishes")
-    val userName = extractUserName(request, true)
+    val userName = extractUserNameNotNull(request)
 
     val newWishes = ArrayList<Wish>()
     copyTask.wishes.forEach {

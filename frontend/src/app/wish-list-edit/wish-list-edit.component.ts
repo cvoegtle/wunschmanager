@@ -223,10 +223,10 @@ export class WishListEditComponent {
     reserveDialog.afterClosed().subscribe(dialogRet => {
       if (dialogRet) {
         if (dialogRet.donor) {
-          this.wishService.proxyReserve(this.wishList.id, wish.id, dialogRet.donor).subscribe(updatedWish => {
+          this.wishService.proxyReserve(this.wishList.id, wish.id, dialogRet).subscribe(updatedWish => {
                 wish.donations = updatedWish.donations;
               },
-              _ => this.errorHandler.handle('reserveWish'));
+              _ => this.errorHandler.handle('proxyReserveWish'));
         } else {
           this.runReservationInMyName(wish)
         }

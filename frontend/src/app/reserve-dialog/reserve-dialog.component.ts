@@ -1,10 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Wish } from "../services/wish";
+import { Donation, DonationImpl, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-
-export class ReservationResponse {
-  donor: string;
-}
 
 @Component({
   selector: 'app-reserve-dialog',
@@ -14,7 +10,7 @@ export class ReservationResponse {
 export class ReserveDialogComponent implements OnInit {
 
   wish: Wish;
-  dialogResult: ReservationResponse;
+  dialogResult: Donation;
 
   constructor(public dialogRef: MatDialogRef<ReserveDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -23,7 +19,8 @@ export class ReserveDialogComponent implements OnInit {
     this.dialogRef.keydownEvents().subscribe(key => {
       if (key.code == "Escape") this.closeDialog();
     });
-    this.dialogResult = new ReservationResponse();
+    this.dialogResult = new DonationImpl();
+    this.dialogResult.amount = this.wish.suggestedParticipation
   }
 
   closeDialog() {
