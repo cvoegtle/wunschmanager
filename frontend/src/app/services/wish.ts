@@ -41,7 +41,7 @@ export class WishImpl implements Wish {
     this.caption = wish.caption;
     this.groupGift = wish.groupGift;
     this.estimatedPrice = wish.estimatedPrice;
-    this.suggestedParticipation = wish.estimatedPrice;
+    this.suggestedParticipation = wish.suggestedParticipation;
     this.description = wish.description;
     this.link = wish.link;
     this.createTimestamp = wish.createTimestamp;
