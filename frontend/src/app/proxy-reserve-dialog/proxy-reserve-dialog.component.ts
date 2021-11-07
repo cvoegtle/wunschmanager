@@ -4,15 +4,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-reserve-dialog',
-  templateUrl: './reserve-dialog.component.html',
-  styleUrls: ['./reserve-dialog.component.css']
+  templateUrl: './proxy-reserve-dialog.component.html',
+  styleUrls: ['./proxy-reserve-dialog.component.css']
 })
-export class ReserveDialogComponent implements OnInit {
+export class ProxyReserveDialogComponent implements OnInit {
 
   wish: Wish;
   dialogResult: Donation;
 
-  constructor(public dialogRef: MatDialogRef<ReserveDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<ProxyReserveDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.wish = data.wish;
     this.dialogRef.backdropClick().subscribe(result => this.closeDialog())

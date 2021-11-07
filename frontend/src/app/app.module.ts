@@ -71,18 +71,18 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { LocalStorageService } from "./services/local-storage.service";
-import { ReserveDialogComponent } from './reserve-dialog/reserve-dialog.component';
+import { ProxyReserveDialogComponent } from './proxy-reserve-dialog/proxy-reserve-dialog.component';
 import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
-    ErrorDialogComponent, WishListDuplicateDialogComponent, ReserveDialogComponent],
+    ErrorDialogComponent, WishListDuplicateDialogComponent, ProxyReserveDialogComponent],
   declarations: [
     AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
     WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-    ReserveDialogComponent, DonorViewerComponent
+    ProxyReserveDialogComponent, DonorViewerComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,

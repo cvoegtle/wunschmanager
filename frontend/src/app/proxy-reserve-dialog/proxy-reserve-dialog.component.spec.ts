@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReserveDialogComponent } from './reserve-dialog.component';
+import { ProxyReserveDialogComponent } from './proxy-reserve-dialog.component';
 
 describe('ReserveDialogComponent', () => {
-  let component: ReserveDialogComponent;
-  let fixture: ComponentFixture<ReserveDialogComponent>;
+  let component: ProxyReserveDialogComponent;
+  let fixture: ComponentFixture<ProxyReserveDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReserveDialogComponent ]
+      declarations: [ ProxyReserveDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReserveDialogComponent);
+    fixture = TestBed.createComponent(ProxyReserveDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

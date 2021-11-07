@@ -13,7 +13,7 @@ import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
 import { convertToWishOrder } from "../services/wish.order";
-import { ReserveDialogComponent } from "../reserve-dialog/reserve-dialog.component";
+import { ProxyReserveDialogComponent } from "../proxy-reserve-dialog/proxy-reserve-dialog.component";
 
 
 @Component({
@@ -214,7 +214,7 @@ export class WishListEditComponent {
   }
 
   private doProxyReservation(wish: Wish) {
-    let reserveDialog = this.dialog.open(ReserveDialogComponent, {
+    let reserveDialog = this.dialog.open(ProxyReserveDialogComponent, {
       data: {
         wish: wish
       }
