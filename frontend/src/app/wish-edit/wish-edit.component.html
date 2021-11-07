@@ -24,19 +24,17 @@
       </div>
       <div *ngIf="orderMode" class="description">{{wish.caption}}</div>
 
-      <div *ngIf="!orderMode && isGroupGift()" class="wish-line">
-        <div class="wish-half-width">
+        <div class="wish-half-width" *ngIf="!orderMode && isGroupGift()">
           <mat-form-field>
             <input matInput type="number" placeholder="Wert in Euro" [(ngModel)]="wish.estimatedPrice" (change)="onWishChange()" name="editPrice">
           </mat-form-field>
         </div>
-        <div class="wish-half-width">
+        <div class="wish-half-width" *ngIf="!orderMode && isGroupGift()">
           <mat-form-field>
             <input matInput type="number" placeholder="Vorschlag für Beteiligung" [(ngModel)]="wish.suggestedParticipation"
                    (change)="onWishChange()" name="editSuggestion">
           </mat-form-field>
         </div>
-      </div>
 
       <div *ngIf="!orderMode" class="wish-line">
         <mat-form-field *ngIf="!orderMode" class="wish-full-width">
