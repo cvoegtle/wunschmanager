@@ -57,7 +57,7 @@
       </div>
       <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
 
-      <donor-viewer *ngFor="let donation of wish.donations" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="true"></donor-viewer>
+      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="true"></donor-viewer>
     </form>
   </div>
 </mat-card>

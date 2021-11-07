@@ -10,6 +10,7 @@ export class DonorViewerComponent implements OnInit {
   @Input() donation: Donation;
   @Input() myPresent: boolean = false;
   @Input() loggedIn: boolean = false;
+  @Input() first: boolean = false;
   @Output() donorClicked = new EventEmitter<void>();
 
 

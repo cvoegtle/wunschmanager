@@ -14,7 +14,7 @@
           <div class="description" *ngIf="wish.description">{{wish.description}}</div>
         </div>
       </div>
-      <donor-viewer *ngFor="let donation of wish.donations" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="isLoggedIn()"
+      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="isLoggedIn()"
                     (donorClicked)="handleDonorClick()"></donor-viewer>
     </div>
     <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">
