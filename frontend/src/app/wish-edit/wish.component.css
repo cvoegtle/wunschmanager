@@ -30,6 +30,11 @@
     flex-direction: row;
 }
 
+.wish-column {
+    display: flex;
+    flex-direction: column;
+}
+
 .wish-item {
     width: 100%;
 }
