@@ -29,9 +29,9 @@ class DonationComparator : Comparator<Donation> {
       return 1
     }
     if (o1.organiser != o2.organiser) {
-      return o1.organiser.compareTo(o2.organiser)
+      return -1 * o1.organiser.compareTo(o2.organiser)
     }
-    return o1.donor.compareTo(o2.donor)
+    return o1.donor.compareTo(o2.donor, ignoreCase = true)
   }
 }
 
