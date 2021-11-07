@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { containsSelectedWish, removeWishSelection, Wish } from '../services/wish';
+import { containsSelectedWish, Donation, DonationImpl, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
 import { UserService } from '../services/user.service';
@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteItemDialogComponent } from "../delete-item-dialog/delete-item-dialog.component";
 import { WishViewMultiColumnComponent } from "../wish-view-multi-column/wish-view-multi-column.component";
 import { Router } from "@angular/router";
+import { ParticipateDialogComponent } from "../participate-dialog/participate-dialog.component";
 
 @Component({
   selector: 'wish-list-view',
@@ -76,11 +77,34 @@ export class WishListViewComponent implements OnInit {
 
   reserveClicked(wish: Wish) {
     if (this.userStatus.loggedIn) {
-      this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => wish.donations = updatedWish.donations,
-          _ => this.errorHandler.handle('reserveWish'));
+      if (wish.groupGift) {
+        this.participateInGroupGift(wish);
+      } else {
+        this.callReservationService(wish);
+      }
     } else {
       this.askForLogin('für eine Reservierung musst Du Dich anmelden.');
     }
+  }
+
+  private participateInGroupGift(wish: Wish) {
+    let participateDialog = this.dialog.open(ParticipateDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    participateDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet) {
+        this.callReservationService(wish, dialogRet)
+      }
+    })
+
+  }
+
+  private callReservationService(wish: Wish, donation: Donation = new DonationImpl()) {
+    this.wishService.reserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => wish.donations = updatedWish.donations,
+        _ => this.errorHandler.handle('reserveWish'));
   }
 
   showDonorClicked(wish: Wish) {

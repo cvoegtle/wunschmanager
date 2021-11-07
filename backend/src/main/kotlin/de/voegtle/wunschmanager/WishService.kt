@@ -93,7 +93,12 @@ import javax.servlet.http.HttpServletRequest
     return true
   }
 
-  @GetMapping("/wish/reserve") fun reserve(@RequestParam() listId: Long, @RequestParam() wishId: Long, request: HttpServletRequest): Wish {
+  @PostMapping("/wish/reserve") fun reserve(
+    @RequestParam() listId: Long,
+    @RequestParam() wishId: Long,
+    @RequestBody() donation: Donation,
+    request: HttpServletRequest
+  ): Wish {
     val userName = extractUserNameNotNull(request)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
@@ -102,8 +107,11 @@ import javax.servlet.http.HttpServletRequest
     val existingWish = loadWish(wishList, wishId)
 
     when {
-      existingWish.isAvailable(userName) -> existingWish.addDonation(userName)
-      existingWish.isReservedForMe(userName) -> existingWish.removeDonor(userName)
+      existingWish.isAvailable(userName) -> {
+        donation.donor = userName
+        existingWish.addDonation(donation)
+      }
+      existingWish.isReservedForMe(userName) -> existingWish.removeDonation(userName)
       else -> throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
 

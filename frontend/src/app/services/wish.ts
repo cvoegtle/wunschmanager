@@ -71,7 +71,16 @@ export class WishImpl implements Wish {
 }
 
 export function isAvailable(wish: Wish): boolean {
-  return wish.donations.length == 0 && !wish.invisible;
+  return (wish.donations.length == 0 || wish.groupGift) && !wish.invisible;
+}
+
+export function isReservedByUser(wish: Wish, user: string) {
+  for (let index in wish.donations) {
+    if (wish.donations[index].donor == user || wish.donations[index].proxyDonor == user) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function containsSelectedWish(wishes: Wish[]) {

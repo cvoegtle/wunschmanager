@@ -73,6 +73,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { LocalStorageService } from "./services/local-storage.service";
 import { ProxyReserveDialogComponent } from './proxy-reserve-dialog/proxy-reserve-dialog.component';
 import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
+import { ParticipateDialogComponent } from './participate-dialog/participate-dialog.component';
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
@@ -82,7 +83,7 @@ import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
     WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-    ProxyReserveDialogComponent, DonorViewerComponent
+    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,

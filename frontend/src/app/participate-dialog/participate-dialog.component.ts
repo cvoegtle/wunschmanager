@@ -3,16 +3,16 @@ import { Donation, DonationImpl, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'proxy-reserve-dialog',
-  templateUrl: './proxy-reserve-dialog.component.html',
-  styleUrls: ['./proxy-reserve-dialog.component.css']
+  selector: 'participate-dialog',
+  templateUrl: './participate-dialog.component.html',
+  styleUrls: ['./participate-dialog.component.css']
 })
-export class ProxyReserveDialogComponent implements OnInit {
+export class ParticipateDialogComponent implements OnInit {
 
   wish: Wish;
   dialogResult: Donation;
 
-  constructor(public dialogRef: MatDialogRef<ProxyReserveDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<ParticipateDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.wish = data.wish;
     this.dialogRef.backdropClick().subscribe(result => this.closeDialog())
@@ -30,16 +30,10 @@ export class ProxyReserveDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  reserveForMe(): void {
-    this.dialogResult.donor = null;
+  participate(): void {
     this.dialogRef.close(this.dialogResult);
   }
 
-  reserveForSomeoneElse(): void {
-    this.dialogRef.close(this.dialogResult);
-  }
 
-  isDonorEmpty(): boolean {
-    return this.dialogResult.donor == null || this.dialogResult.donor.length == 0;
-  }
 }
+

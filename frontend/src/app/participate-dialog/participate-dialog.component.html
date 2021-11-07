@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{wish.caption}} reservieren</h1>
+<div mat-dialog-content>
+  <div class="participate-dialog">
+    <mat-form-field *ngIf="wish.groupGift" class="participation-amount">
+      <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="dialogResult.amount"/>
+    </mat-form-field>
+    <mat-checkbox *ngIf="wish.groupGift" [(ngModel)]="dialogResult.organiser">ich kümmere mich um die Orga</mat-checkbox>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="participate()" >beteiligen</button>
+</div>

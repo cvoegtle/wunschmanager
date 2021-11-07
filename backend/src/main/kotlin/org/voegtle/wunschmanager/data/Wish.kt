@@ -41,7 +41,7 @@ import java.util.TreeSet
                                                     priority = this.priority, background = this.background,
                                                     invisible = this.invisible)
 
-  fun removeDonor(donor: String) {
+  fun removeDonation(donor: String) {
     donations.removeIf { it.donor == donor || it.proxyDonor == donor }
   }
 

@@ -1,6 +1,16 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WishList } from '../services/wish-list';
-import { countSelection, extractIds, highlightNewIds, removeWishSelection, Wish } from "../services/wish";
+import {
+  countSelection,
+  Donation,
+  DonationImpl,
+  extractIds,
+  highlightNewIds,
+  isAvailable,
+  isReservedByUser,
+  removeWishSelection,
+  Wish
+} from "../services/wish";
 import { WishService } from "../services/wish.service";
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -199,15 +209,16 @@ export class WishListEditComponent {
   }
 
   reserveClicked(wish: Wish) {
-    if (wish.donations.length) {
-      this.runReservationInMyName(wish);
+    if (isReservedByUser(wish, this.user)) {
+      this.runReservationInMyName(wish, new DonationImpl());
     } else {
       this.doProxyReservation(wish);
     }
   }
 
-  private runReservationInMyName(wish: Wish) {
-    this.wishService.reserve(this.wishList.id, wish.id).subscribe(updatedWish => {
+  private runReservationInMyName(wish: Wish, donation: Donation) {
+    donation.donor = this.user;
+    this.wishService.reserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => {
           wish.donations = updatedWish.donations;
         },
         _ => this.errorHandler.handle('reserveWish'));
@@ -228,7 +239,7 @@ export class WishListEditComponent {
               },
               _ => this.errorHandler.handle('proxyReserveWish'));
         } else {
-          this.runReservationInMyName(wish)
+          this.runReservationInMyName(wish, dialogRet)
         }
       }
     })

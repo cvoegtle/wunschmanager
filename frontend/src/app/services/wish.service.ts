@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Donation, Wish, WishImpl } from "./wish";
+import { Donation, DonationImpl, Wish, WishImpl } from "./wish";
 import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { handleError, unique } from "../util/url-helper";
@@ -46,8 +46,8 @@ export class WishService {
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions);
   }
 
-  reserve(listId: number, wishId: number): Observable<Wish> {
-    return this.http.get<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, httpOptions);
+  reserve(listId: number, wishId: number, donation: Donation): Observable<Wish> {
+    return this.http.post<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, donation, httpOptions);
   }
 
   proxyReserve(listId: number, wishId: number, donation: Donation): Observable<Wish> {
