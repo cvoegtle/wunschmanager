@@ -7,6 +7,7 @@
     <mat-form-field *ngIf="wish.groupGift" class="reserve-donor">
       <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="dialogResult.amount"/>
     </mat-form-field>
+    <mat-checkbox *ngIf="wish.groupGift" [(ngModel)]="dialogResult.organiser">ich kümmere mich um die Orga</mat-checkbox>
   </div>
 </div>
 <div mat-dialog-actions>
