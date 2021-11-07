@@ -2,7 +2,7 @@ package org.voegtle.wunschmanager.data
 
 data class Donation (var donor: String = "",
                      var proxyDonor: String? = null,
-                     var organiser: Boolean = true,
+                     var organiser: Boolean = false,
                      var amount: Double = 0.0) {
   override fun equals(other: Any?): Boolean {
     return other != null && other is Donation && donor == other.donor
