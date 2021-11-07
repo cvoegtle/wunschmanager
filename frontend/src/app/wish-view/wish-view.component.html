@@ -1,5 +1,5 @@
 <mat-card [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
-'background-green': isGreen(), 'background-blue': isBlue()}" *ngIf="wish.caption || wish.description">
+'background-green': isGreen(), 'background-blue': isBlue()}" *ngIf="wish.caption || wish.description" xmlns="http://www.w3.org/1999/html">
   <div class="wish-form">
 
     <div class="wish-column">
@@ -14,10 +14,12 @@
         <a *ngIf="wish.link" href="{{targetUrl()}}" target="_blank">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
           <div *ngIf="wish.description">{{wish.description}}</div>
+          <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
         </a>
         <div *ngIf="!wish.link">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
           <div class="description" *ngIf="wish.description">{{wish.description}}</div>
+          <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
         </div>
       </div>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="isLoggedIn()"

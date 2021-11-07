@@ -74,6 +74,7 @@ import { LocalStorageService } from "./services/local-storage.service";
 import { ProxyReserveDialogComponent } from './proxy-reserve-dialog/proxy-reserve-dialog.component';
 import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
 import { ParticipateDialogComponent } from './participate-dialog/participate-dialog.component';
+import { PriceInformationComponent } from './price-information/price-information.component';
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
@@ -83,7 +84,7 @@ import { ParticipateDialogComponent } from './participate-dialog/participate-dia
     WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent
+    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
