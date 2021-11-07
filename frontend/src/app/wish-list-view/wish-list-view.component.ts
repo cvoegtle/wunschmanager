@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { containsSelectedWish, Donation, DonationImpl, removeWishSelection, Wish } from '../services/wish';
+import { containsSelectedWish, Donation, DonationImpl, isReservedByUser, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
 import { UserService } from '../services/user.service';
@@ -77,7 +77,7 @@ export class WishListViewComponent implements OnInit {
 
   reserveClicked(wish: Wish) {
     if (this.userStatus.loggedIn) {
-      if (wish.groupGift) {
+      if (wish.groupGift && !isReservedByUser(wish, this.userStatus.name)) {
         this.participateInGroupGift(wish);
       } else {
         this.callReservationService(wish);
