@@ -2,12 +2,7 @@
 'background-green': isGreen(), 'background-blue': isBlue()}" *ngIf="wish.caption || wish.description" xmlns="http://www.w3.org/1999/html">
   <div class="wish-form">
 
-    <div class="wish-column">
-      <select-toggle *ngIf="!restricted" [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
-      <button mat-icon-button *ngIf="wish.groupGift" matTooltip="Gruppengeschenk">
-        <i class="material-icons">group</i>
-      </button>
-    </div>
+    <select-toggle *ngIf="!restricted" [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
 
     <div class="wish-full-width">
       <div class="wish-line">
@@ -22,13 +17,12 @@
           <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
         </div>
       </div>
-      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="isLoggedIn()"
+      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()"
+                    [loggedIn]="isLoggedIn()"
                     (donorClicked)="handleDonorClick()"></donor-viewer>
     </div>
-    <button *ngIf="isAvailable() || isMyPresent()" mat-icon-button (click)="reserveClicked()" matTooltip="{{getTooltip()}}">
-      <i *ngIf="!isMyPresent()" class="material-icons">shopping_cart</i>
-      <i *ngIf="isMyPresent()" class="material-icons">remove_shopping_cart</i>
-    </button>
+    <donate-button *ngIf="isAvailable() || isMyPresent()" [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
+    </donate-button>
   </div>
 
 </mat-card>

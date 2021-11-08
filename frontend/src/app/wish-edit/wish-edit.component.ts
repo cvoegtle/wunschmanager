@@ -95,14 +95,6 @@ export class WishEditComponent implements OnInit {
     this.reserved.emit(this.wish);
   }
 
-  getPresentTooltip() {
-    if (this.isMyPresent()) {
-      return 'Geschenk wieder freigeben';
-    } else {
-      return 'Ich möchte das schenken';
-    }
-  }
-
   getGroupGiftTooltip() {
     if (this.isGroupGift()) {
       return 'doch kein Gruppengeschenk';

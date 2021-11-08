@@ -12,11 +12,8 @@
           <mat-icon *ngIf="!isGroupGift()">group</mat-icon>
           <mat-icon *ngIf="isGroupGift()">group_off</mat-icon>
         </button>
-        <button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button (click)="reserveClicked()"
-                matTooltip="{{getPresentTooltip()}}">
-          <mat-icon *ngIf="!isMyPresent()">shopping_cart</mat-icon>
-          <mat-icon *ngIf="isMyPresent()">remove_shopping_cart</mat-icon>
-        </button>
+        <donate-button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button [reserved]="isMyPresent()" (click)="reserveClicked()" >
+        </donate-button>
         <button #settings mat-icon-button [disabled]="orderMode"
                 (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
           <mat-icon>settings</mat-icon>

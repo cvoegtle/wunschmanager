@@ -1,0 +1,7 @@
+<button mat-icon-button matTooltip="{{getToolTip()}}">
+  <i *ngIf="!reserved && !groupGift" class="material-icons">shopping_cart</i>
+  <i *ngIf="reserved && !groupGift" class="material-icons">remove_shopping_cart</i>
+
+  <i *ngIf="!reserved && groupGift" class="material-icons">group</i>
+  <i *ngIf="reserved && groupGift" class="material-icons">group_off</i>
+</button>

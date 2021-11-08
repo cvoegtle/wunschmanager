@@ -57,14 +57,6 @@ export class WishViewComponent implements OnInit {
     return false;
   }
 
-  getTooltip() {
-    if (this.isMyPresent()) {
-      return 'Geschenk wieder freigeben';
-    } else {
-      return 'Ich möchte das schenken';
-    }
-  }
-
   reserveClicked() {
     this.reserved.emit(this.wish);
   }
