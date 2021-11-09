@@ -8,10 +8,6 @@
         <mat-form-field class="wish-full-width">
           <input matInput placeholder="Wunsch" [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
         </mat-form-field>
-        <button mat-icon-button (click)="groupGiftClicked()" matTooltip="{{getGroupGiftTooltip()}}">
-          <mat-icon *ngIf="!isGroupGift()">group</mat-icon>
-          <mat-icon *ngIf="isGroupGift()">group_off</mat-icon>
-        </button>
         <donate-button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button [reserved]="isMyPresent()" (click)="reserveClicked()" >
         </donate-button>
         <button #settings mat-icon-button [disabled]="orderMode"
@@ -20,18 +16,6 @@
         </button>
       </div>
       <div *ngIf="orderMode" class="description">{{wish.caption}}</div>
-
-        <div class="wish-half-width" *ngIf="!orderMode && isGroupGift()">
-          <mat-form-field>
-            <input matInput type="number" placeholder="Wert in Euro" [(ngModel)]="wish.estimatedPrice" (change)="onWishChange()" name="editPrice">
-          </mat-form-field>
-        </div>
-        <div class="wish-half-width" *ngIf="!orderMode && isGroupGift()">
-          <mat-form-field>
-            <input matInput type="number" placeholder="Vorschlag für Beteiligung" [(ngModel)]="wish.suggestedParticipation"
-                   (change)="onWishChange()" name="editSuggestion">
-          </mat-form-field>
-        </div>
 
       <div *ngIf="!orderMode" class="wish-line">
         <mat-form-field *ngIf="!orderMode" class="wish-full-width">
@@ -52,6 +36,7 @@
       </div>
       <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
 
+      <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="true"></donor-viewer>
     </form>
   </div>

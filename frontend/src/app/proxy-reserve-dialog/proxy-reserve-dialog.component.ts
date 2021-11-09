@@ -10,7 +10,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 export class ProxyReserveDialogComponent implements OnInit {
 
   wish: Wish;
-  dialogResult: Donation;
+  donation: Donation;
+  wishChanged: boolean;
 
   constructor(public dialogRef: MatDialogRef<ProxyReserveDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -19,8 +20,8 @@ export class ProxyReserveDialogComponent implements OnInit {
     this.dialogRef.keydownEvents().subscribe(key => {
       if (key.code == "Escape") this.closeDialog();
     });
-    this.dialogResult = new DonationImpl();
-    this.dialogResult.amount = this.wish.suggestedParticipation
+    this.donation = new DonationImpl();
+    this.donation.amount = this.wish.suggestedParticipation
   }
 
   closeDialog() {
@@ -31,15 +32,23 @@ export class ProxyReserveDialogComponent implements OnInit {
   }
 
   reserveForMe(): void {
-    this.dialogResult.donor = null;
-    this.dialogRef.close(this.dialogResult);
+    this.donation.donor = null;
+    this.reserve();
   }
 
   reserveForSomeoneElse(): void {
-    this.dialogRef.close(this.dialogResult);
+    this.reserve();
+  }
+
+  private reserve() {
+    this.dialogRef.close({donation: this.donation, wishChanged: this.wishChanged});
   }
 
   isDonorEmpty(): boolean {
-    return this.dialogResult.donor == null || this.dialogResult.donor.length == 0;
+    return this.donation.donor == null || this.donation.donor.length == 0;
+  }
+
+  onWishChange() {
+    this.wishChanged = true;
   }
 }

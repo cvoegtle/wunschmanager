@@ -2,12 +2,20 @@
 <div mat-dialog-content>
   <div class="reserve-dialog">
     <mat-form-field class="reserve-donor">
-      <input #real_donor placeholder="für wen" matInput [(ngModel)]="dialogResult.donor" cdkFocusInitial/>
+      <input #real_donor placeholder="für wen" matInput [(ngModel)]="donation.donor" cdkFocusInitial/>
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="wish.groupGift" (change)="onWishChange()">Gruppengeschenk vorschlagen</mat-checkbox>
+    <mat-form-field *ngIf="wish.groupGift"  class="reserve-donor">
+      <input matInput type="number" placeholder="Wert in Euro" [(ngModel)]="wish.estimatedPrice" (change)="onWishChange()" name="editPrice">
+    </mat-form-field>
+    <mat-form-field *ngIf="wish.groupGift"  class="reserve-donor">
+      <input matInput type="number" placeholder="Vorschlag für Beteiligung" [(ngModel)]="wish.suggestedParticipation"
+             (change)="onWishChange()" name="editSuggestion">
     </mat-form-field>
     <mat-form-field *ngIf="wish.groupGift" class="reserve-donor">
-      <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="dialogResult.amount"/>
+      <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="donation.amount"/>
     </mat-form-field>
-    <mat-checkbox *ngIf="wish.groupGift" [(ngModel)]="dialogResult.organiser">ich kümmere mich um die Orga</mat-checkbox>
+    <mat-checkbox *ngIf="wish.groupGift" [(ngModel)]="donation.organiser">ich kümmere mich um die Orga</mat-checkbox>
   </div>
 </div>
 <div mat-dialog-actions>

@@ -40,10 +40,6 @@ export class WishEditComponent implements OnInit {
     return false;
   }
 
-  isGroupGift(): boolean {
-    return this.wish.groupGift;
-  }
-
   isManagedList(): boolean {
     return this.user != null;
   }
@@ -72,11 +68,6 @@ export class WishEditComponent implements OnInit {
     this.wishChange.emit(this.wish)
   }
 
-  groupGiftClicked() {
-    this.wish.groupGift = !this.wish.groupGift;
-    this.wishChange.emit(this.wish);
-  }
-
   settingsClicked() {
     let settingsDialog = this.dialog.open(WishPropertiesComponent, {
       data: {
@@ -93,14 +84,6 @@ export class WishEditComponent implements OnInit {
 
   reserveClicked() {
     this.reserved.emit(this.wish);
-  }
-
-  getGroupGiftTooltip() {
-    if (this.isGroupGift()) {
-      return 'doch kein Gruppengeschenk';
-    } else {
-      return 'zum Gruppengeschenk machen';
-    }
   }
 
   targetUrl() {

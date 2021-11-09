@@ -231,18 +231,29 @@ export class WishListEditComponent {
       }
     });
 
-    reserveDialog.afterClosed().subscribe(dialogRet => {
-      if (dialogRet) {
-        if (dialogRet.donor) {
-          this.wishService.proxyReserve(this.wishList.id, wish.id, dialogRet).subscribe(updatedWish => {
-                wish.donations = updatedWish.donations;
-              },
-              _ => this.errorHandler.handle('proxyReserveWish'));
-        } else {
-          this.runReservationInMyName(wish, dialogRet)
+    reserveDialog.afterClosed().subscribe(dialogResponse => {
+      if (dialogResponse) {
+        if (dialogResponse.wishChanged) {
+          this.callUpdateService(wish);
         }
+        this.callReservationService(dialogResponse.donation, wish);
       }
     })
+  }
+
+  private callUpdateService(wish: Wish) {
+    this.wishService.update(this.wishList.id, wish);
+  }
+
+  private callReservationService(donation: Donation, wish: Wish) {
+    if (donation.donor) {
+      this.wishService.proxyReserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => {
+            wish.donations = updatedWish.donations;
+          },
+          _ => this.errorHandler.handle('proxyReserveWish'));
+    } else {
+      this.runReservationInMyName(wish, donation)
+    }
   }
 
   private deleteSelectedWishes() {
