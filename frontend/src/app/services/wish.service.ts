@@ -46,12 +46,22 @@ export class WishService {
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions);
   }
 
-  reserve(listId: number, wishId: number, donation: Donation): Observable<Wish> {
-    return this.http.post<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}&unique=${unique()}`, donation, httpOptions);
+  reserve(listId: number, wishId: number, donation: Donation, wish: Wish = null): Observable<Wish> {
+    let reserveRequest = this.buildReserveRequest(donation, wish);
+    return this.http.post<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}`, reserveRequest, httpOptions);
   }
 
-  proxyReserve(listId: number, wishId: number, donation: Donation): Observable<Wish> {
-    return this.http.post<Wish>(`${this.getBaseUrl()}/wish/proxy_reserve?listId=${listId}&wishId=${wishId}`, donation, httpOptions);
+  proxyReserve(listId: number, wishId: number, donation: Donation, wish: Wish = null): Observable<Wish> {
+    let reserveRequest = this.buildReserveRequest(donation, wish);
+    return this.http.post<Wish>(`${this.getBaseUrl()}/wish/proxy_reserve?listId=${listId}&wishId=${wishId}`, reserveRequest, httpOptions);
+  }
+
+  private buildReserveRequest(donation: Donation, wish: Wish) {
+    if (wish != null) {
+      wish = new WishImpl(wish);
+    }
+    let reserveRequest = {donation: donation, wish: wish}
+    return reserveRequest;
   }
 
   private getBaseUrl() {

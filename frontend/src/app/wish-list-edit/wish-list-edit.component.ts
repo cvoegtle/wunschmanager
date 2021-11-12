@@ -218,7 +218,7 @@ export class WishListEditComponent {
 
   private runReservationInMyName(wish: Wish, donation: Donation) {
     donation.donor = this.user;
-    this.wishService.reserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => {
+    this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
           wish.donations = updatedWish.donations;
         },
         _ => this.errorHandler.handle('reserveWish'));
@@ -247,7 +247,7 @@ export class WishListEditComponent {
 
   private callReservationService(donation: Donation, wish: Wish) {
     if (donation.donor) {
-      this.wishService.proxyReserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => {
+      this.wishService.proxyReserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
             wish.donations = updatedWish.donations;
           },
           _ => this.errorHandler.handle('proxyReserveWish'));

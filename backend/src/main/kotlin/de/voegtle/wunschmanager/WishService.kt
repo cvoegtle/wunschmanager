@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.Donation
+import org.voegtle.wunschmanager.data.ReserveRequest
 import org.voegtle.wunschmanager.data.UpdateOrderRequest
 import org.voegtle.wunschmanager.data.UpdateRequest
 import org.voegtle.wunschmanager.data.Wish
@@ -96,7 +97,7 @@ import javax.servlet.http.HttpServletRequest
   @PostMapping("/wish/reserve") fun reserve(
     @RequestParam() listId: Long,
     @RequestParam() wishId: Long,
-    @RequestBody() donation: Donation,
+    @RequestBody() reserveRequest: ReserveRequest,
     request: HttpServletRequest
   ): Wish {
     val userName = extractUserNameNotNull(request)
@@ -105,11 +106,12 @@ import javax.servlet.http.HttpServletRequest
     assertNotOwnership(userName, wishList, "You cannot make reservations to your own wishes")
 
     val existingWish = loadWish(wishList, wishId)
+    mergeGroupGiftInformation(existingWish, reserveRequest.wish)
 
     when {
       existingWish.isAvailable(userName) -> {
-        donation.donor = userName
-        existingWish.addDonation(donation)
+        reserveRequest.donation.donor = userName
+        existingWish.addDonation(reserveRequest.donation)
       }
       existingWish.isReservedForMe(userName) -> existingWish.removeDonation(userName)
       else -> throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
@@ -122,26 +124,35 @@ import javax.servlet.http.HttpServletRequest
   @PostMapping("wish/proxy_reserve") fun proxyReserve(
     @RequestParam() listId: Long,
     @RequestParam() wishId: Long,
-    @RequestBody() donation: Donation,
+    @RequestBody() reserveRequest: ReserveRequest,
     request: HttpServletRequest
   ): Wish {
     val userName = extractUserNameNotNull(request)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
     assertManagedOwnership(userName, wishList, "You have to own the list and the list has to be a managed list")
-    assertNotEmpty(donation.donor, "The donor must not be empty")
+    assertNotEmpty(reserveRequest.donation.donor, "The donor must not be empty")
 
     val existingWish = loadWish(wishList, wishId)
+    mergeGroupGiftInformation(existingWish, reserveRequest.wish)
 
     if (existingWish.isAvailable(userName)) {
-      donation.proxyDonor = userName
-      existingWish.addDonation(donation)
+      reserveRequest.donation.proxyDonor = userName
+      existingWish.addDonation(reserveRequest.donation)
     } else {
       throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
 
     saveWish(existingWish)
     return existingWish
+  }
+
+  private fun mergeGroupGiftInformation(existingWish: Wish, clientWish: Wish?) {
+    clientWish?.let {
+      existingWish.groupGift = it.groupGift
+      existingWish.estimatedPrice = it.estimatedPrice
+      existingWish.suggestedParticipation = it.suggestedParticipation
+    }
   }
 
   @PostMapping("/wish/copy") fun copy(@RequestBody() copyTask: WishCopyTask, request: HttpServletRequest): List<Wish> {
