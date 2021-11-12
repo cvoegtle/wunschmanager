@@ -113,7 +113,10 @@ import javax.servlet.http.HttpServletRequest
         reserveRequest.donation.donor = userName
         existingWish.addDonation(reserveRequest.donation)
       }
-      existingWish.isReservedForMe(userName) -> existingWish.removeDonation(userName)
+      existingWish.isReservedForMe(userName) -> {
+        existingWish.removeDonation(userName)
+        removeGroupInformationWithoutDonation(existingWish)
+      }
       else -> throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
 
@@ -152,6 +155,14 @@ import javax.servlet.http.HttpServletRequest
       existingWish.groupGift = it.groupGift
       existingWish.estimatedPrice = it.estimatedPrice
       existingWish.suggestedParticipation = it.suggestedParticipation
+    }
+  }
+
+  private fun removeGroupInformationWithoutDonation(existingWish: Wish) {
+    if (existingWish.donations.isEmpty()) {
+      existingWish.groupGift = false
+      existingWish.estimatedPrice = null
+      existingWish.suggestedParticipation = null
     }
   }
 
