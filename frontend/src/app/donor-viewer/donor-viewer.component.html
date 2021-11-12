@@ -1,9 +1,9 @@
 <div matLine>
   <hr *ngIf="first" class="separator-line">
   <span *ngIf="loggedIn && donation.amount">{{donation.amount}} € </span>
-  <span *ngIf="loggedIn && donation.organiser">Organisator </span>
-  <a *ngIf="!myPresent && loggedIn" href="mailto:{{donation.donor}}" class="highlighted">{{donation.donor}}</a>
-  <a *ngIf="!myPresent && !loggedIn && first" class="highlighted" (click)="handleDonorClick()">Reservierung anzeigen</a>
-  <span *ngIf="myPresent" class="highlighted">{{donation.donor}}</span>
+  <a *ngIf="!isMyPresent() && loggedIn" href="mailto:{{donation.donor}}" class="highlighted">{{donation.donor}}</a>
+  <a *ngIf="!isMyPresent() && !loggedIn && first" class="highlighted" (click)="handleDonorClick()">Reservierung anzeigen</a>
+  <span *ngIf="isMyPresent()" class="highlighted">{{donation.donor}}</span>
+  <span *ngIf="loggedIn && donation.organiser"> </span> <span *ngIf="loggedIn && donation.organiser" class="material-icons" style="vertical-align: bottom">manage_accounts</span>
   <span *ngIf="donation.proxyDonor && loggedIn"> (durch <a href="mailto:{{donation.proxyDonor}}">{{donation.proxyDonor}}</a>)</span>
 </div>

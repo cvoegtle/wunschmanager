@@ -8,7 +8,7 @@ import { Donation, Wish } from "../services/wish";
 })
 export class DonorViewerComponent implements OnInit {
   @Input() donation: Donation;
-  @Input() myPresent: boolean = false;
+  @Input() userName: String;
   @Input() loggedIn: boolean = false;
   @Input() first: boolean = false;
   @Output() donorClicked = new EventEmitter<void>();
@@ -21,5 +21,9 @@ export class DonorViewerComponent implements OnInit {
 
   handleDonorClick() {
     this.donorClicked.emit();
+  }
+
+  isMyPresent() {
+    return this.userName == this.donation.donor;
   }
 }

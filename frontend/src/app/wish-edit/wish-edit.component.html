@@ -37,7 +37,7 @@
       <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
 
       <price-information *ngIf="wish.groupGift && isManagedList() " [wish]="wish"></price-information>
-      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()" [loggedIn]="true"></donor-viewer>
+      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user" [loggedIn]="true"></donor-viewer>
     </form>
   </div>
 </mat-card>
