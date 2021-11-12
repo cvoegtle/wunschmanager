@@ -16,6 +16,7 @@
 
 .wish-full-width {
     max-width: 460px;
+    flex-grow: 2;
 }
 
 .wish-line {
