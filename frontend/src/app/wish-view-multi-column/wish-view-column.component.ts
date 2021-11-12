@@ -13,6 +13,7 @@ export class WishViewColumnComponent {
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() showDonor = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
+  @Output() suggestGroup = new EventEmitter<Wish>();
 
   constructor() {
   }
@@ -27,5 +28,9 @@ export class WishViewColumnComponent {
 
   showDonorClicked(wish: Wish) {
     this.showDonor.emit(wish);
+  }
+
+  suggestGroupClicked(wish: Wish) {
+    this.suggestGroup.emit(wish);
   }
 }

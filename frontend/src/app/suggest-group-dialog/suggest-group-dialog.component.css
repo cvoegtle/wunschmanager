@@ -1,0 +1,12 @@
+.reserve-dialog {
+    width: 320px;
+}
+
+.reserve-donor {
+    width: 300px;
+}
+
+.half-width {
+    max-width: 230px;
+    width: 50%;
+}

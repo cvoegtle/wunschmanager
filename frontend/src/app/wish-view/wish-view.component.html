@@ -23,7 +23,7 @@
     <div>
       <donate-button *ngIf="isAvailable() || isMyPresent()" [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
       </donate-button>
-      <group-gift-button *ngIf="isAvailable() && !wish.groupGift"></group-gift-button>
+      <group-gift-button *ngIf="isAvailable() && !wish.groupGift" (click)="suggestGroupClicked()"></group-gift-button>
     </div>
   </div>
 

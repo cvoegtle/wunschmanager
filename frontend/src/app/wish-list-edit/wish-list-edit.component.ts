@@ -233,16 +233,9 @@ export class WishListEditComponent {
 
     reserveDialog.afterClosed().subscribe(dialogResponse => {
       if (dialogResponse) {
-        if (dialogResponse.wishChanged) {
-          this.callUpdateService(wish);
-        }
         this.callReservationService(dialogResponse.donation, wish);
       }
     })
-  }
-
-  private callUpdateService(wish: Wish) {
-    this.wishService.update(this.wishList.id, wish);
   }
 
   private callReservationService(donation: Donation, wish: Wish) {

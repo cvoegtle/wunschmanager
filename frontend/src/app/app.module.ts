@@ -77,6 +77,7 @@ import { ParticipateDialogComponent } from './participate-dialog/participate-dia
 import { PriceInformationComponent } from './price-information/price-information.component';
 import { DonateButtonComponent } from './donate-button/donate-button.component';
 import { GroupGiftButtonComponent } from './group-gift-button/group-gift-button.component';
+import { SuggestGroupDialogComponent } from './suggest-group-dialog/suggest-group-dialog.component';
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
@@ -86,7 +87,7 @@ import { GroupGiftButtonComponent } from './group-gift-button/group-gift-button.
     WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent, GroupGiftButtonComponent
+    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent, GroupGiftButtonComponent, SuggestGroupDialogComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,

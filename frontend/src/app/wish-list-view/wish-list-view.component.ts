@@ -13,6 +13,7 @@ import { DeleteItemDialogComponent } from "../delete-item-dialog/delete-item-dia
 import { WishViewMultiColumnComponent } from "../wish-view-multi-column/wish-view-multi-column.component";
 import { Router } from "@angular/router";
 import { ParticipateDialogComponent } from "../participate-dialog/participate-dialog.component";
+import { SuggestGroupDialogComponent } from "../suggest-group-dialog/suggest-group-dialog.component";
 
 @Component({
   selector: 'wish-list-view',
@@ -101,6 +102,21 @@ export class WishListViewComponent implements OnInit {
     })
 
   }
+
+  suggestGroupClicked(wish: Wish) {
+    let suggestGroupDialog = this.dialog.open(SuggestGroupDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    suggestGroupDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet) {
+        this.callReservationService(wish, dialogRet);
+      }
+    })
+  }
+
 
   private callReservationService(wish: Wish, donation: Donation = new DonationImpl()) {
     this.wishService.reserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => wish.donations = updatedWish.donations,

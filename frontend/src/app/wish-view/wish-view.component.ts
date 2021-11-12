@@ -15,6 +15,7 @@ export class WishViewComponent implements OnInit {
   @Output() showDonor = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
   @Output() wishSelected = new EventEmitter<Wish>();
+  @Output() suggestGroup = new EventEmitter<Wish>();
 
   constructor() {
   }
@@ -59,6 +60,10 @@ export class WishViewComponent implements OnInit {
 
   reserveClicked() {
     this.reserved.emit(this.wish);
+  }
+
+  suggestGroupClicked() {
+    this.suggestGroup.emit(this.wish);
   }
 
   handleDonorClick() {
