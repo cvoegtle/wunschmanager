@@ -88,21 +88,6 @@ export class WishListViewComponent implements OnInit {
     }
   }
 
-  private participateInGroupGift(wish: Wish) {
-    let participateDialog = this.dialog.open(ParticipateDialogComponent, {
-      data: {
-        wish: wish
-      }
-    });
-
-    participateDialog.afterClosed().subscribe(dialogRet => {
-      if (dialogRet) {
-        this.callReservationService(wish, dialogRet)
-      }
-    })
-
-  }
-
   suggestGroupClicked(wish: Wish) {
     let suggestGroupDialog = this.dialog.open(SuggestGroupDialogComponent, {
       data: {
@@ -117,16 +102,9 @@ export class WishListViewComponent implements OnInit {
     })
   }
 
-
-  private callReservationService(wish: Wish, donation: Donation = new DonationImpl()) {
-    this.wishService.reserve(this.wishList.id, wish.id, donation).subscribe(updatedWish => wish.donations = updatedWish.donations,
-        _ => this.errorHandler.handle('reserveWish'));
-  }
-
   showDonorClicked(wish: Wish) {
     this.askForLogin('um den Schenker zu sehen, musst Du Dich anmelden.');
   }
-
 
   onWishSelection() {
     this.wishesSelected = containsSelectedWish(this.wishes);
@@ -156,6 +134,31 @@ export class WishListViewComponent implements OnInit {
 
   isYellow(): boolean {
     return isYellow(this.wishList.background);
+  }
+
+  private participateInGroupGift(wish: Wish) {
+    let participateDialog = this.dialog.open(ParticipateDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    participateDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet) {
+        this.callReservationService(wish, dialogRet)
+      }
+    })
+
+  }
+
+  private callReservationService(wish: Wish, donation: Donation = new DonationImpl()) {
+    this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
+          wish.donations = updatedWish.donations;
+          wish.groupGift = updatedWish.groupGift;
+          wish.estimatedPrice = updatedWish.estimatedPrice;
+          wish.suggestedParticipation = updatedWish.suggestedParticipation;
+        },
+        _ => this.errorHandler.handle('reserveWish'));
   }
 
   private askForLogin(message: string) {
