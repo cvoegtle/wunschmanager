@@ -9,20 +9,22 @@
         <a *ngIf="wish.link" href="{{targetUrl()}}" target="_blank">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
           <div *ngIf="wish.description">{{wish.description}}</div>
-          <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
         </a>
         <div *ngIf="!wish.link">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
           <div class="description" *ngIf="wish.description">{{wish.description}}</div>
-          <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
         </div>
       </div>
+      <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [myPresent]="isMyPresent()"
                     [loggedIn]="isLoggedIn()"
                     (donorClicked)="handleDonorClick()"></donor-viewer>
     </div>
-    <donate-button *ngIf="isAvailable() || isMyPresent()" [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
-    </donate-button>
+    <div>
+      <donate-button *ngIf="isAvailable() || isMyPresent()" [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
+      </donate-button>
+      <group-gift-button *ngIf="isAvailable() && !wish.groupGift"></group-gift-button>
+    </div>
   </div>
 
 </mat-card>
