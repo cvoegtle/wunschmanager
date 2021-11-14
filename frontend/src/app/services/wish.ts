@@ -71,7 +71,11 @@ export class WishImpl implements Wish {
 }
 
 export function isAvailable(wish: Wish): boolean {
-  return (wish.donations.length == 0 || wish.groupGift) && !wish.invisible;
+  return (wish.donations.length == 0 || isGroupGifOpenForParticipation(wish)) && !wish.invisible;
+}
+
+export function isGroupGifOpenForParticipation(wish: Wish): boolean {
+  return wish.groupGift && donationOpenParticipation(wish) > 0;
 }
 
 export function isReservedByUser(wish: Wish, user: string) {
