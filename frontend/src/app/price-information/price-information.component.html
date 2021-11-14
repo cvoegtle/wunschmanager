@@ -1,6 +1,8 @@
 <div class="group-information">
   <span *ngIf="wish.estimatedPrice">Wert: {{wish.estimatedPrice}} € </span>
-  <span *ngIf="wish.estimatedPrice && wish.suggestedParticipation"> / </span>
-  <span *ngIf="wish.suggestedParticipation">Beteiligungsvorschlag: {{wish.suggestedParticipation}} € </span>
+  <span *ngIf="wish.estimatedPrice"> / </span>
+  <span >zugesagt: {{participation()}} € </span>
+  <span *ngIf="wish.estimatedPrice"> / </span>
+  <span *ngIf="wish.estimatedPrice">offen: {{openParticipation()}} € </span>
 </div>
 

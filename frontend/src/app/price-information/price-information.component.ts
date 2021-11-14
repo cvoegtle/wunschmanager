@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Wish } from "../services/wish";
+import { donationOpenParticipation, donationTotalParticipation, Wish } from "../services/wish";
 
 @Component({
   selector: 'price-information',
@@ -14,4 +14,11 @@ export class PriceInformationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  participation() {
+    return donationTotalParticipation(this.wish);
+  }
+
+  openParticipation() {
+    return donationOpenParticipation(this.wish);
+  }
 }

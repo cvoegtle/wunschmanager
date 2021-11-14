@@ -146,3 +146,23 @@ export function countSelection(wishes: Wish[]): number {
   }
   return count;
 }
+
+export function donationTotalParticipation(wish: Wish): number {
+  let total:number = 0;
+  for (let index in wish.donations) {
+    if (wish.donations[index].amount) {
+      total += wish.donations[index].amount;
+    }
+  }
+  return total;
+}
+
+export function donationOpenParticipation(wish: Wish): number {
+  let open: number = 0;
+
+  if (wish.estimatedPrice) {
+    open = wish.estimatedPrice - donationTotalParticipation(wish);
+  }
+
+  return open;
+}
