@@ -6,6 +6,10 @@
     background: lightgray;
 }
 
+.group-gift {
+    border: 3px solid brown;
+}
+
 .wish-form {
     min-width: 250px;
     max-width: 510px;

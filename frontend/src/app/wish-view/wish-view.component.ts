@@ -47,6 +47,9 @@ export class WishViewComponent implements OnInit {
     return isAvailable(this.wish) && isBlue(this.wish.background);
   }
 
+  isGroupGift() {
+    return isAvailable(this.wish) && this.wish.groupGift;
+  }
 
   isMyPresent(): boolean {
     let donations = this.wish.donations;
