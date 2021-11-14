@@ -82,7 +82,7 @@ export function isAvailable(wish: Wish): boolean {
 }
 
 export function isGroupGifOpenForParticipation(wish: Wish): boolean {
-  return wish.groupGift && donationOpenParticipation(wish) > 0;
+  return wish.groupGift && (donationOpenParticipation(wish) > 0 || wish.estimatedPrice == null);
 }
 
 export function isReservedByUser(wish: Wish, user: string) {

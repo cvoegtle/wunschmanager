@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Donation, DonationImpl, Wish } from "../services/wish";
+import { Donation, DonationImpl, donationOpenParticipation, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
@@ -20,7 +20,15 @@ export class ParticipateDialogComponent implements OnInit {
       if (key.code == "Escape") this.closeDialog();
     });
     this.dialogResult = new DonationImpl();
-    this.dialogResult.amount = this.wish.suggestedParticipation
+    this.dialogResult.amount = this.calculationSuggestedParticipation()
+  }
+
+  private calculationSuggestedParticipation() {
+    if (donationOpenParticipation(this.wish) > 0 && this.wish.suggestedParticipation) {
+      return Math.min(donationOpenParticipation(this.wish), this.wish.suggestedParticipation);
+    } else {
+      return this.wish.suggestedParticipation
+    }
   }
 
   closeDialog() {
