@@ -70,6 +70,13 @@ export class WishImpl implements Wish {
   donations: Donation[] = [];
 }
 
+export function copyDonationInformation(target: Wish, source: Wish) {
+  target.groupGift = source.groupGift;
+  target.estimatedPrice = source.estimatedPrice;
+  target.suggestedParticipation = source.suggestedParticipation;
+  target.donations = source.donations;
+}
+
 export function isAvailable(wish: Wish): boolean {
   return (wish.donations.length == 0 || isGroupGifOpenForParticipation(wish)) && !wish.invisible;
 }

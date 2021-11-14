@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { containsSelectedWish, Donation, DonationImpl, isReservedByUser, removeWishSelection, Wish } from '../services/wish';
+import { containsSelectedWish, copyDonationInformation, Donation, DonationImpl, isReservedByUser, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
 import { UserService } from '../services/user.service';
@@ -153,10 +153,7 @@ export class WishListViewComponent implements OnInit {
 
   private callReservationService(wish: Wish, donation: Donation = new DonationImpl()) {
     this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
-          wish.donations = updatedWish.donations;
-          wish.groupGift = updatedWish.groupGift;
-          wish.estimatedPrice = updatedWish.estimatedPrice;
-          wish.suggestedParticipation = updatedWish.suggestedParticipation;
+          copyDonationInformation(wish, updatedWish);
         },
         _ => this.errorHandler.handle('reserveWish'));
   }

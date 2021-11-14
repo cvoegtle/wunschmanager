@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import {
+  copyDonationInformation,
   countSelection,
   Donation,
   DonationImpl,
   extractIds,
   highlightNewIds,
-  isAvailable,
   isReservedByUser,
   removeWishSelection,
   Wish
@@ -219,7 +219,7 @@ export class WishListEditComponent {
   private runReservationInMyName(wish: Wish, donation: Donation) {
     donation.donor = this.user;
     this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
-          wish.donations = updatedWish.donations;
+          copyDonationInformation(wish, updatedWish);
         },
         _ => this.errorHandler.handle('reserveWish'));
   }
@@ -241,7 +241,7 @@ export class WishListEditComponent {
   private callReservationService(donation: Donation, wish: Wish) {
     if (donation.donor) {
       this.wishService.proxyReserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
-            wish.donations = updatedWish.donations;
+            copyDonationInformation(wish, updatedWish);
           },
           _ => this.errorHandler.handle('proxyReserveWish'));
     } else {
