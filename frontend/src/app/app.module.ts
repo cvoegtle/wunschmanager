@@ -78,6 +78,7 @@ import { PriceInformationComponent } from './price-information/price-information
 import { DonateButtonComponent } from './donate-button/donate-button.component';
 import { GroupGiftButtonComponent } from './group-gift-button/group-gift-button.component';
 import { SuggestGroupDialogComponent } from './suggest-group-dialog/suggest-group-dialog.component';
+import { EuroFormatPipe } from './util/euro-format.pipe';
 
 @NgModule({
   entryComponents: [ShareDialogComponent, DeleteItemDialogComponent, EditEventDialogComponent, WishPropertiesComponent,
@@ -87,7 +88,8 @@ import { SuggestGroupDialogComponent } from './suggest-group-dialog/suggest-grou
     WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
     SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
     WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent, GroupGiftButtonComponent, SuggestGroupDialogComponent
+    ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
+    GroupGiftButtonComponent, SuggestGroupDialogComponent, EuroFormatPipe
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,

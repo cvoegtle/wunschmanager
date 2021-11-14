@@ -1,6 +1,6 @@
 <div matLine>
   <hr *ngIf="first" class="separator-line">
-  <span *ngIf="loggedIn && donation.amount">{{donation.amount}} € </span>
+  <span *ngIf="loggedIn && donation.amount">{{donation.amount | euro: 2}} </span>
   <a *ngIf="!isMyPresent() && loggedIn" href="mailto:{{donation.donor}}" class="highlighted">{{donation.donor}}</a>
   <a *ngIf="!isMyPresent() && !loggedIn && first" class="highlighted" (click)="handleDonorClick()">Reservierung anzeigen</a>
   <span *ngIf="isMyPresent()" class="highlighted">{{donation.donor}}</span>
