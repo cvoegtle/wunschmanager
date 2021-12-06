@@ -1,5 +1,5 @@
 buildscript {    // Configuration for building
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.5.10'
     ext.spring_boot_version = '2.5.6'
     repositories {
         mavenCentral()
@@ -23,12 +23,12 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
-    implementation 'com.google.appengine:appengine:1.9.91'
-    implementation 'com.google.appengine:appengine-api-1.0-sdk:1.9.91'
+    implementation 'com.google.appengine:appengine:1.9.93'
+    implementation 'com.google.appengine:appengine-api-1.0-sdk:1.9.93'
     implementation 'com.google.appengine:appengine-api-labs:1.9.88'
     implementation 'com.google.appengine:appengine-endpoints:1.9.86'
     implementation 'com.google.appengine:appengine-endpoints-deps:1.9.86'
-    implementation 'com.google.appengine:appengine-jsr107cache:1.9.91'
+    implementation 'com.google.appengine:appengine-jsr107cache:1.9.93'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0'
 
     implementation 'com.google.guava:guava:19.0'
@@ -47,7 +47,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '44'
+        version = '45'
         projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
@@ -74,4 +74,8 @@ task cleanupWebApp(type:Delete) {
     delete fileTree("$webappDir") {
         include "*"
     }
+}
+
+repositories {
+    mavenCentral()
 }

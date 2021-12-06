@@ -66,4 +66,10 @@ import java.util.TreeSet
       proxyDonor = null
     }
   }
+
+  fun replaceDonations(replacementDonor: String) {
+    donations.clear()
+    addDonation(replacementDonor)
+  }
+
 }

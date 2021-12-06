@@ -29,7 +29,7 @@ fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wi
       wishes.removeIf { it.invisible == true }
       wishes.forEach {
         if (it.donations.isNotEmpty()) {
-          it.addDonation("wunschmanager@voegtle.org")
+          it.replaceDonations("wunschmanager@voegtle.org")
         }
       }
     }
