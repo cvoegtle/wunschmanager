@@ -9,6 +9,7 @@ import { Donation, Wish } from "../services/wish";
 export class DonorViewerComponent implements OnInit {
   @Input() donation: Donation;
   @Input() userName: String;
+  @Input() myPresent: boolean = false;
   @Input() loggedIn: boolean = false;
   @Input() first: boolean = false;
   @Output() donorClicked = new EventEmitter<void>();
@@ -23,7 +24,7 @@ export class DonorViewerComponent implements OnInit {
     this.donorClicked.emit();
   }
 
-  isMyPresent() {
-    return this.userName == this.donation.donor;
+  isMyDonation() {
+    return this.userName == this.donation.donor || this.userName == this.donation.proxyDonor;
   }
 }

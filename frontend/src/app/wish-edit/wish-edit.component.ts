@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { isAvailable, Wish } from "../services/wish";
+import { isAvailable, isReservedByUser, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
@@ -31,13 +31,7 @@ export class WishEditComponent implements OnInit {
   }
 
   isMyPresent(): boolean {
-    let donations = this.wish.donations;
-    for (let index in donations) {
-      if (donations[index].donor && (donations[index].donor == this.user || donations[index].proxyDonor == this.user)) {
-        return true;
-      }
-    }
-    return false;
+    return isReservedByUser(this.wish, this.user)
   }
 
   isManagedList(): boolean {

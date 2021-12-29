@@ -18,6 +18,7 @@
       <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user"
                     [loggedIn]="isLoggedIn()"
+                    [myPresent]="isMyPresent()"
                     (donorClicked)="handleDonorClick()"></donor-viewer>
     </div>
     <div>
