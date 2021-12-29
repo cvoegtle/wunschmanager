@@ -1,18 +1,17 @@
 <h1 mat-dialog-title>{{wish.caption}} reservieren</h1>
 <div mat-dialog-content>
   <div class="reserve-dialog">
-    <mat-checkbox [(ngModel)]="wish.groupGift">Gruppengeschenk vorschlagen</mat-checkbox>
-    <mat-form-field *ngIf="wish.groupGift"  class="reserve-donor">
+    <mat-form-field class="reserve-donor">
       <input matInput type="number" placeholder="Wert in Euro" [(ngModel)]="wish.estimatedPrice" name="editPrice">
     </mat-form-field>
-    <mat-form-field *ngIf="wish.groupGift" class="reserve-donor">
+    <mat-form-field class="reserve-donor">
       <input #amount placeholder="Mein Anteil" matInput type="number" [(ngModel)]="donation.amount"/>
     </mat-form-field>
-    <mat-form-field *ngIf="wish.groupGift"  class="reserve-donor">
+    <mat-form-field class="reserve-donor">
       <input matInput type="number" placeholder="Vorschlag für Beteiligung" [(ngModel)]="wish.suggestedParticipation"
              name="editSuggestion">
     </mat-form-field>
-    <mat-checkbox *ngIf="wish.groupGift" [(ngModel)]="donation.organiser">ich kümmere mich um die Orga</mat-checkbox>
+    <mat-checkbox [(ngModel)]="donation.organiser">ich kümmere mich um die Orga</mat-checkbox>
   </div>
 </div>
 <div mat-dialog-actions>
