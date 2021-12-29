@@ -6,7 +6,8 @@ import org.voegtle.wunschmanager.data.WishList
 
 fun loadReducedListOfWishes(wishList: WishList, userName: String?): MutableList<Wish> {
   val wishes = loadFullListOfWishes(wishList)
-  return reduceWishList(userName, wishList, wishes)
+  val reducedWishes = reduceWishList(userName, wishList, wishes)
+  return addAffiliateTags(userName, reducedWishes)
 }
 
 fun loadFullListOfWishes(wishList: WishList): MutableList<Wish> {
@@ -15,7 +16,6 @@ fun loadFullListOfWishes(wishList: WishList): MutableList<Wish> {
   wishes.stream().forEach { it.migrateDonor() }
   return wishes
 }
-
 
 fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wish>): MutableList<Wish> {
   when (userName) {
@@ -37,5 +37,9 @@ fun reduceWishList(userName: String?, wishList: WishList, wishes: MutableList<Wi
     else -> wishes.removeIf { it.invisible == true }
   }
   return wishes
+}
+
+fun addAffiliateTags(userName: String?, wishes: MutableList<Wish>): MutableList<Wish> {
+ return AmazonAffiliateProgramm().processWishes(userName, wishes)
 }
 
