@@ -6,10 +6,8 @@ class AmazonAffiliateProgramm {
   val AMAZON_URL_PREFIX = "https://www.amazon.de/"
   val AMAZON_WUNSCHMANAGER_TAG = "&tag=wunschmanager-21"
 
-  fun processWishes(userName: String?, wishes: MutableList<Wish>): MutableList<Wish> {
-    if (userName != null) {
-      wishes.filter { hasAmazonLink(it) }.forEach { addAffiliateTag(it) }
-    }
+  fun processWishes(wishes: MutableList<Wish>): MutableList<Wish> {
+    wishes.filter { hasAmazonLink(it) }.forEach { addAffiliateTag(it) }
     return wishes
   }
 
