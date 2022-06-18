@@ -3,8 +3,6 @@ package de.voegtle.wunschmanager.util
 import org.voegtle.wunschmanager.data.Wish
 
 class AmazonAffiliateProgramm {
-  val AMAZON_URL_PREFIX = "https://www.amazon.de/"
-  val AMAZON_WUNSCHMANAGER_TAG = "&tag=wunschmanager-21"
 
   fun processWishes(wishes: MutableList<Wish>): MutableList<Wish> {
     wishes.filter { hasAmazonLink(it) }.forEach { addAffiliateTag(it) }
@@ -18,6 +16,11 @@ class AmazonAffiliateProgramm {
 
   private fun addAffiliateTag(wish: Wish) {
     wish.link += AMAZON_WUNSCHMANAGER_TAG
+  }
+
+  companion object {
+    const val AMAZON_URL_PREFIX = "https://www.amazon.de/"
+    const val AMAZON_WUNSCHMANAGER_TAG = ""  // Disable Affiliate Programm "&tag=wunschmanager-21"
   }
 
 }
