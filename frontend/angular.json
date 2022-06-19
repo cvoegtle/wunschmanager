@@ -132,7 +132,6 @@
       }
     }
   },
-  "defaultProject": "wunschmanager-client",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

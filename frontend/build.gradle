@@ -22,7 +22,7 @@ task compile(type:Exec) {
     inputs.dir "."
     outputs.dir "$angularOutputDir"
     group = BasePlugin.BUILD_GROUP
-    commandLine "ng", "build", "--prod", "--output-path=$angularOutputDir"
+    commandLine "ng", "build", "--configuration=production", "--output-path=$angularOutputDir"
 }
 
 task clean(type:Delete) {
