@@ -1,9 +1,12 @@
 /.idea/
 /build/
 /frontend/dist/
+/frontend/.angular/
+/frontend/.gradle/
 /node_modules/
 /backend/build/
 /backend/dev_server/
+/backend/.gradle/
 /backend/out/
 /backend/src/main/webapp/assets/wunschmanager.png
 /backend/src/main/webapp/.htaccess
