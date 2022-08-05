@@ -63,6 +63,7 @@ import javax.servlet.http.HttpServletRequest
       existingWish.suggestedParticipation = it.suggestedParticipation
       existingWish.description = it.description
       existingWish.link = it.link
+      existingWish.alternateLinks = it.alternateLinks
       existingWish.priority = it.priority
       existingWish.background = it.background
       existingWish.invisible = it.invisible

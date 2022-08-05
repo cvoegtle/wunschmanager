@@ -15,6 +15,9 @@
           <div class="description" *ngIf="wish.description">{{wish.description}}</div>
         </div>
       </div>
+
+      <link-viewer *ngFor="let link of wish.alternateLinks; let linkIndex = index" [link]="link" [index]="linkIndex" ></link-viewer>
+
       <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user"
                     [loggedIn]="isLoggedIn()"

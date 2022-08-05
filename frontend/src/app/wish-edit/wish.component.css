@@ -78,3 +78,7 @@ mat-card {
 .highlight {
     animation: mymove 700ms ease-out;
 }
+
+.top-space {
+    margin-top: 10px;
+}

@@ -8,6 +8,7 @@ export interface Wish {
   suggestedParticipation: number;
   description: string;
   link: string;
+  alternateLinks: string[];
   donor: string;
   proxyDonor: string
   createTimestamp: number;
@@ -35,7 +36,7 @@ export class DonationImpl implements Donation{
   amount: number
 }
 
-export class WishImpl implements Wish {
+class WishImpl implements Wish {
   constructor(wish: Wish) {
     this.id = wish.id;
     this.caption = wish.caption;
@@ -44,6 +45,7 @@ export class WishImpl implements Wish {
     this.suggestedParticipation = wish.suggestedParticipation;
     this.description = wish.description;
     this.link = wish.link;
+    this.alternateLinks = wish.alternateLinks;
     this.createTimestamp = wish.createTimestamp;
     this.priority = wish.priority;
     this.background = wish.background;
@@ -57,6 +59,7 @@ export class WishImpl implements Wish {
   suggestedParticipation: number;
   description: string;
   link: string;
+  alternateLinks: string[] = [];
   donor: string;
   proxyDonor: string
   createTimestamp: number;
@@ -68,6 +71,15 @@ export class WishImpl implements Wish {
   highlighted: boolean;
 
   donations: Donation[] = [];
+}
+
+export function copyWish(wish: Wish): Wish {
+  if (wish != null) {
+    let copy = new WishImpl(wish);
+    removeEmptyLinks(copy);
+    return copy;
+  }
+  return null;
 }
 
 export function copyDonationInformation(target: Wish, source: Wish) {
@@ -176,4 +188,22 @@ export function donationOpenParticipation(wish: Wish): number {
   }
 
   return open;
+}
+
+export function reduceToOneEmptyLink(wish: Wish) {
+  removeEmptyLinks(wish);
+  if (wish.link) {
+    wish.alternateLinks.push("");
+  }
+}
+
+export function removeEmptyLinks(wish: Wish) {
+  wish.alternateLinks=wish.alternateLinks.filter(function(link, index, links) {
+    return link != null && link.trim() != "";
+  })
+
+  if (wish.link == null || wish.link.trim() == "" && wish.alternateLinks.length > 0) {
+    wish.link = wish.alternateLinks[0];
+    wish.alternateLinks.shift();
+  }
 }

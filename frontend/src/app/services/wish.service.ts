@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Donation, DonationImpl, Wish, WishImpl } from "./wish";
+import { copyWish, Donation, Wish } from "./wish";
 import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
 import { handleError, unique } from "../util/url-helper";
@@ -37,7 +37,7 @@ export class WishService {
   }
 
   update(listId: number, wish: Wish): Observable<boolean> {
-    let updateRequest = {listId: listId, wish: new WishImpl(wish)};
+    let updateRequest = {listId: listId, wish: copyWish(wish)};
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions);
   }
 
@@ -57,10 +57,8 @@ export class WishService {
   }
 
   private buildReserveRequest(donation: Donation, wish: Wish) {
-    if (wish != null) {
-      wish = new WishImpl(wish);
-    }
-    let reserveRequest = {donation: donation, wish: wish}
+    let reserveWish = copyWish(wish);
+    let reserveRequest = {donation: donation, wish: reserveWish}
     return reserveRequest;
   }
 

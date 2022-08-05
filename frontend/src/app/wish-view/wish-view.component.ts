@@ -23,27 +23,27 @@ export class WishViewComponent implements OnInit {
   ngOnInit() {
   }
 
-  isLoggedIn() {
-    return this.user;
+  isLoggedIn(): boolean {
+    return this.user != null;
   }
 
-  isAvailable() {
+  isAvailable(): boolean {
     return isAvailable(this.wish);
   }
 
-  isRed() {
+  isRed(): boolean {
     return isAvailable(this.wish) && isRed(this.wish.background);
   }
 
-  isYellow() {
+  isYellow(): boolean {
     return isAvailable(this.wish) && isYellow(this.wish.background);
   }
 
-  isGreen() {
+  isGreen(): boolean {
     return isAvailable(this.wish) && isGreen(this.wish.background);
   }
 
-  isBlue() {
+  isBlue(): boolean {
     return isAvailable(this.wish) && isBlue(this.wish.background);
   }
 
@@ -78,7 +78,7 @@ export class WishViewComponent implements OnInit {
     this.wishSelected.emit(this.wish);
   }
 
-  targetUrl() {
+  targetUrl(): string {
     return makeValidUrl(this.wish.link);
   }
 

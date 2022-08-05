@@ -1,0 +1,10 @@
+<div *ngIf="editMode" class="wish-line">
+  <mat-form-field class="wish-url">
+    <input matInput placeholder="Link" [(ngModel)]="link" (change)="onLinkChanged()" name="editLink">
+  </mat-form-field>
+  <a *ngIf="link" mat-icon-button target="_blank" href="{{targetUrl()}}" matTooltip="Seite öffnen">
+    <i class="material-icons">link</i>
+  </a>
+</div>
+<div *ngIf="viewMode" class="description">{{link}}</div>
+

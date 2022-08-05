@@ -26,16 +26,17 @@
       </div>
       <div *ngIf="orderMode" class="description">{{wish.description}}</div>
 
-
-      <div *ngIf="!orderMode" class="wish-line">
-        <mat-form-field class="wish-url">
-          <input matInput placeholder="Link" [(ngModel)]="wish.link" [disabled]="orderMode" (change)="onWishChange()" name="editLink">
-        </mat-form-field>
-        <a *ngIf="wish.link" [disabled]="orderMode" mat-icon-button target="_blank" href="{{targetUrl()}}" matTooltip="Seite öffnen">
-          <i class="material-icons">link</i>
-        </a>
-      </div>
-      <div *ngIf="wish.link && orderMode && !wish.caption && !wish.description" class="description">{{wish.link}}</div>
+      <link-edit [link]="wish.link"
+                 [editMode]="!orderMode"
+                 [viewMode]="wish.link && orderMode && !wish.caption && !wish.description"
+                 (linkChanged)="onLinkChanged(-1, $event)">
+      </link-edit>
+      <link-edit *ngFor="let alternateLink of wish.alternateLinks; let indexOfLink=index;"
+                 [link]="alternateLink"
+                 [editMode]="!orderMode"
+                 [viewMode]="false"
+                 (linkChanged)="onLinkChanged(indexOfLink, $event)">
+      </link-edit>
 
       <price-information *ngIf="wish.groupGift && isManagedList() " [wish]="wish"></price-information>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user"

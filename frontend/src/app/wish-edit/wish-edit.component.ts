@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { isAvailable, isReservedByUser, Wish } from "../services/wish";
+import { isAvailable, isReservedByUser, reduceToOneEmptyLink, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
@@ -24,6 +24,7 @@ export class WishEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    reduceToOneEmptyLink(this.wish);
   }
 
   isAvailable() {
@@ -43,7 +44,7 @@ export class WishEditComponent implements OnInit {
   }
 
   isYellow() {
-    return this.isAvailable() &&  isYellow(this.wish.background);
+    return this.isAvailable() && isYellow(this.wish.background);
   }
 
   isGreen() {
@@ -80,12 +81,18 @@ export class WishEditComponent implements OnInit {
     this.reserved.emit(this.wish);
   }
 
-  targetUrl() {
-    return makeValidUrl(this.wish.link);
-  }
-
   toggleSelection() {
     this.wish.selected = !this.wish.selected;
     this.wishSelection.emit(this.wish);
+  }
+
+  onLinkChanged(index: number, link: string) {
+    if (index < 0) {
+      this.wish.link = link;
+    } else {
+      this.wish.alternateLinks[index] = link;
+    }
+    reduceToOneEmptyLink(this.wish);
+    this.wishChange.emit(this.wish);
   }
 }

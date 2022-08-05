@@ -8,7 +8,7 @@ import { Donation, Wish } from "../services/wish";
 })
 export class DonorViewerComponent implements OnInit {
   @Input() donation: Donation;
-  @Input() userName: String;
+  @Input() userName: string;
   @Input() myPresent: boolean = false;
   @Input() loggedIn: boolean = false;
   @Input() first: boolean = false;
