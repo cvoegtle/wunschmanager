@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <link-viewer *ngIf="wish.alternateLinks" [link]="wish.link" [first]="true" [index]="1"></link-viewer>
+      <link-viewer *ngIf="wish.alternateLinks.length > 0" [link]="wish.link" [first]="true" [index]="1"></link-viewer>
       <link-viewer *ngFor="let link of wish.alternateLinks; let linkIndex = index;" [link]="link" [index]="linkIndex+2"></link-viewer>
 
       <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
