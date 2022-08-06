@@ -10,15 +10,13 @@ import { makeValidUrl } from "../util/url-helper";
 export class LinkEditComponent implements OnInit {
   @Input() editMode: boolean;
   @Input() viewMode: boolean;
+  @Input() index: number;
   @Input() link: string;
-  @Output() linkChanged = new EventEmitter<string>();
+  @Output() linkChange = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
-    if (this.link == null) {
-      this.link="";
-    }
   }
 
   targetUrl() {
@@ -26,6 +24,6 @@ export class LinkEditComponent implements OnInit {
   }
 
   onLinkChanged() {
-    this.linkChanged.emit(this.link);
+    this.linkChange.emit(this.link);
   }
 }

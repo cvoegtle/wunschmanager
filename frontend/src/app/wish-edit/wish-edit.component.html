@@ -29,13 +29,14 @@
       <link-edit [link]="wish.link"
                  [editMode]="!orderMode"
                  [viewMode]="wish.link && orderMode && !wish.caption && !wish.description"
-                 (linkChanged)="onLinkChanged(null, $event)">
+                 (linkChange)="onLinkChanged(null, $event)">
       </link-edit>
-      <link-edit *ngFor="let alternateLink of wish.alternateLinks; let indexOfLink=index;"
+      <link-edit *ngFor="let alternateLink of wish.alternateLinks; let indexOfLink=index"
                  [link]="alternateLink"
                  [editMode]="!orderMode"
                  [viewMode]="false"
-                 (linkChanged)="onLinkChanged(indexOfLink, $event)">
+                 [index]="indexOfLink"
+                 (linkChange)="onLinkChanged(indexOfLink, $event)">
       </link-edit>
 
       <price-information *ngIf="wish.groupGift && isManagedList() " [wish]="wish"></price-information>

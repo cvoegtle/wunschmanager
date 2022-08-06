@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { isAvailable, isReservedByUser, reduceToOneEmptyLink, Wish } from "../services/wish";
-import { makeValidUrl } from "../util/url-helper";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
@@ -92,7 +91,9 @@ export class WishEditComponent implements OnInit {
     } else {
       this.wish.alternateLinks[index] = link;
     }
-    reduceToOneEmptyLink(this.wish);
     this.wishChange.emit(this.wish);
+
+    // deferred ausführen, da sonst der letzte Link von Angular dupliziert wird
+    setTimeout(reduceToOneEmptyLink, 10, this.wish);
   }
 }

@@ -190,11 +190,15 @@ export function donationOpenParticipation(wish: Wish): number {
   return open;
 }
 
-export function reduceToOneEmptyLink(wish: Wish) {
-  removeEmptyLinks(wish);
+export function ensureEmptyLink(wish: Wish) {
   if (wish.link) {
     wish.alternateLinks.push("");
   }
+}
+
+export function reduceToOneEmptyLink(wish: Wish) {
+  removeEmptyLinks(wish);
+  ensureEmptyLink(wish);
 }
 
 export function removeEmptyLinks(wish: Wish) {
