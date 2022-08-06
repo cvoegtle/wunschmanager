@@ -87,7 +87,7 @@ export class WishEditComponent implements OnInit {
   }
 
   onLinkChanged(index: number, link: string) {
-    if (index < 0) {
+    if (index == null) {
       this.wish.link = link;
     } else {
       this.wish.alternateLinks[index] = link;

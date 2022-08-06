@@ -29,7 +29,7 @@
       <link-edit [link]="wish.link"
                  [editMode]="!orderMode"
                  [viewMode]="wish.link && orderMode && !wish.caption && !wish.description"
-                 (linkChanged)="onLinkChanged(-1, $event)">
+                 (linkChanged)="onLinkChanged(null, $event)">
       </link-edit>
       <link-edit *ngFor="let alternateLink of wish.alternateLinks; let indexOfLink=index;"
                  [link]="alternateLink"
