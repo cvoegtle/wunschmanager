@@ -17,7 +17,7 @@ import java.util.TreeSet
                    var suggestedParticipation: Double? = null,
                    @Index var description: String = "",
                    var link: String? = null,
-                   var alternateLinks: List<String> = ArrayList(),
+                   var alternatives: List<Alternative> = ArrayList(),
                    @Index var donor: String? = null,
                    @Index var proxyDonor: String? = null,
                    @Index var createTimestamp: Long = 0,
@@ -39,7 +39,7 @@ import java.util.TreeSet
                                                     suggestedParticipation = this.suggestedParticipation,
                                                     description = this.description,
                                                     link = this.link,
-                                                    alternateLinks = this.alternateLinks.map { it }.toList(),
+                                                    alternatives = this.alternatives.map { it }.toList(),
                                                     createTimestamp = Date().time,
                                                     priority = this.priority, background = this.background,
                                                     invisible = this.invisible)

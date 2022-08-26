@@ -1,24 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { convertUrlToShortText, makeValidUrl } from "../util/url-helper";
+import { Alternative, Wish } from "../services/wish";
 
 @Component({
-  selector: 'link-viewer',
-  templateUrl: './link-viewer.component.html',
+  selector: 'content-viewer',
+  templateUrl: './content-viewer.component.html',
   styleUrls: ['../wish-edit/wish.component.css']
 })
-export class LinkViewerComponent implements OnInit {
+export class ContentViewerComponent implements OnInit {
   @Input() first: boolean;
   @Input() index: number;
-  @Input() link: string;
-  description: string;
+  @Input() content: Alternative | Wish;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.description = this.index + ". " + convertUrlToShortText(this.link);
   }
 
   targetUrl() {
-    return makeValidUrl(this.link);
+    return makeValidUrl(this.content.link);
   }
 }

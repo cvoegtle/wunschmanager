@@ -1,0 +1,17 @@
+<div *ngIf="editMode" class="wish-line">
+  <mat-form-field class="wish-full-width">
+        <textarea matInput placeholder="Beschreibung" [(ngModel)]="content.description" [disabled]="viewMode" matTextareaAutosize
+                  (change)="onContentChanged()" matAutosizeMinRows="2" matAutosizeMaxRows="5" name="editDescription"></textarea>
+  </mat-form-field>
+</div>
+<div *ngIf="viewMode" class="description">{{content.description}}</div>
+<div *ngIf="editMode" class="wish-line">
+  <mat-form-field class="wish-url">
+    <input matInput placeholder="Link" [(ngModel)]="content.link" (change)="onContentChanged()" name="editLink">
+  </mat-form-field>
+  <a *ngIf="content.link" mat-icon-button target="_blank" href="{{targetUrl()}}" matTooltip="Seite öffnen">
+    <i class="material-icons">link</i>
+  </a>
+</div>
+<div *ngIf="viewMode && !content.description" class="description">{{content.link}}</div>
+

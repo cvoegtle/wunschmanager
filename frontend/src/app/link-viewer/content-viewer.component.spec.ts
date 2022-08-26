@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LinkEditComponent } from './link-edit.component';
+import { ContentViewerComponent } from './content-viewer.component';
 
-describe('LinkEditComponent', () => {
-  let component: LinkEditComponent;
-  let fixture: ComponentFixture<LinkEditComponent>;
+describe('LinkViewerComponent', () => {
+  let component: ContentViewerComponent;
+  let fixture: ComponentFixture<ContentViewerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LinkEditComponent ]
+      declarations: [ ContentViewerComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LinkEditComponent);
+    fixture = TestBed.createComponent(ContentViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

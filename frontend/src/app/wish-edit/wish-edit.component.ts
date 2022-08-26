@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { isAvailable, isReservedByUser, reduceToOneEmptyLink, Wish } from "../services/wish";
+import { Alternative, isAvailable, isReservedByUser, reduceToOneEmptyAlternative, Wish } from "../services/wish";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
@@ -23,7 +23,7 @@ export class WishEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    reduceToOneEmptyLink(this.wish);
+    reduceToOneEmptyAlternative(this.wish);
   }
 
   isAvailable() {
@@ -85,15 +85,13 @@ export class WishEditComponent implements OnInit {
     this.wishSelection.emit(this.wish);
   }
 
-  onLinkChanged(index: number, link: string) {
-    if (index == null) {
-      this.wish.link = link;
-    } else {
-      this.wish.alternateLinks[index] = link;
+  onContentChanged(index: number, content: Alternative | Wish) {
+    if (index != null) {
+      this.wish.alternatives[index] = content;
     }
     this.wishChange.emit(this.wish);
 
     // deferred ausführen, da sonst der letzte Link von Angular dupliziert wird
-    setTimeout(reduceToOneEmptyLink, 10, this.wish);
+    setTimeout(reduceToOneEmptyAlternative, 10, this.wish);
   }
 }

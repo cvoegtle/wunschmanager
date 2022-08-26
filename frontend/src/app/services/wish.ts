@@ -8,7 +8,7 @@ export interface Wish {
   suggestedParticipation: number;
   description: string;
   link: string;
-  alternateLinks: string[];
+  alternatives: Alternative[];
   donor: string;
   proxyDonor: string
   createTimestamp: number;
@@ -29,7 +29,12 @@ export interface Donation {
   amount: number
 }
 
-export class DonationImpl implements Donation{
+export interface Alternative {
+  description: string;
+  link: string;
+}
+
+export class DonationImpl implements Donation {
   donor: string;
   proxyDonor: string;
   organiser: boolean;
@@ -45,7 +50,7 @@ class WishImpl implements Wish {
     this.suggestedParticipation = wish.suggestedParticipation;
     this.description = wish.description;
     this.link = wish.link;
-    this.alternateLinks = wish.alternateLinks;
+    this.alternatives = wish.alternatives;
     this.createTimestamp = wish.createTimestamp;
     this.priority = wish.priority;
     this.background = wish.background;
@@ -59,7 +64,7 @@ class WishImpl implements Wish {
   suggestedParticipation: number;
   description: string;
   link: string;
-  alternateLinks: string[] = [];
+  alternatives: Alternative[] = [];
   donor: string;
   proxyDonor: string
   createTimestamp: number;
@@ -73,10 +78,20 @@ class WishImpl implements Wish {
   donations: Donation[] = [];
 }
 
+class AlternativeImpl implements Alternative {
+  constructor() {
+    this.description = "";
+    this.link = "";
+  }
+
+  description: string;
+  link: string;
+}
+
 export function copyWish(wish: Wish): Wish {
   if (wish != null) {
     let copy = new WishImpl(wish);
-    removeEmptyLinks(copy);
+    removeEmptyAlternatives(copy);
     return copy;
   }
   return null;
@@ -171,7 +186,7 @@ export function countSelection(wishes: Wish[]): number {
 }
 
 export function donationTotalParticipation(wish: Wish): number {
-  let total:number = 0;
+  let total: number = 0;
   for (let index in wish.donations) {
     if (wish.donations[index].amount) {
       total += wish.donations[index].amount;
@@ -190,24 +205,41 @@ export function donationOpenParticipation(wish: Wish): number {
   return open;
 }
 
-export function ensureEmptyLink(wish: Wish) {
+export function ensureEmptyAlternative(wish: Wish) {
   if (wish.link) {
-    wish.alternateLinks.push("");
+    let alternativesWithoutLink = wish.alternatives.filter(function (alternative, index, alternatives) {
+      return !isWithLink(alternative);
+    })
+    if (alternativesWithoutLink.length == 0) {
+      wish.alternatives.push(new AlternativeImpl());
+    }
   }
 }
 
-export function reduceToOneEmptyLink(wish: Wish) {
-  removeEmptyLinks(wish);
-  ensureEmptyLink(wish);
+export function reduceToOneEmptyAlternative(wish: Wish) {
+  removeEmptyAlternatives(wish);
+  ensureEmptyAlternative(wish);
 }
 
-export function removeEmptyLinks(wish: Wish) {
-  wish.alternateLinks=wish.alternateLinks.filter(function(link, index, links) {
-    return link != null && link.trim() != "";
+export function removeEmptyAlternatives(wish: Wish) {
+  wish.alternatives = wish.alternatives.filter(function (alternative, index, links) {
+    return isWithDescriptionOrLink(alternative);
   })
 
-  if (wish.link == null || wish.link.trim() == "" && wish.alternateLinks.length > 0) {
-    wish.link = wish.alternateLinks[0];
-    wish.alternateLinks.shift();
+  if (!isWithDescriptionOrLink(wish) && wish.alternatives.length > 0) {
+    wish.link = wish.alternatives[0].link;
+    wish.alternatives.shift();
   }
+}
+
+function isWithDescriptionOrLink(content: Wish | Alternative):boolean {
+  return !isEmptyString(content.description) || !isEmptyString(content.link);
+}
+
+function isWithLink(content: Wish | Alternative): boolean {
+  return !isEmptyString(content.link);
+}
+
+function isEmptyString(str: string): boolean {
+  return str == null || str.trim() == "";
 }
