@@ -1,22 +1,23 @@
 <mat-card [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
-'background-green': isGreen(), 'background-blue': isBlue(), 'group-gift': isGroupGift()}" *ngIf="wish.caption || wish.description" xmlns="http://www.w3.org/1999/html">
+'background-green': isGreen(), 'background-blue': isBlue(), 'group-gift': isGroupGift()}" *ngIf="wish.caption || wish.description"
+          xmlns="http://www.w3.org/1999/html">
   <div class="wish-form">
 
     <select-toggle *ngIf="!restricted" [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
 
     <div class="wish-full-width">
       <div class="wish-line">
-        <a *ngIf="wish.link" href="{{targetUrl()}}" target="_blank">
+        <a *ngIf="wish.link && wish.alternatives.length == 0" href="{{targetUrl()}}" target="_blank">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
-          <div *ngIf="wish.description">{{wish.description}}</div>
         </a>
-        <div *ngIf="!wish.link">
+        <div *ngIf="!(wish.link && wish.alternatives.length == 0)">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
-          <div class="description" *ngIf="wish.description">{{wish.description}}</div>
         </div>
       </div>
 
-      <content-viewer *ngFor="let content of wish.alternatives; let contentIndex = index;" [content]="content" [index]="contentIndex+2"></content-viewer>
+      <content-viewer *ngIf="wish.link || wish.description" [content]="wish" [index]="wish.alternatives.length > 0 ? 1 : null"></content-viewer>
+      <content-viewer *ngFor="let content of wish.alternatives; let contentIndex = index;" [content]="content"
+                      [index]="contentIndex+2"></content-viewer>
 
       <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
       <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user"

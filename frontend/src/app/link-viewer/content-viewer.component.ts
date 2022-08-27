@@ -20,4 +20,14 @@ export class ContentViewerComponent implements OnInit {
   targetUrl() {
     return makeValidUrl(this.content.link);
   }
+
+  description() {
+    let totalDescription = this.index ? this.index + ". " : "";
+    if (this.content.description) {
+      totalDescription += this.content.description;
+    } else {
+      totalDescription += convertUrlToShortText(this.content.link)
+    }
+    return totalDescription
+  }
 }
