@@ -7,15 +7,15 @@
 
     <div class="wish-full-width">
       <div class="wish-line">
-        <a *ngIf="wish.link && wish.alternatives.length == 0" href="{{targetUrl()}}" target="_blank">
+        <a *ngIf="wish.link && !withAlternatives()" href="{{targetUrl()}}" target="_blank">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
         </a>
-        <div *ngIf="!(wish.link && wish.alternatives.length == 0)">
+        <div *ngIf="!wish.link || withAlternatives()">
           <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
         </div>
       </div>
 
-      <content-viewer *ngIf="wish.link || wish.description" [content]="wish" [index]="wish.alternatives.length > 0 ? 1 : null"></content-viewer>
+      <content-viewer *ngIf="wish.link || wish.description" [content]="wish" [index]="withAlternatives() ? 1 : null"></content-viewer>
       <content-viewer *ngFor="let content of wish.alternatives; let contentIndex = index;" [content]="content"
                       [index]="contentIndex+2"></content-viewer>
 

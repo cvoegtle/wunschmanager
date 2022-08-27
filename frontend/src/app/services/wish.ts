@@ -226,7 +226,7 @@ export function removeEmptyAlternatives(wish: Wish) {
     return isWithDescriptionOrLink(alternative);
   })
 
-  if (!isWithDescriptionOrLink(wish) && wish.alternatives.length > 0) {
+  if (!isWithDescriptionOrLink(wish) && isWithAlternatives(wish)) {
     wish.link = wish.alternatives[0].link;
     wish.description = wish.alternatives[0].description;
     wish.alternatives.shift();
@@ -235,6 +235,10 @@ export function removeEmptyAlternatives(wish: Wish) {
 
 function isWithDescriptionOrLink(content: Wish | Alternative):boolean {
   return !isEmptyString(content.description) || !isEmptyString(content.link);
+}
+
+export function isWithAlternatives(wish: Wish): boolean {
+  return wish.alternatives.length > 0;
 }
 
 function isWithLink(content: Wish | Alternative): boolean {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { isAvailable, Wish } from "../services/wish";
+import { isAvailable, isWithAlternatives, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
@@ -82,4 +82,7 @@ export class WishViewComponent implements OnInit {
     return makeValidUrl(this.wish.link);
   }
 
+  withAlternatives() {
+    return isWithAlternatives(this.wish);
+  }
 }
