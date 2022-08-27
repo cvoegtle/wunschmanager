@@ -228,6 +228,7 @@ export function removeEmptyAlternatives(wish: Wish) {
 
   if (!isWithDescriptionOrLink(wish) && wish.alternatives.length > 0) {
     wish.link = wish.alternatives[0].link;
+    wish.description = wish.alternatives[0].description;
     wish.alternatives.shift();
   }
 }
