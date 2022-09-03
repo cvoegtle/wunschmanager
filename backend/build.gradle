@@ -25,10 +25,6 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'com.google.appengine:appengine:1.9.98'
     implementation 'com.google.appengine:appengine-api-1.0-sdk:2.0.7'
-    implementation 'com.google.appengine:appengine-api-labs:1.9.88'
-    implementation 'com.google.appengine:appengine-endpoints:1.9.86'
-    implementation 'com.google.appengine:appengine-endpoints-deps:1.9.86'
-    implementation 'com.google.appengine:appengine-jsr107cache:1.9.98'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3'
 
     implementation 'com.google.guava:guava:31.1-jre'
@@ -47,7 +43,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '87'
+        version = '88'
         projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
