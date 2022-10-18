@@ -3,6 +3,7 @@
   <runtime>java8</runtime>
   <threadsafe>true</threadsafe>
   <instance-class>F1</instance-class>
+<!--  <app-engine-apis>true</app-engine-apis>  wichtig für java 11 Umgebung-->
   <automatic-scaling>
     <min-idle-instances>1</min-idle-instances>
     <max-idle-instances>1</max-idle-instances>
