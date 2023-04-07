@@ -31,6 +31,9 @@ task explodedWar(type: Sync) {
 
 task copyToWebApp(type:Copy) {
     dependsOn ':frontend:build'
+    delete fileTree("$webappDir") {
+        include "*.js"
+    }
     copy {
         from "$angularOutputDir"
         into "$webappDir"
