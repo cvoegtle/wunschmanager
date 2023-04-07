@@ -42,7 +42,7 @@ war {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '91'
+        version = '94'
         projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
