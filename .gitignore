@@ -22,3 +22,11 @@
 /backend/src/main/webapp/manifest.webapp
 /backend/src/main/webapp/*.js
 /backend/src/main/webapp/*.css
+.DS_Store
+backend/.DS_Store
+backend/src/main/.DS_Store
+backend/src/main/kotlin/de/voegtle/.DS_Store
+backend/src/main/webapp/.DS_Store
+frontend/.DS_Store
+frontend/src/app/.DS_Store
+
