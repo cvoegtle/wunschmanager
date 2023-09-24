@@ -9,7 +9,7 @@
       <span class="filler">{{wishList.owner | name}} <span *ngIf="wishList.managed">(Verwalter)</span></span>
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <div class="mat-body-1 wish-list-info">{{wishList.description}}</div>
+  <div class="mat-body-2 wish-list-info">{{wishList.description}}</div>
   <wish-view-multi-column #wishColumns [wishes]="wishes" [user]="userStatus?.name" [restricted]="restricted"
                           (wishSelection)="onWishSelection()"
                           (reserved)="reserveClicked($event)"

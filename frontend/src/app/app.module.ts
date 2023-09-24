@@ -64,6 +64,7 @@ import { WishColumnComponent } from "./wish-multi-column/wish-column.component";
 import { WishViewColumnComponent } from "./wish-view-multi-column/wish-view-column.component";
 import { WishViewMultiColumnComponent } from "./wish-view-multi-column/wish-view-multi-column.component";
 import { FocusDirective } from "./util/focus.directive";
+import { BackgroundColorSelectionComponent } from './background-color-selection/background-color-selection.component';
 
 import { A11yModule } from '@angular/cdk/a11y';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -81,6 +82,7 @@ import { SuggestGroupDialogComponent } from './suggest-group-dialog/suggest-grou
 import { EuroFormatPipe } from './util/euro-format.pipe';
 import { ContentEditComponent } from './link-edit/content-edit.component';
 import { ContentViewerComponent } from './link-viewer/content-viewer.component';
+import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
 
 @NgModule({
     declarations: [
@@ -89,7 +91,7 @@ import { ContentViewerComponent } from './link-viewer/content-viewer.component';
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
         ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
-        GroupGiftButtonComponent, SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent
+        GroupGiftButtonComponent, SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent
     ],
     imports: [
         BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
@@ -105,6 +107,7 @@ import { ContentViewerComponent } from './link-viewer/content-viewer.component';
         MatCheckboxModule,
         MatChipsModule,
         MatDatepickerModule, MatExpansionModule,
+        MatFormFieldModule,
         MatGridListModule,
         MatIconModule,
         MatInputModule, MatMenuModule, MatPaginatorModule,

@@ -1,4 +1,4 @@
-<mat-card [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
+<mat-card appearance="outlined" [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
 'background-green': isGreen(), 'background-blue': isBlue(), 'group-gift': isGroupGift()}" *ngIf="wish.caption || wish.description"
           xmlns="http://www.w3.org/1999/html">
   <div class="wish-form">

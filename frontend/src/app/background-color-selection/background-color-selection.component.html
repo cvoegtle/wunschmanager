@@ -1,0 +1,17 @@
+<mat-form-field class="edit-event">
+  <mat-select [(value)]="backgroundColor" placeholder="Hintergrundfarbe" (selectionChange)="onSelectionChange()">
+    <mat-option></mat-option>
+    <mat-option value="red" class="background-red">
+      <div>rot</div>
+    </mat-option>
+    <mat-option value="yellow"  class="background-yellow">
+      <div>gelb</div>
+    </mat-option>
+    <mat-option value="green"class="background-green">
+      <div>grün</div>
+    </mat-option>
+    <mat-option value="blue"  class="background-blue">
+      <div>blau</div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

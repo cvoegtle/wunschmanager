@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { WishList } from "../services/wish-list";
+import { Change } from "../wish-properties/wish-properties.component";
 
 @Component({
   selector: 'edit-event-dialog',
@@ -26,6 +27,11 @@ export class EditEventDialogComponent {
   private doClose() {
     if (!this.wishList.event) this.wishList.event = this.oldEvent;
     this.dialogRef.close(this.changed);
+  }
+
+  onBackgroundChanged(newBackground:string) {
+    this.wishList.background = newBackground
+    this.valueChanged()
   }
 
   valueChanged() {

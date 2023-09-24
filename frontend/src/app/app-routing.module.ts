@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EditComponent } from "./edit/edit.component";
 import { LoginComponent } from "./login/login.component";
 import { ViewComponent } from "./view/view.component";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
 
 const routes: Routes = [
@@ -14,7 +15,10 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {})],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+  ]
 })
 
 export class AppRoutingModule {

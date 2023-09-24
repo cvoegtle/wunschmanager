@@ -34,7 +34,8 @@ export class WishPropertiesComponent {
     this.changed  = Change.CHANGED;
   }
 
-  onBackgroundChanged() {
+  onBackgroundChanged(newBackground:string) {
+    this.wish.background = newBackground
     this.changed  = Change.CHANGED;
   }
 
