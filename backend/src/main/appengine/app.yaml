@@ -1,0 +1,11 @@
+env: flex
+runtime: java21
+threadsafe: true
+instance_class: F2
+entrypoint: 'java -jar wunschmanager-backend.jar'
+
+app_engine_apis: true
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 1

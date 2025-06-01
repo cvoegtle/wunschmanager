@@ -4,7 +4,7 @@ import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.assertOwnership
 import de.voegtle.wunschmanager.util.duplicateUnusedWishes
-import de.voegtle.wunschmanager.util.extractUserName
+import de.voegtle.wunschmanager.util.extractUserId
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.SharedWishList
 import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
 @RestController
 class WishListService {
   @GetMapping("/wishlist/create")
-  fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, req: HttpServletRequest): WishList {
-    val userName = extractUserName(req, true)
+  fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, @AuthenticationPrincipal oidcUser: OidcUser?): WishList {
+    val userName = extractUserId(oidcUser, true)
 
     val newWishList = WishList(event = event, owner = userName, managed = managed, createTimestamp = Date().time)
     ObjectifyService.ofy().save().entity(newWishList).now()
@@ -28,10 +30,10 @@ class WishListService {
 
   @PostMapping("/wishlist/duplicate")
   fun duplicate(@RequestBody() wishList: WishList, @RequestParam() templateId: Long,
-                req: HttpServletRequest): WishList {
-    val userName = extractUserName(req, true)
+                @AuthenticationPrincipal oidcUser: OidcUser?): WishList {
+    val userName = extractUserId(oidcUser, true)
     val template = ObjectifyService.ofy().load().type(WishList::class.java).id(templateId).now()
-    assertOwnership(req, template, "You do not have the permission to copy this list.")
+    assertOwnership(oidcUser, template, "You do not have the permission to copy this list.")
 
     val newWishList = WishList(event = wishList.event, owner = userName, managed = wishList.managed,
                                description = wishList.description, background = wishList.background,
@@ -48,10 +50,10 @@ class WishListService {
       WishList::class.java).id(id).now()
 
   @PostMapping("/wishlist/update")
-  fun update(@RequestBody() wishList: WishList, req: HttpServletRequest): WishList {
+  fun update(@RequestBody() wishList: WishList, @AuthenticationPrincipal oidcUser: OidcUser?): WishList {
     val updateCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(wishList.id!!).now()
 
-    assertOwnership(req, updateCandidate, "You do not have the permission to change the list.")
+    assertOwnership(oidcUser, updateCandidate, "You do not have the permission to change the list.")
 
     updateCandidate.event = wishList.event
     updateCandidate.description = wishList.description
@@ -62,17 +64,17 @@ class WishListService {
   }
 
   @GetMapping("/wishlist/list")
-  fun list(req: HttpServletRequest): List<WishList> {
-    val userName = extractUserName(req, true)
+  fun list(@AuthenticationPrincipal oidcUser: OidcUser?): List<WishList> {
+    val userName = extractUserId(oidcUser, true)
     return ObjectifyService.ofy().load().type(WishList::class.java).filter("owner ==", userName)
         .order("createTimestamp").list()
   }
 
   @GetMapping("/wishlist/delete")
-  fun delete(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
+  fun delete(@RequestParam() id: Long, @AuthenticationPrincipal oidcUser: OidcUser?): Boolean {
     val deleteCandidate = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
-    assertOwnership(req, deleteCandidate, "You do not have the permission to delete the list.")
+    assertOwnership(oidcUser, deleteCandidate, "You do not have the permission to delete the list.")
 
     ObjectifyService.ofy().delete().type(WishList::class.java).id(id).now()
     return true
@@ -80,10 +82,10 @@ class WishListService {
 
 
   @GetMapping("/wishlist/share")
-  fun share(@RequestParam() id: Long, req: HttpServletRequest): List<WishList> {
+  fun share(@RequestParam() id: Long, @AuthenticationPrincipal oidcUser: OidcUser?): List<WishList> {
     val result = ArrayList<WishList>()
 
-    val userName = extractUserName(req)
+    val userName = extractUserId(oidcUser, true)
     val wishListToBeShared = ObjectifyService.ofy().load().type(WishList::class.java).id(id).now()
 
     if (wishListToBeShared.owner != userName) {
@@ -100,8 +102,8 @@ class WishListService {
   }
 
   @GetMapping("/wishlist/shared")
-  fun shared(req: HttpServletRequest): Collection<WishList> {
-    val userName = extractUserName(req)
+  fun shared(@AuthenticationPrincipal oidcUser: OidcUser?): Collection<WishList> {
+    val userName = extractUserId(oidcUser)
 
     val sharedLists = ObjectifyService.ofy().load().type(SharedWishList::class.java)
         .filter("sharedWith", userName).list()
@@ -116,8 +118,8 @@ class WishListService {
   }
 
   @GetMapping("/wishlist/unshare")
-  fun unshare(@RequestParam() id: Long, req: HttpServletRequest): Boolean {
-    val userName = extractUserName(req)
+  fun unshare(@RequestParam() id: Long, @AuthenticationPrincipal oidcUser: OidcUser?): Boolean {
+    val userName = extractUserId(oidcUser)
     val sharedLists = ObjectifyService.ofy().load().type(SharedWishList::class.java)
         .filter("sharedWith", userName).filter("wishListId", id).list()
     ObjectifyService.ofy().delete().entities(sharedLists).now()

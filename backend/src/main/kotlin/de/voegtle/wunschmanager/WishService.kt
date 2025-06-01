@@ -8,8 +8,8 @@ import de.voegtle.wunschmanager.util.assertNotEmpty
 import de.voegtle.wunschmanager.util.assertNotOwnership
 import de.voegtle.wunschmanager.util.assertOwnership
 import de.voegtle.wunschmanager.util.duplicateWishes
-import de.voegtle.wunschmanager.util.extractUserName
-import de.voegtle.wunschmanager.util.extractUserNameNotNull
+import de.voegtle.wunschmanager.util.extractUserId
+import de.voegtle.wunschmanager.util.extractUserIdNotNull
 import de.voegtle.wunschmanager.util.loadFullListOfWishes
 import de.voegtle.wunschmanager.util.loadReducedListOfWishes
 import de.voegtle.wunschmanager.util.updatePriorities
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import org.voegtle.wunschmanager.data.Donation
 import org.voegtle.wunschmanager.data.ReserveRequest
 import org.voegtle.wunschmanager.data.UpdateOrderRequest
 import org.voegtle.wunschmanager.data.UpdateRequest
@@ -27,21 +26,23 @@ import org.voegtle.wunschmanager.data.WishCopyTask
 import org.voegtle.wunschmanager.data.WishIds
 import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
 @RestController() class WishService {
-  @GetMapping("/wish/list") fun list(@RequestParam() list: Long, request: HttpServletRequest): List<Wish> {
+  @GetMapping("/wish/list") fun list(@RequestParam() list: Long, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
-    val userName = extractUserName(request, false)
+    val userName = extractUserId(oidcUser, false)
 
     return loadReducedListOfWishes(wishList, userName)
   }
 
-  @GetMapping("/wish/create") fun create(@RequestParam() list: Long, request: HttpServletRequest): Wish {
+  @GetMapping("/wish/create") fun create(@RequestParam() list: Long, @AuthenticationPrincipal oidcUser: OidcUser?): Wish {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
-    assertOwnership(request, wishList, "You must be the owner of the list to create new wishes")
+    assertOwnership(oidcUser, wishList, "You must be the owner of the list to create new wishes")
 
     val newWish = Wish(wishList = Key.create(wishList), createTimestamp = Date().time)
     saveWish(newWish)
@@ -49,12 +50,12 @@ import javax.servlet.http.HttpServletRequest
   }
 
   @PostMapping("/wish/update")
-  fun update(@RequestBody() updateRequest: UpdateRequest, request: HttpServletRequest): Boolean {
+  fun update(@RequestBody() updateRequest: UpdateRequest, @AuthenticationPrincipal oidcUser: OidcUser?): Boolean {
     val wish = updateRequest.wish
     wish?.let {
       val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(updateRequest.listId!!).now()
 
-      assertOwnership(request, wishList, "You must be the owner of the list to update a wishes")
+      assertOwnership(oidcUser, wishList, "You must be the owner of the list to update a wishes")
 
       val existingWish = loadWish(wishList, it.id!!)
       existingWish.caption = it.caption
@@ -74,10 +75,10 @@ import javax.servlet.http.HttpServletRequest
   }
 
   @PostMapping("/wish/update_order")
-  fun update(@RequestBody() updateOrderRequest: UpdateOrderRequest, request: HttpServletRequest): Boolean {
+  fun update(@RequestBody() updateOrderRequest: UpdateOrderRequest, @AuthenticationPrincipal oidcUser: OidcUser?): Boolean {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(updateOrderRequest.listId).now()
 
-    assertOwnership(request, wishList, "You must be the owner of the list to update a wishes")
+    assertOwnership(oidcUser, wishList, "You must be the owner of the list to update a wishes")
 
     val wishes = loadFullListOfWishes(wishList)
     updatePriorities(wishes, updateOrderRequest.wishOrders)
@@ -86,10 +87,10 @@ import javax.servlet.http.HttpServletRequest
   }
 
 
-  @PostMapping("/wish/delete") fun delete(@RequestBody wishIds: WishIds, request: HttpServletRequest): Boolean {
+  @PostMapping("/wish/delete") fun delete(@RequestBody wishIds: WishIds, @AuthenticationPrincipal oidcUser: OidcUser?): Boolean {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(wishIds.sourceListId).now()
 
-    assertOwnership(request, wishList, "You must be owner of the list to delete wishes")
+    assertOwnership(oidcUser, wishList, "You must be owner of the list to delete wishes")
 
     ObjectifyService.ofy().delete().type(Wish::class.java).parent(wishList).ids(wishIds.wishIds).now()
     return true
@@ -99,9 +100,9 @@ import javax.servlet.http.HttpServletRequest
     @RequestParam() listId: Long,
     @RequestParam() wishId: Long,
     @RequestBody() reserveRequest: ReserveRequest,
-    request: HttpServletRequest
+    @AuthenticationPrincipal oidcUser: OidcUser?
   ): Wish {
-    val userName = extractUserNameNotNull(request)
+    val userName = extractUserIdNotNull(oidcUser)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
     assertNotOwnership(userName, wishList, "You cannot make reservations to your own wishes")
@@ -129,9 +130,9 @@ import javax.servlet.http.HttpServletRequest
     @RequestParam() listId: Long,
     @RequestParam() wishId: Long,
     @RequestBody() reserveRequest: ReserveRequest,
-    request: HttpServletRequest
+    @AuthenticationPrincipal oidcUser: OidcUser?
   ): Wish {
-    val userName = extractUserNameNotNull(request)
+    val userName = extractUserIdNotNull(oidcUser)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
     assertManagedOwnership(userName, wishList, "You have to own the list and the list has to be a managed list")
@@ -167,11 +168,11 @@ import javax.servlet.http.HttpServletRequest
     }
   }
 
-  @PostMapping("/wish/copy") fun copy(@RequestBody() copyTask: WishCopyTask, request: HttpServletRequest): List<Wish> {
+  @PostMapping("/wish/copy") fun copy(@RequestBody() copyTask: WishCopyTask, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {
     val destinationList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(copyTask.destinationListId).now()
 
-    assertOwnership(request, destinationList, "You must be owner of the list to add wishes")
-    val userName = extractUserNameNotNull(request)
+    assertOwnership(oidcUser, destinationList, "You must be owner of the list to add wishes")
+    val userName = extractUserIdNotNull(oidcUser)
 
     val newWishes = ArrayList<Wish>()
     copyTask.wishes.forEach {

@@ -1,5 +1,6 @@
 package de.voegtle.wunschmanager
 
+import com.googlecode.objectify.ObjectifyFactory
 import org.springframework.boot.builder.SpringApplicationBuilder
 import com.googlecode.objectify.ObjectifyService
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
@@ -10,6 +11,8 @@ import org.voegtle.wunschmanager.data.WishList
 
 class ServletInitializer : SpringBootServletInitializer() {
   override fun configure(builder: SpringApplicationBuilder): SpringApplicationBuilder {
+    ObjectifyService.init(ObjectifyFactory())
+
     ObjectifyService.register(Wish::class.java)
     ObjectifyService.register(WishList::class.java)
     ObjectifyService.register(SharedWishList::class.java)

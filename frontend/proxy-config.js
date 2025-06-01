@@ -3,9 +3,10 @@ const PROXY_CONFIG = [{
     "/wishlist",
     "/wish",
     "/user/status",
-    "/_ah"
+    "/_ah",
+    "/oauth2/authorization/google"
   ],
-  target: "http://localhost:8080",
+  target: "http://localhost:8085",
   secure: false
 }]
 

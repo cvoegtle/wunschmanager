@@ -20,6 +20,11 @@ task appengineDeploy {
     finalizedBy 'backend:appengineDeploy'
 }
 
+task appengineRun {
+    dependsOn 'build'
+    finalizedBy 'backend:appengineRun'
+}
+
 task build(type: GradleBuild) {
     dependsOn 'copyToWebApp'
     finalizedBy ':backend:build'

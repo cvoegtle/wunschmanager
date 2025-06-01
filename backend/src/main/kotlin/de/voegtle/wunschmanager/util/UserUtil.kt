@@ -2,10 +2,10 @@ package de.voegtle.wunschmanager.util
 
 import org.voegtle.wunschmanager.data.WishList
 import java.util.logging.Logger
-import javax.servlet.http.HttpServletRequest
+import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
-fun extractUserName(request: HttpServletRequest, exceptionIfNull: Boolean = true): String? {
-  val userName = request.userPrincipal?.name
+fun extractUserId(oidcUser: OidcUser?, exceptionIfNull: Boolean = true): String? {
+  val userName = oidcUser?.subject
   if (exceptionIfNull && userName == null) {
     logException("This action requires a login")
     throw LoginRequiredException("This action requires a login")
@@ -13,26 +13,26 @@ fun extractUserName(request: HttpServletRequest, exceptionIfNull: Boolean = true
   return userName
 }
 
-fun extractUserNameNotNull(request: HttpServletRequest):String = extractUserName(request)!!
+fun extractUserIdNotNull(oidcUser: OidcUser?):String = extractUserId(oidcUser)!!
 
-fun assertOwnership(request: HttpServletRequest, wishList: WishList, message: String) {
-  val userName = extractUserName(request, true)
-  if (wishList.owner != userName) {
-    logException("$userName: $message")
+fun assertOwnership(oidcUser: OidcUser?, wishList: WishList, message: String) {
+  val userId = extractUserId(oidcUser, true)
+  if (wishList.owner != userId) {
+    logException("$userId: $message")
     throw PermissionDenied(message)
   }
 }
 
-fun assertNotOwnership(userName: String?, wishList: WishList, message: String) {
-  if (wishList.owner == userName && !wishList.managed) {
-    logException("$userName: $message")
+fun assertNotOwnership(userId: String?, wishList: WishList, message: String) {
+  if (wishList.owner == userId && !wishList.managed) {
+    logException("$userId: $message")
     throw PermissionDenied(message)
   }
 }
 
-fun assertManagedOwnership(userName: String?, wishList: WishList, message: String) {
-  if (wishList.owner != userName || !wishList.managed) {
-    logException("$userName: $message")
+fun assertManagedOwnership(userId: String?, wishList: WishList, message: String) {
+  if (wishList.owner != userId || !wishList.managed) {
+    logException("$userId: $message")
     throw PermissionDenied(message)
   }
 }
@@ -43,8 +43,6 @@ fun assertNotEmpty(donor: String, message: String) {
     throw PermissionDenied(message)
   }
 }
-
-
 
 private fun logException(message: String) {
   val log = Logger.getLogger("UserUtil")

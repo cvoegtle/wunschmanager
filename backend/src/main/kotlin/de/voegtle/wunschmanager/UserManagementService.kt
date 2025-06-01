@@ -1,38 +1,32 @@
 package de.voegtle.wunschmanager
 
-import com.google.appengine.api.users.UserService
-import com.google.appengine.api.users.UserServiceFactory
-import de.voegtle.wunschmanager.util.extractUserName
-import org.springframework.web.bind.annotation.CrossOrigin
+import de.voegtle.wunschmanager.util.extractUserId
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.UserStatus
 import java.util.logging.Logger
-import javax.servlet.http.HttpServletRequest
 
 @RestController class UserManagementService {
   protected val log = Logger.getLogger("UserManagementService")
 
-  var userService = UserServiceFactory.getUserService()
 
   @GetMapping("/user/status")
-  fun status(@RequestParam() startUrl: String, req: HttpServletRequest): UserStatus {
-    val userName = extractUserName(request = req, exceptionIfNull = false)
+  fun status(@RequestParam() startUrl: String, @AuthenticationPrincipal oidcUser: OidcUser?): UserStatus {
+    val userName = extractUserId(oidcUser, exceptionIfNull = false)
     val loggedIn = userName != null
 
-    log.info("UserName=$userName,  currentUser=${userService?.currentUser?.email}");
+    log.info("UserId=${oidcUser?.subject},  currentUser=${oidcUser?.email}")
 
     return UserStatus(name = userName, loggedIn = loggedIn,
-                      url = localise(createUserManagementUrl(userService, startUrl, loggedIn), req))
+                      url = createUserManagementUrl(startUrl, loggedIn))
   }
 
-  fun createUserManagementUrl(userService: UserService, startUrl: String, loggedIn: Boolean)
-    = if (loggedIn) createLogoutUrl(userService, startUrl) else userService.createLoginURL(startUrl)
-
-  private fun createLogoutUrl(userService: UserService,
-                              startUrl: String) = userService.createLogoutURL(trimUrlParameter(startUrl))
+  fun createUserManagementUrl(startUrl: String, loggedIn: Boolean)
+    = if (!loggedIn) "/oauth2/authorization/google"  else "/logout"
 
   private fun trimUrlParameter(url: String): String {
     val startParameter = url.indexOf("?")
