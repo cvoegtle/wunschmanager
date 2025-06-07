@@ -13,7 +13,7 @@ subprojects {
 }
 
 def angularOutputDir = "$projectDir/frontend/dist"
-def webappDir = "$projectDir/backend/src/main/webapp"
+def webappDir = "$projectDir/backend/src/main/resources/static"
 
 task appengineDeploy {
     dependsOn 'build'

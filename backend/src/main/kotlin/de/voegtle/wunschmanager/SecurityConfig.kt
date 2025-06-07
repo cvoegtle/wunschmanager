@@ -19,7 +19,7 @@ class SecurityConfig {
     http
       .authorizeHttpRequests { authorize ->
         authorize
-          .requestMatchers("/", "/user/status", "/error").permitAll() // Öffentliche Pfade
+          .requestMatchers("/", "/index.html", "/favicon.png", "/user/status", "/error").permitAll() // Öffentliche Pfade
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
       }
       .oauth2Login { oauth2Login ->

@@ -4,6 +4,7 @@ const PROXY_CONFIG = [{
     "/wish",
     "/user/status",
     "/_ah",
+    "/logout",
     "/oauth2/authorization/google"
   ],
   target: "http://localhost:8085",

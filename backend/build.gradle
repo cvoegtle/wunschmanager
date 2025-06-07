@@ -24,7 +24,7 @@ apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    providedCompile 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0'
 
     implementation 'com.google.guava:guava:33.3.1-jre'
@@ -33,7 +33,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$spring_boot_version"
     implementation "org.springframework.boot:spring-boot-starter-security:$spring_security_version"
     implementation "org.springframework.boot:spring-boot-starter-oauth2-client:$spring_security_version"
-    providedRuntime "org.springframework.boot:spring-boot-starter-tomcat:$spring_boot_version"
+    runtimeOnly "org.springframework.boot:spring-boot-starter-tomcat:$spring_boot_version"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
 }
 

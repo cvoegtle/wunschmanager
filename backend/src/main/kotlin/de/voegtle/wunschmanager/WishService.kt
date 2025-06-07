@@ -13,6 +13,8 @@ import de.voegtle.wunschmanager.util.extractUserIdNotNull
 import de.voegtle.wunschmanager.util.loadFullListOfWishes
 import de.voegtle.wunschmanager.util.loadReducedListOfWishes
 import de.voegtle.wunschmanager.util.updatePriorities
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -26,9 +28,6 @@ import org.voegtle.wunschmanager.data.WishCopyTask
 import org.voegtle.wunschmanager.data.WishIds
 import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
-import jakarta.servlet.http.HttpServletRequest
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
 @RestController() class WishService {
   @GetMapping("/wish/list") fun list(@RequestParam() list: Long, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {

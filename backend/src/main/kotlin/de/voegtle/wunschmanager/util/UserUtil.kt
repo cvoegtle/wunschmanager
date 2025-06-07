@@ -5,7 +5,7 @@ import java.util.logging.Logger
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
 fun extractUserId(oidcUser: OidcUser?, exceptionIfNull: Boolean = true): String? {
-  val userName = oidcUser?.subject
+  val userName = oidcUser?.email
   if (exceptionIfNull && userName == null) {
     logException("This action requires a login")
     throw LoginRequiredException("This action requires a login")
