@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 import { UserStatus } from "./user.status";
 import { ConfigurationService } from "./configuration.service";
 import { handleError, unique } from "../util/url-helper";
@@ -23,6 +23,16 @@ export class UserService {
           catchError(handleError<UserStatus>('user/status')));
     }
     return this.lastUserStatus
+  }
+
+  logout(): Observable<void> {
+    return this.http.post<void>('/logout', {}, httpOptions)
+        .pipe(
+            tap(() => {
+              this.clearStatus();
+            }),
+            catchError(handleError<void>('logout'))
+        );
   }
 
   getApplicationUrl() {

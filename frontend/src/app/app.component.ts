@@ -44,6 +44,28 @@ export class AppComponent implements OnInit {
     this.userService.clearStatus();
     let logoutUrl = this.userStatus.url;
     window.location.href = logoutUrl;
+/*    this.userService.logout().subscribe({
+      next: () => {
+        // Nach einem erfolgreichen POST an /logout wird das Backend (Spring Security)
+        // den Browser typischerweise zur 'logoutSuccessUrl' (z.B. /logged_out.html) weiterleiten.
+        // Der Browser folgt dieser Weiterleitung automatisch.
+        // Der lokale User-Status wird bereits im 'tap'-Operator der logout()-Methode im Service gelöscht.
+        // oder hier explizit:
+        this.userStatus = null;
+
+        console.log('Logout-Anfrage erfolgreich gesendet. Das Backend sollte weiterleiten.');
+
+        // Normalerweise ist hier keine manuelle Navigation nötig, da das Backend umleitet.
+        // Falls die /logged_out.html Seite dann den IdP-Logout (Google) initiieren soll,
+        // müsste diese Logik auf der /logged_out.html Seite selbst implementiert werden,
+        // ggf. unter Verwendung der 'idpLogoutUrl'.
+      },
+      error: (err) => {
+        this.errorHandler.handle('logout');
+        console.error('Logout fehlgeschlagen:', err);
+        // Hier könntest du dem Benutzer eine Fehlermeldung anzeigen.
+      }
+    });*/
   }
 
   isLoggedIn(): boolean {

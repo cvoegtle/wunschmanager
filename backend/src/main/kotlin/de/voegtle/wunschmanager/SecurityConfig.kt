@@ -1,5 +1,6 @@
 package de.voegtle.wunschmanager
 
+import com.google.cloud.Identity.user
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -9,6 +10,8 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
 
 @Configuration
 @EnableWebSecurity
@@ -16,23 +19,31 @@ class SecurityConfig {
 
   @Bean
   fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    CsrfTokenRequestAttributeHandler()
     http
       .authorizeHttpRequests { authorize ->
         authorize
-          .requestMatchers("/", "/index.html", "/favicon.png", "/user/status", "/error").permitAll() // Öffentliche Pfade
+          .requestMatchers("/please_login.html","/logged_out.html","/favicon.ico", "/manifest.webapp", "/user/status", "/logout","/error").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
       }
       .oauth2Login { oauth2Login ->
         oauth2Login
-          .loginPage("/oauth2/authorization/google") // Optional: Wenn du einen eigenen Login-Link hast, der hierhin zeigt
-          .defaultSuccessUrl("/edit", true) // Wohin nach erfolgreichem Login?
-          .failureUrl("/") // Wohin bei fehlgeschlagenem Login?
+          .loginPage("/oauth2/authorization/google")
+          .defaultSuccessUrl("/index.html", true)
+          .failureUrl("/please_login.html")
           .userInfoEndpoint { userInfo ->
             userInfo.oidcUserService(oidcUserService()) // Optional: Custom OidcUserService
-          }            }
+          }
+      }
+      .csrf { csrf ->
+        csrf.disable()
+//        csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//          .csrfTokenRequestHandler(requestHandler)
+        // withHttpOnlyFalse() ist wichtig, damit Angular das Cookie lesen kann.
+      }
       .logout { logout ->
         logout
-          .logoutSuccessUrl("/") // Wohin nach dem Logout?
+          .logoutSuccessUrl("/logged_out.html") // Wohin nach dem Logout?
           .invalidateHttpSession(true)
           .clearAuthentication(true)
           .deleteCookies("JSESSIONID") // Ggf. weitere Cookies löschen
