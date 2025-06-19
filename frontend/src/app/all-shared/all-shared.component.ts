@@ -6,9 +6,10 @@ import { ErrorHandler } from '../error-handler/error-handler.component';
 import { WishIds } from "../services/wish-copy-task";
 
 @Component({
-  selector: 'all-shared',
-  templateUrl: './all-shared.component.html',
-  styleUrls: ['./all-shared.component.css']
+    selector: 'all-shared',
+    templateUrl: './all-shared.component.html',
+    styleUrls: ['./all-shared.component.css'],
+    standalone: false
 })
 export class AllSharedComponent implements OnInit {
   @Output() selection = new EventEmitter<WishIds>()

@@ -16,9 +16,10 @@ import { ParticipateDialogComponent } from "../participate-dialog/participate-di
 import { SuggestGroupDialogComponent } from "../suggest-group-dialog/suggest-group-dialog.component";
 
 @Component({
-  selector: 'wish-list-view',
-  templateUrl: './wish-list-view.component.html',
-  styleUrls: ['../wish-list-edit/wish-list.component.css', '../util/color.css']
+    selector: 'wish-list-view',
+    templateUrl: './wish-list-view.component.html',
+    styleUrls: ['../wish-list-edit/wish-list.component.css', '../util/color.css'],
+    standalone: false
 })
 export class WishListViewComponent implements OnInit {
   @Input() wishList: WishList;

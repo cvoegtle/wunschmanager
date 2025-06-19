@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'donate-button',
-  templateUrl: './donate-button.component.html',
-  styleUrls: ['./donate-button.component.css']
+    selector: 'donate-button',
+    templateUrl: './donate-button.component.html',
+    styleUrls: ['./donate-button.component.css'],
+    standalone: false
 })
 export class DonateButtonComponent implements OnInit {
   @Input() reserved: boolean;

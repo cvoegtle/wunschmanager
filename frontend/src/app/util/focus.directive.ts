@@ -1,7 +1,8 @@
 import { Directive, Input, ElementRef, AfterViewInit } from '@angular/core';
 
 @Directive({
-  selector: '[christian]'
+    selector: '[christian]',
+    standalone: false
 })
 export class FocusDirective implements AfterViewInit {
   @Input() christianfocus: boolean;

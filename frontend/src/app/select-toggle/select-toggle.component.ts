@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'select-toggle',
-  templateUrl: './select-toggle.component.html',
-  styleUrls: ['./select-toggle.component.css']
+    selector: 'select-toggle',
+    templateUrl: './select-toggle.component.html',
+    styleUrls: ['./select-toggle.component.css'],
+    standalone: false
 })
 export class SelectToggleComponent implements OnInit {
   @Input() selected;

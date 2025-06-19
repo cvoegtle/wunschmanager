@@ -7,9 +7,10 @@ import { ErrorHandler } from "../error-handler/error-handler.component";
 import { LocalStorageService } from "../services/local-storage.service";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
   private userStatus: UserStatus;

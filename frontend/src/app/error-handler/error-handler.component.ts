@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
 
 @Component({
-  selector: 'error-handler',
-  template: '',
-  styles: []
+    selector: 'error-handler',
+    template: '',
+    styles: [],
+    standalone: false
 })
 export class  ErrorHandler {
 

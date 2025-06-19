@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'background-color-selection',
-  templateUrl: './background-color-selection.component.html',
-  styleUrls: ['../util/color.css']
+    selector: 'background-color-selection',
+    templateUrl: './background-color-selection.component.html',
+    styleUrls: ['../util/color.css'],
+    standalone: false
 })
 export class BackgroundColorSelectionComponent {
   @Input() backgroundColor: string;

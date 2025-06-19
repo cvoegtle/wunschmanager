@@ -3,9 +3,10 @@ import { Donation, DonationImpl, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'suggest-group-dialog',
-  templateUrl: './suggest-group-dialog.component.html',
-  styleUrls: ['./suggest-group-dialog.component.css']
+    selector: 'suggest-group-dialog',
+    templateUrl: './suggest-group-dialog.component.html',
+    styleUrls: ['./suggest-group-dialog.component.css'],
+    standalone: false
 })
 export class SuggestGroupDialogComponent implements OnInit {
   wish: Wish;

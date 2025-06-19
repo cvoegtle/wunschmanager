@@ -3,9 +3,10 @@ import { Donation, DonationImpl, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'proxy-reserve-dialog',
-  templateUrl: './proxy-reserve-dialog.component.html',
-  styleUrls: ['./proxy-reserve-dialog.component.css']
+    selector: 'proxy-reserve-dialog',
+    templateUrl: './proxy-reserve-dialog.component.html',
+    styleUrls: ['./proxy-reserve-dialog.component.css'],
+    standalone: false
 })
 export class ProxyReserveDialogComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { WishList, WishListImpl } from "../services/wish-list";
 import { DuplicateRequest } from "../services/duplicate-request";
 
 @Component({
-  selector: 'app-wish-list-duplicate-dialog',
-  templateUrl: './wish-list-duplicate-dialog.component.html',
-  styleUrls: ['./wish-list-duplicate-dialog.component.css', '../util/color.css']
+    selector: 'app-wish-list-duplicate-dialog',
+    templateUrl: './wish-list-duplicate-dialog.component.html',
+    styleUrls: ['./wish-list-duplicate-dialog.component.css', '../util/color.css'],
+    standalone: false
 })
 export class WishListDuplicateDialogComponent {
   referenceList: WishList;

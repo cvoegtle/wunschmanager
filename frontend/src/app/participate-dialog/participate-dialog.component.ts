@@ -3,9 +3,10 @@ import { Donation, DonationImpl, donationOpenParticipation, Wish } from "../serv
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'participate-dialog',
-  templateUrl: './participate-dialog.component.html',
-  styleUrls: ['./participate-dialog.component.css']
+    selector: 'participate-dialog',
+    templateUrl: './participate-dialog.component.html',
+    styleUrls: ['./participate-dialog.component.css'],
+    standalone: false
 })
 export class ParticipateDialogComponent implements OnInit {
 

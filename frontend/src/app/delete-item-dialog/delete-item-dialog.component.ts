@@ -2,9 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-  selector: 'delete-item-dialog',
-  templateUrl: './delete-item-dialog.component.html',
-  styleUrls: ['./delete-item-dialog.component.css']
+    selector: 'delete-item-dialog',
+    templateUrl: './delete-item-dialog.component.html',
+    styleUrls: ['./delete-item-dialog.component.css'],
+    standalone: false
 })
 export class DeleteItemDialogComponent {
 

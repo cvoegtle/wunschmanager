@@ -10,9 +10,10 @@ import { DuplicateRequest } from "../services/duplicate-request";
 import { WishIds } from "../services/wish-copy-task";
 
 @Component({
-  selector: 'wish-editor',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+    selector: 'wish-editor',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.css'],
+    standalone: false
 })
 export class EditComponent implements OnInit {
   wishLists: WishList[];

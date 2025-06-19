@@ -5,9 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
 @Component({
-  selector: 'wish-edit',
-  templateUrl: './wish-edit.component.html',
-  styleUrls: ['./wish.component.css', '../util/color.css']
+    selector: 'wish-edit',
+    templateUrl: './wish-edit.component.html',
+    styleUrls: ['./wish.component.css', '../util/color.css'],
+    standalone: false
 })
 export class WishEditComponent implements OnInit {
   @Input() wish: Wish;

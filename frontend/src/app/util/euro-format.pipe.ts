@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'euro'
+    name: 'euro',
+    standalone: false
 })
 export class EuroFormatPipe implements PipeTransform {
 

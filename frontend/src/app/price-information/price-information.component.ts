@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { donationOpenParticipation, donationTotalParticipation, Wish } from "../services/wish";
 
 @Component({
-  selector: 'price-information',
-  templateUrl: './price-information.component.html',
-  styleUrls: ['./price-information.component.css']
+    selector: 'price-information',
+    templateUrl: './price-information.component.html',
+    styleUrls: ['./price-information.component.css'],
+    standalone: false
 })
 export class PriceInformationComponent implements OnInit {
   @Input() wish: Wish;

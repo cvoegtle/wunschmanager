@@ -3,9 +3,10 @@ import { Wish } from "../services/wish";
 import { sort, splitIntoColumns } from "../util/wishlist-helper";
 
 @Component({
-  selector: 'wish-multi-column',
-  templateUrl: './wish-multi-column.component.html',
-  styleUrls: ['./wish-multi-column.component.css']
+    selector: 'wish-multi-column',
+    templateUrl: './wish-multi-column.component.html',
+    styleUrls: ['./wish-multi-column.component.css'],
+    standalone: false
 })
 export class WishMultiColumnComponent {
   @Input() wishes: Wish[];

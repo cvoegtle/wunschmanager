@@ -7,9 +7,10 @@ export enum Change {
 }
 
 @Component({
-  selector: 'app-wish-properties',
-  templateUrl: './wish-properties.component.html',
-  styleUrls: ['../wish-edit/wish.component.css']
+    selector: 'app-wish-properties',
+    templateUrl: './wish-properties.component.html',
+    styleUrls: ['../wish-edit/wish.component.css'],
+    standalone: false
 })
 
 export class WishPropertiesComponent {

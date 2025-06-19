@@ -3,9 +3,10 @@ import { convertUrlToShortText, makeValidUrl } from "../util/url-helper";
 import { Alternative, Wish } from "../services/wish";
 
 @Component({
-  selector: 'content-viewer',
-  templateUrl: './content-viewer.component.html',
-  styleUrls: ['../wish-edit/wish.component.css']
+    selector: 'content-viewer',
+    templateUrl: './content-viewer.component.html',
+    styleUrls: ['../wish-edit/wish.component.css'],
+    standalone: false
 })
 export class ContentViewerComponent implements OnInit {
   @Input() first: boolean;

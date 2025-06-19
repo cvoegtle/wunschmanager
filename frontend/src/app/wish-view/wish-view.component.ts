@@ -4,9 +4,10 @@ import { makeValidUrl } from "../util/url-helper";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 
 @Component({
-  selector: 'wish-view',
-  templateUrl: './wish-view.component.html',
-  styleUrls: ['../wish-edit/wish.component.css', '../util/color.css']
+    selector: 'wish-view',
+    templateUrl: './wish-view.component.html',
+    styleUrls: ['../wish-edit/wish.component.css', '../util/color.css'],
+    standalone: false
 })
 export class WishViewComponent implements OnInit {
   @Input() wish: Wish;

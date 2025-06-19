@@ -4,9 +4,10 @@ import { WishList } from "../services/wish-list";
 import { Change } from "../wish-properties/wish-properties.component";
 
 @Component({
-  selector: 'edit-event-dialog',
-  templateUrl: './edit-event-dialog.component.html',
-  styleUrls: ['./edit-event-dialog.component.css', '../util/color.css']
+    selector: 'edit-event-dialog',
+    templateUrl: './edit-event-dialog.component.html',
+    styleUrls: ['./edit-event-dialog.component.css', '../util/color.css'],
+    standalone: false
 })
 export class EditEventDialogComponent {
 

@@ -3,9 +3,10 @@ import { Alternative, Donation, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 
 @Component({
-  selector: 'content-edit',
-  templateUrl: './content-edit.component.html',
-  styleUrls: ['../wish-edit/wish.component.css']
+    selector: 'content-edit',
+    templateUrl: './content-edit.component.html',
+    styleUrls: ['../wish-edit/wish.component.css'],
+    standalone: false
 })
 export class ContentEditComponent implements OnInit {
   @Input() editMode: boolean;

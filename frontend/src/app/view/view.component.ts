@@ -10,9 +10,10 @@ import { UserService } from "../services/user.service";
 import { UserStatus } from "../services/user.status";
 
 @Component({
-  selector: 'app-view',
-  templateUrl: './view.component.html',
-  styleUrls: ['./view.component.css']
+    selector: 'app-view',
+    templateUrl: './view.component.html',
+    styleUrls: ['./view.component.css'],
+    standalone: false
 })
 export class ViewComponent implements OnInit {
   wishList: WishList;

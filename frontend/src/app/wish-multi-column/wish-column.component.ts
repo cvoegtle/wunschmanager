@@ -3,8 +3,9 @@ import { adjustPriority2Order, clearHighlight, highlightByIndex, Wish } from "..
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
-  selector: 'wish-column',
-  templateUrl: './wish-column.component.html'
+    selector: 'wish-column',
+    templateUrl: './wish-column.component.html',
+    standalone: false
 })
 export class WishColumnComponent {
   @Input() wishes: Wish[];

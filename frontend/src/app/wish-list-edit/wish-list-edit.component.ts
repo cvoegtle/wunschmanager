@@ -27,9 +27,10 @@ import { ProxyReserveDialogComponent } from "../proxy-reserve-dialog/proxy-reser
 
 
 @Component({
-  selector: 'wish-list-edit',
-  templateUrl: './wish-list-edit.component.html',
-  styleUrls: ['./wish-list.component.css', '../util/color.css']
+    selector: 'wish-list-edit',
+    templateUrl: './wish-list-edit.component.html',
+    styleUrls: ['./wish-list.component.css', '../util/color.css'],
+    standalone: false
 })
 export class WishListEditComponent {
   @Input() wishList: WishList;
