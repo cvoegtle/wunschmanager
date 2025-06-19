@@ -3,12 +3,16 @@
   <div class="properties-dialog">
     <background-color-selection [backgroundColor]="wish.background" (valueChange)="onBackgroundChanged($event)"></background-color-selection>
 
-    <button mat-button *ngIf="!wish.invisible" (click)="toggleVisibility()" matTooltip="Wunsch verstecken">
-      <i class="material-icons">visibility_off</i>&nbsp;&nbsp;Wunsch verstecken
-    </button>
-    <button mat-button *ngIf="wish.invisible" (click)="toggleVisibility()" matTooltip="Wunsch wieder anzeigen">
-      <i class="material-icons">visibility</i>&nbsp;&nbsp;Wunsch anzeigen
-    </button>
+    @if (!wish.invisible) {
+      <button mat-button (click)="toggleVisibility()" matTooltip="Wunsch verstecken">
+        <i class="material-icons">visibility_off</i>&nbsp;&nbsp;Wunsch verstecken
+      </button>
+    }
+    @if (wish.invisible) {
+      <button mat-button (click)="toggleVisibility()" matTooltip="Wunsch wieder anzeigen">
+        <i class="material-icons">visibility</i>&nbsp;&nbsp;Wunsch anzeigen
+      </button>
+    }
 
   </div>
 </div>

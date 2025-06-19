@@ -1,15 +1,21 @@
 <mat-toolbar color='primary'>
-  <button *ngIf="isAwayFromHome()" mat-icon-button (click)="homeClicked()" matTooltip="zur Startseite">
-    <i class="material-icons">home</i>
-  </button>
+  @if (isAwayFromHome()) {
+    <button mat-icon-button (click)="homeClicked()" matTooltip="zur Startseite">
+      <i class="material-icons">home</i>
+    </button>
+  }
 
   <span>Wunsch Manager</span>
   <span class="fill-remaining-space"></span>
-  <button *ngIf="isLoggedIn()" (click)="logoutClicked()" mat-raised-button color='accent'>{{userStatus?.name | name}}  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
-  <button *ngIf="isViewer() && !isLoggedIn()" (click)="loginClicked()" mat-raised-button color='accent'>anmelden  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
+  @if (isLoggedIn()) {
+    <button (click)="logoutClicked()" mat-raised-button color='accent'>{{userStatus?.name | name}}  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
+  }
+  @if (isViewer() && !isLoggedIn()) {
+    <button (click)="loginClicked()" mat-raised-button color='accent'>anmelden  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
+  }
 </mat-toolbar>
 <div class='working-area'>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 <hr>
-<span class="mat-body-2 app-footer">Wunschmanager Version 101 - 19.6.2025</span>
+  <span class="mat-body-2 app-footer">Wunschmanager Version 102 - 19.6.2025</span>

@@ -6,24 +6,30 @@
       <span class="event">{{wishList.event}}</span>
     </mat-panel-title>
     <mat-panel-description>
-      <span class="filler">{{wishList.owner | name}} <span *ngIf="wishList.managed">(Verwalter)</span></span>
+      <span class="filler">{{wishList.owner | name}} @if (wishList.managed) {
+        <span>(Verwalter)</span>
+      }</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-2 wish-list-info">{{wishList.description}}</div>
   <wish-view-multi-column #wishColumns [wishes]="wishes" [user]="userStatus?.name" [restricted]="restricted"
-                          (wishSelection)="onWishSelection()"
-                          (reserved)="reserveClicked($event)"
-                          (suggestGroup)="suggestGroupClicked($event)"
-                          (showDonor)="showDonorClicked($event)">
+    (wishSelection)="onWishSelection()"
+    (reserved)="reserveClicked($event)"
+    (suggestGroup)="suggestGroupClicked($event)"
+    (showDonor)="showDonorClicked($event)">
 
   </wish-view-multi-column>
   <mat-action-row>
-    <button mat-button *ngIf="wishesSelected" (click)="publishSelection()" matTooltip="markierte Wünsche kopieren">
-      <i class="material-icons">file_copy</i> Auswahl kopieren
-    </button>
-    <button *ngIf="deleteEnabled" mat-button (click)="deleteClicked()"
-            matTooltip="Wunschliste aus der Ansicht entfernen">
-      <i class="material-icons">delete</i> Liste entfernen
-    </button>
+    @if (wishesSelected) {
+      <button mat-button (click)="publishSelection()" matTooltip="markierte Wünsche kopieren">
+        <i class="material-icons">file_copy</i> Auswahl kopieren
+      </button>
+    }
+    @if (deleteEnabled) {
+      <button mat-button (click)="deleteClicked()"
+        matTooltip="Wunschliste aus der Ansicht entfernen">
+        <i class="material-icons">delete</i> Liste entfernen
+      </button>
+    }
   </mat-action-row>
 </mat-expansion-panel>

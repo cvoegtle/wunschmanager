@@ -1,35 +1,54 @@
+@if (wish.caption || wish.description) {
 <mat-card appearance="outlined" [ngClass]="{ 'unavailable': !isAvailable(), 'background-red': isRed(), 'background-yellow': isYellow(),
-'background-green': isGreen(), 'background-blue': isBlue(), 'group-gift': isGroupGift()}" *ngIf="wish.caption || wish.description"
-          xmlns="http://www.w3.org/1999/html">
-  <div class="wish-form">
-
-    <select-toggle *ngIf="!restricted" [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
-
-    <div class="wish-full-width">
-      <div class="wish-line">
-        <a *ngIf="wish.link && !withAlternatives()" href="{{targetUrl()}}" target="_blank">
-          <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
-        </a>
-        <div *ngIf="!wish.link || withAlternatives()">
-          <div class="caption" *ngIf="wish.caption">{{wish.caption}}</div>
+'background-green': isGreen(), 'background-blue': isBlue(), 'group-gift': isGroupGift()}"
+    xmlns="http://www.w3.org/1999/html">
+    <div class="wish-form">
+      @if (!restricted) {
+        <select-toggle [selected]="wish.selected" (selectionChange)="toggleSelection()"></select-toggle>
+      }
+      <div class="wish-full-width">
+        <div class="wish-line">
+          @if (wish.link && !withAlternatives()) {
+            <a href="{{targetUrl()}}" target="_blank">
+              @if (wish.caption) {
+                <div class="caption">{{wish.caption}}</div>
+              }
+            </a>
+          }
+          @if (!wish.link || withAlternatives()) {
+            <div>
+              @if (wish.caption) {
+                <div class="caption">{{wish.caption}}</div>
+              }
+            </div>
+          }
         </div>
+        @if (wish.link || wish.description) {
+          <content-viewer [content]="wish" [index]="withAlternatives() ? 1 : null"></content-viewer>
+        }
+        @for (content of wish.alternatives; track content; let contentIndex = $index) {
+          <content-viewer [content]="content"
+          [index]="contentIndex+2"></content-viewer>
+        }
+        @if (wish.groupGift) {
+          <price-information [wish]="wish"></price-information>
+        }
+        @for (donation of wish.donations; track donation; let first = $first) {
+          <donor-viewer [first]="first" [donation]="donation" [userName]="user"
+            [loggedIn]="isLoggedIn()"
+            [myPresent]="isMyPresent()"
+          (donorClicked)="handleDonorClick()"></donor-viewer>
+        }
       </div>
-
-      <content-viewer *ngIf="wish.link || wish.description" [content]="wish" [index]="withAlternatives() ? 1 : null"></content-viewer>
-      <content-viewer *ngFor="let content of wish.alternatives; let contentIndex = index;" [content]="content"
-                      [index]="contentIndex+2"></content-viewer>
-
-      <price-information *ngIf="wish.groupGift" [wish]="wish"></price-information>
-      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user"
-                    [loggedIn]="isLoggedIn()"
-                    [myPresent]="isMyPresent()"
-                    (donorClicked)="handleDonorClick()"></donor-viewer>
+      <div>
+        @if (isAvailable() || isMyPresent()) {
+          <donate-button [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
+          </donate-button>
+        }
+        @if (isAvailable() && !wish.groupGift) {
+          <group-gift-button (click)="suggestGroupClicked()"></group-gift-button>
+        }
+      </div>
     </div>
-    <div>
-      <donate-button *ngIf="isAvailable() || isMyPresent()" [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
-      </donate-button>
-      <group-gift-button *ngIf="isAvailable() && !wish.groupGift" (click)="suggestGroupClicked()"></group-gift-button>
-    </div>
-  </div>
-
-</mat-card>
+  </mat-card>
+}

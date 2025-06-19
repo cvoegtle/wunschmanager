@@ -1,3 +1,5 @@
 <mat-accordion>
-  <wish-list-view *ngFor="let list of wishLists" [wishList]="list" (deleted)="onDeleteList($event)" (selection)="publishSelection($event)"></wish-list-view>
+  @for (list of wishLists; track list) {
+    <wish-list-view [wishList]="list" (deleted)="onDeleteList($event)" (selection)="publishSelection($event)"></wish-list-view>
+  }
 </mat-accordion>

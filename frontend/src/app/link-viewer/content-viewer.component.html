@@ -1,6 +1,10 @@
 <div [ngClass]="{ 'wish-line': true, 'top-space': first}">
-  <a *ngIf="content.link" href="{{targetUrl()}}" target="_blank">
-    <div>{{description()}}</div>
-  </a>
-  <div class="description" *ngIf="!content.link">{{description()}}</div>
+  @if (content.link) {
+    <a href="{{targetUrl()}}" target="_blank">
+      <div>{{description()}}</div>
+    </a>
+  }
+  @if (!content.link) {
+    <div class="description">{{description()}}</div>
+  }
 </div>

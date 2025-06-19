@@ -2,40 +2,52 @@
 'background-yellow': isYellow(), 'background-green': isGreen(), 'background-blue': isBlue(), 'highlight': isHighlighted()}">
   <div class="wish-form">
     <form class="wish-full-width">
-      <div *ngIf="!orderMode" class="wish-line">
-        <select-toggle [selected]="wish.selected"
-                       (selectionChange)="toggleSelection()"></select-toggle>
-        <mat-form-field class="wish-full-width">
-          <mat-label>Wunsch</mat-label>
-          <input matInput [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
-        </mat-form-field>
-        <donate-button *ngIf="isManagedList() && (isAvailable() || isMyPresent())" mat-icon-button [reserved]="isMyPresent()"
-                       (click)="reserveClicked()">
-        </donate-button>
-        <button #settings mat-icon-button [disabled]="orderMode"
-                (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
-          <mat-icon>settings</mat-icon>
-        </button>
-      </div>
-      <div *ngIf="orderMode" class="description">{{wish.caption}}</div>
+      @if (!orderMode) {
+        <div class="wish-line">
+          <select-toggle [selected]="wish.selected"
+          (selectionChange)="toggleSelection()"></select-toggle>
+          <mat-form-field class="wish-full-width">
+            <mat-label>Wunsch</mat-label>
+            <input matInput [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
+          </mat-form-field>
+          @if (isManagedList() && (isAvailable() || isMyPresent())) {
+            <donate-button mat-icon-button [reserved]="isMyPresent()"
+              (click)="reserveClicked()">
+            </donate-button>
+          }
+          <button #settings mat-icon-button [disabled]="orderMode"
+            (click)="settingsClicked()" matTooltip="Eigenschaften bearbeiten">
+            <mat-icon>settings</mat-icon>
+          </button>
+        </div>
+      }
+      @if (orderMode) {
+        <div class="description">{{wish.caption}}</div>
+      }
 
       <content-edit [content]="wish"
-                 [editMode]="!orderMode"
-                 [viewMode]="orderMode && !wish.caption"
-                 (contentChange)="onContentChanged(null, $event)">
+        [editMode]="!orderMode"
+        [viewMode]="orderMode && !wish.caption"
+        (contentChange)="onContentChanged(null, $event)">
       </content-edit>
-      <content-edit *ngFor="let alternative of wish.alternatives; let indexOfLink=index"
-                 [content]="alternative"
-                 [editMode]="!orderMode"
-                 [viewMode]="false"
-                 [index]="indexOfLink"
-                 (contentChange)="onContentChanged(indexOfLink, $event)">
-      </content-edit>
+      @for (alternative of wish.alternatives; track alternative; let indexOfLink = $index) {
+        <content-edit
+          [content]="alternative"
+          [editMode]="!orderMode"
+          [viewMode]="false"
+          [index]="indexOfLink"
+          (contentChange)="onContentChanged(indexOfLink, $event)">
+        </content-edit>
+      }
 
-      <price-information *ngIf="wish.groupGift && isManagedList() " [wish]="wish"></price-information>
-      <donor-viewer *ngFor="let donation of wish.donations; let first = first" [first]="first" [donation]="donation" [userName]="user"
-                    [loggedIn]="true" [myPresent]="isMyPresent()">
-      </donor-viewer>
+      @if (wish.groupGift && isManagedList() ) {
+        <price-information [wish]="wish"></price-information>
+      }
+      @for (donation of wish.donations; track donation; let first = $first) {
+        <donor-viewer [first]="first" [donation]="donation" [userName]="user"
+          [loggedIn]="true" [myPresent]="isMyPresent()">
+        </donor-viewer>
+      }
     </form>
   </div>
 </mat-card>
