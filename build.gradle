@@ -12,7 +12,7 @@ subprojects {
     version = '1.0'
 }
 
-def angularOutputDir = "$projectDir/frontend/dist"
+def angularOutputDir = "$projectDir/frontend/dist/browser"
 def webappDir = "$projectDir/backend/src/main/resources/static"
 
 task appengineDeploy {

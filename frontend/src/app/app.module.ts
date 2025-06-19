@@ -37,7 +37,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { WishListEditComponent } from './wish-list-edit/wish-list-edit.component';
 import { WishService } from "./services/wish.service";
 import { WishEditComponent } from './wish-edit/wish-edit.component';
@@ -84,8 +84,7 @@ import { ContentEditComponent } from './link-edit/content-edit.component';
 import { ContentViewerComponent } from './link-viewer/content-viewer.component';
 import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
         WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
@@ -93,8 +92,7 @@ import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
         ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
         GroupGiftButtonComponent, SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent
     ],
-    imports: [
-        BrowserModule, HttpClientModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
+    bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
         ReactiveFormsModule, AppRoutingModule, MatListModule, MatDialogModule, MatAutocompleteModule,
         A11yModule,
         CdkStepperModule,
@@ -125,10 +123,6 @@ import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-        MatTooltipModule
-    ],
-    providers: [WishService, WishListService, LocalStorageService, UserService, ConfigurationService, ErrorHandler],
-    bootstrap: [AppComponent]
-})
+        MatTooltipModule], providers: [WishService, WishListService, LocalStorageService, UserService, ConfigurationService, ErrorHandler, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
