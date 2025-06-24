@@ -46,7 +46,7 @@ class WishListService {
   }
 
   @GetMapping("/wishlist/get")
-  fun get(@RequestParam() id: Long, req: HttpServletRequest): WishList = ObjectifyService.ofy().load().type(
+  fun get(@RequestParam() id: Long): WishList = ObjectifyService.ofy().load().type(
       WishList::class.java).id(id).now()
 
   @PostMapping("/wishlist/update")

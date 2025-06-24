@@ -23,12 +23,23 @@ class SecurityConfig {
     http
       .authorizeHttpRequests { authorize ->
         authorize
-          .requestMatchers("/please_login.html","/logged_out.html","/favicon.ico", "/manifest.webapp", "/user/status", "/logout","/error").permitAll()
+          .requestMatchers("/please_login.html",
+                           "/logged_out.html",
+                           "/favicon.ico",
+                           "/manifest.webapp",
+                           "/user/status",
+                           "/logout",
+                           "/error",
+                           "/view",
+                           "/share",
+                           "/wishlist/get",
+                           "/wish/list").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
       }
       .oauth2Login { oauth2Login ->
         oauth2Login
           .loginPage("/oauth2/authorization/google")
+//          .defaultSuccessUrl("http://localhost:4200/index.html", true)
           .defaultSuccessUrl("/index.html", true)
           .failureUrl("/please_login.html")
           .userInfoEndpoint { userInfo ->
