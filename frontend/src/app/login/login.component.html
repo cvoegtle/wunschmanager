@@ -2,6 +2,7 @@
   <mat-grid-tile>
     <div class="login-view">
       <button (click)="loginClicked()" mat-raised-button color='primary'>mit Google anmelden</button>
+      <button *ngIf="isListShared()" (click)="proceedClicked()" mat-raised-button color='primary'>anonym fortfahren</button>
     </div>
   </mat-grid-tile>
 </mat-grid-list>

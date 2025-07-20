@@ -23,15 +23,15 @@ class SecurityConfig {
     http
       .authorizeHttpRequests { authorize ->
         authorize
-          .requestMatchers("/please_login.html",
+          .requestMatchers("/*",
+                           "/please_login.html",
                            "/logged_out.html",
                            "/favicon.ico",
                            "/manifest.webapp",
                            "/user/status",
                            "/logout",
                            "/error",
-                           "/view",
-                           "/share",
+                           "/view/*",
                            "/wishlist/get",
                            "/wish/list").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung

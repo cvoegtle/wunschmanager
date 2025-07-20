@@ -14,6 +14,7 @@ import { LocalStorageService } from "../services/local-storage.service";
 })
 export class LoginComponent implements OnInit {
   private userStatus: UserStatus;
+  private sharedList: string;
 
 
   constructor(private configurationService: ConfigurationService,
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.sharedList = this.getUrlParam('share');
     if (this.configurationService.isInitialised()) {
       this.fetchStatus();
     } else {
@@ -33,18 +35,23 @@ export class LoginComponent implements OnInit {
 
   loginClicked() {
     let url = this.userStatus.url;
-    let sharedListId = this.getUrlParam('share');
-    if (sharedListId) {
-      url += `?share=${sharedListId}`;
+    if (this.isListShared()) {
+      url += `?share=${(this.sharedList)}`;
     }
 
     window.location.href = url;
   }
 
+  proceedClicked() {
+   this.navigateToSharing()
+  }
+
   private fetchStatus() {
     this.userService.fetchStatus().subscribe(status => {
           this.updateStatus(status);
-          this.navigate();
+          if (status.loggedIn) {
+            this.navigate();
+          }
         },
         _ => this.errorHandler.handle('fetchStatus'));
   }
@@ -62,9 +69,8 @@ export class LoginComponent implements OnInit {
       return; // stay on login page
     }
 
-    let sharedList = this.getUrlParam('share');
-    if (sharedList) {
-      this.navigateToSharing(sharedList);
+    if (this.isListShared()) {
+      this.navigateToSharing();
     } else {
       this.navigateToMainModule();
     }
@@ -77,12 +83,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private navigateToSharing(sharedList: string) {
+  private navigateToSharing() {
     if (this.userStatus.loggedIn) {
-      this.router.navigate(['/share/' + sharedList]);
+      this.router.navigate(['/share/' + this.sharedList]);
     } else {
-      this.router.navigate(['/view/' + sharedList]);
+      this.router.navigate(['/view/' + this.sharedList]);
     }
+  }
+
+  public isListShared(): boolean {
+    return this.sharedList != null;
   }
 
   getUrlParam(prop: string): string {
@@ -97,5 +107,4 @@ export class LoginComponent implements OnInit {
 
     return (prop in params) ? params[prop] : null;
   }
-
 }
