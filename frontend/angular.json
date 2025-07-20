@@ -12,7 +12,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": {
-              "base": "dist"
+              "base": "dist/app"
             },
             "index": "src/index.html",
             "tsConfig": "src/tsconfig.app.json",
@@ -32,6 +32,7 @@
               "src/styles.css"
             ],
             "scripts": [],
+            "baseHref": "/app/",
             "aot": false,
             "extractLicenses": false,
             "sourceMap": true,
@@ -41,6 +42,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/app/",
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,

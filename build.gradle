@@ -13,6 +13,7 @@ subprojects {
 }
 
 def angularOutputDir = "$projectDir/frontend/dist/browser"
+def frontendStaticDir = "$projectDir/frontend/static"
 def webappDir = "$projectDir/backend/src/main/resources/static"
 
 task appengineDeploy {
@@ -41,12 +42,17 @@ task copyToWebApp(type:Copy) {
     }
     copy {
         from "$angularOutputDir"
+        into "$webappDir/app"
+        include '**'
+    }
+    copy {
+        from "$frontendStaticDir"
         into "$webappDir"
         include '**'
     }
     copy {
         from "$projectDir/backend/configuration"
-        into "$webappDir"
+        into "$webappDir/app"
         include "configuration.json"
     }
 }
