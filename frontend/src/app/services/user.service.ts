@@ -40,9 +40,9 @@ export class UserService {
     let hostname = window.location.hostname;
     let port = window.location.port;
     if (port == '80' || port == '443') {
-      return `${protocol}//${hostname}`;
+      return `${protocol}//${hostname}/app`;
     } else {
-      return `${protocol}//${hostname}:${port}`;
+      return `${protocol}//${hostname}:${port}/app`;
     }
   }
 
