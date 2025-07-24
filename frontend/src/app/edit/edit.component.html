@@ -5,7 +5,7 @@
     (updated)="onUpdateEvent($event)" (duplicate)="onDuplicate($event)" (selection)="onSelection($event)"></wish-list-edit>
   }
 </mat-accordion>
-<form>
+<form class="wish-list-create">
   <mat-form-field class="wish-list-name">
     <input matInput placeholder="Neue Wunschliste" [(ngModel)]="newWishListEvent" name="newWishListInput">
   </mat-form-field>
