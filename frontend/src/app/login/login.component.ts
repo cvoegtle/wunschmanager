@@ -14,8 +14,6 @@ import { LocalStorageService } from "../services/local-storage.service";
 })
 export class LoginComponent implements OnInit {
   private userStatus: UserStatus;
-  private sharedList: string;
-
 
   constructor(private configurationService: ConfigurationService,
               private userService: UserService,
@@ -25,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sharedList = this.getUrlParam('share');
+    this.storeUrlParameterShare();
     if (this.configurationService.isInitialised()) {
       this.fetchStatus();
     } else {
@@ -35,10 +33,6 @@ export class LoginComponent implements OnInit {
 
   loginClicked() {
     let url = this.userStatus.url;
-    if (this.isListShared()) {
-      url += `?share=${(this.sharedList)}`;
-    }
-
     window.location.href = url;
   }
 
@@ -74,7 +68,6 @@ export class LoginComponent implements OnInit {
     } else {
       this.navigateToMainModule();
     }
-
   }
 
   private navigateToMainModule() {
@@ -85,14 +78,31 @@ export class LoginComponent implements OnInit {
 
   private navigateToSharing() {
     if (this.userStatus.loggedIn) {
-      this.router.navigate(['/share/' + this.sharedList]);
+      this.router.navigate(['/share/' + this.getSharedList()]);
     } else {
-      this.router.navigate(['/view/' + this.sharedList]);
+      this.router.navigate(['/view/' + this.getSharedList()]);
     }
+
+    this.clearSharedList();
+  }
+
+  private getSharedList(): string {
+    return this.localStorage.retrieve(LocalStorageService.sharedListId)
+  }
+
+  private clearSharedList() {
+    this.localStorage.clear(LocalStorageService.sharedListId);
   }
 
   public isListShared(): boolean {
-    return this.sharedList != null;
+    return this.getSharedList() != null;
+  }
+
+  private storeUrlParameterShare() {
+    let sharedList = this.getUrlParam('share');
+    if (sharedList) {
+      this.localStorage.store(LocalStorageService.sharedListId, sharedList);
+    }
   }
 
   getUrlParam(prop: string): string {

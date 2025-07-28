@@ -1,7 +1,0 @@
-RewriteEngine on
-
-RewriteRule share .
-RewriteRule view .
-RewriteRule edit .
-
-AddType text/cache-manifest .appcache

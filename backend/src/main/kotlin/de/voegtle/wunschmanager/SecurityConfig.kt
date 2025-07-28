@@ -23,15 +23,14 @@ class SecurityConfig {
     http
       .authorizeHttpRequests { authorize ->
         authorize
-          .requestMatchers("/*",
-                           "/please_login.html",
-                           "/logged_out.html",
+          .requestMatchers("/",
+                           "/error",
                            "/favicon.ico",
                            "/manifest.webapp",
+                           "/please_login.html",
+                           "/logged_out.html",
+                           "/app/**",
                            "/user/status",
-                           "/logout",
-                           "/error",
-                           "/view/*",
                            "/wishlist/get",
                            "/wish/list").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
@@ -40,7 +39,7 @@ class SecurityConfig {
         oauth2Login
           .loginPage("/oauth2/authorization/google")
 //          .defaultSuccessUrl("http://localhost:4200/index.html", true)
-          .defaultSuccessUrl("/index.html", true)
+          .defaultSuccessUrl("/app/index.html", true)
           .failureUrl("/please_login.html")
           .userInfoEndpoint { userInfo ->
             userInfo.oidcUserService(oidcUserService()) // Optional: Custom OidcUserService
@@ -50,7 +49,7 @@ class SecurityConfig {
         csrf.disable()
 //        csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //          .csrfTokenRequestHandler(requestHandler)
-        // withHttpOnlyFalse() ist wichtig, damit Angular das Cookie lesen kann.
+//        withHttpOnlyFalse() ist wichtig, damit Angular das Cookie lesen kann.
       }
       .logout { logout ->
         logout
