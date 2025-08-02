@@ -18,10 +18,8 @@ class ForwardingController {
    */
   @RequestMapping(
     value = [
-      // Fängt die Wurzel der App ab
       "/app",
       "/app/",
-      // Fängt alle bekannten Top-Level-Routen und deren Unterpfade ab
       "/app/view/**",
       "/app/edit/**",
       "/app/share/**"
