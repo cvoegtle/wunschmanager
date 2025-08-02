@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class BackgroundColorSelectionComponent {
   @Input() backgroundColor: string;
-  @Output() valueChange = new EventEmitter<String>();
+  @Output() valueChange = new EventEmitter<string>();
 
 
   onSelectionChange() {

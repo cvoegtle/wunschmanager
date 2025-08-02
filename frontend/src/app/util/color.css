@@ -1,30 +1,83 @@
 .background-red {
-    background: lightcoral;
+    background-color: #f8d7da; /* Sanfteres Rot */
 }
 .foreground-red {
-    color: lightcoral;
+    color: #721c24;
+}
+/* Ensure red is applied in all states (normal, hover, focus, selected) */
+.mat-mdc-option.background-red,
+.mat-mdc-option.background-red.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple),
+.mat-mdc-option.background-red:focus.mdc-list-item,
+.mat-mdc-option.background-red.mat-mdc-option-active.mdc-list-item {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+}
+
+/* Add a subtle hover effect for both normal and selected items */
+.mat-mdc-option.background-red:hover:not(.mdc-list-item--disabled),
+.mat-mdc-option.background-red.mdc-list-item--selected:hover:not(.mdc-list-item--disabled) {
+    background-color: #f5c6cb !important;
 }
 
 .background-yellow {
-    background: lightgoldenrodyellow;
+    background-color: #fff3cd; /* Sanfteres Gelb */
+}
+.foreground-yellow {
+    color: #856404;
+}
+/* Ensure yellow is applied in all states (normal, hover, focus, selected) */
+.mat-mdc-option.background-yellow,
+.mat-mdc-option.background-yellow.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple),
+.mat-mdc-option.background-yellow:focus.mdc-list-item,
+.mat-mdc-option.background-yellow.mat-mdc-option-active.mdc-list-item {
+    background-color: #fff3cd !important;
+    color: #856404 !important;
 }
 
-.foreground-yellow {
-    color: lightgoldenrodyellow;
+/* Add a subtle hover effect for both normal and selected items */
+.mat-mdc-option.background-yellow:hover:not(.mdc-list-item--disabled),
+.mat-mdc-option.background-yellow.mdc-list-item--selected:hover:not(.mdc-list-item--disabled) {
+    background-color: #ffeeba !important;
 }
 
 .background-green {
-    background: lightgreen;
+    background-color: #d4edda; /* Sanfteres Grün */
+}
+.foreground-green {
+    color: #155724;
+}
+/* Ensure green is applied in all states (normal, hover, focus, selected) */
+.mat-mdc-option.background-green,
+.mat-mdc-option.background-green.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple),
+.mat-mdc-option.background-green:focus.mdc-list-item,
+.mat-mdc-option.background-green.mat-mdc-option-active.mdc-list-item {
+    background-color: #d4edda !important;
+    color: #155724 !important;
 }
 
-.foreground-green {
-    color: lightgreen;
+/* Add a subtle hover effect for both normal and selected items */
+.mat-mdc-option.background-green:hover:not(.mdc-list-item--disabled),
+.mat-mdc-option.background-green.mdc-list-item--selected:hover:not(.mdc-list-item--disabled) {
+    background-color: #c3e6cb !important;
 }
 
 .background-blue {
-    background: lightblue;
+    background-color: #cce5ff; /* Sanfteres Blau */
+}
+.foreground-blue {
+    color: #004085;
+}
+/* Ensure blue is applied in all states (normal, hover, focus, selected) */
+.mat-mdc-option.background-blue,
+.mat-mdc-option.background-blue.mdc-list-item--selected:not(.mdc-list-item--disabled):not(.mat-mdc-option-multiple),
+.mat-mdc-option.background-blue:focus.mdc-list-item,
+.mat-mdc-option.background-blue.mat-mdc-option-active.mdc-list-item {
+    background-color: #cce5ff !important;
+    color: #004085 !important;
 }
 
-.foreground-blue {
-    color: lightblue;
+/* Add a subtle hover effect for both normal and selected items */
+.mat-mdc-option.background-blue:hover:not(.mdc-list-item--disabled),
+.mat-mdc-option.background-blue.mdc-list-item--selected:hover:not(.mdc-list-item--disabled) {
+    background-color: #b8daff !important;
 }
