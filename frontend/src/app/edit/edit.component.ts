@@ -17,6 +17,7 @@ import { WishIds } from "../services/wish-copy-task";
 })
 export class EditComponent implements OnInit {
   wishLists: WishList[];
+  sharedWishLists: WishList[];
   user: string;
   public newWishListEvent: string = "";
   public newListIsManaged: boolean = false;
@@ -90,7 +91,8 @@ export class EditComponent implements OnInit {
       this.router.navigate(['/']);
     } else {
       this.user = userStatus.name;
-      this.fetchWishLists()
+      this.fetchWishLists();
+      this.fetchSharedWishLists();
     }
   }
 
@@ -98,4 +100,10 @@ export class EditComponent implements OnInit {
     this.wishListService.fetch().subscribe(wishLists => this.wishLists = wishLists,
         _ => this.errorHandler.handle('fetchLists'));
   }
+
+  private fetchSharedWishLists() {
+    this.wishListService.fetchShared().subscribe(wishLists => this.sharedWishLists = wishLists,
+        _ => this.errorHandler.handle('fetchSharedLists'));
+  }
+
 }

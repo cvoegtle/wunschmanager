@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import { WishListService } from '../services/wish-list.service';
 import { ConfigurationService } from '../services/configuration.service';
@@ -12,26 +12,14 @@ import { WishIds } from "../services/wish-copy-task";
     standalone: false
 })
 export class AllSharedComponent implements OnInit {
+  @Input() sharedWishLists: WishList[];
   @Output() selection = new EventEmitter<WishIds>()
 
-  wishLists: WishList[];
-
-  constructor(private configurationService: ConfigurationService,
-              private wishListService: WishListService,
+  constructor(private wishListService: WishListService,
               private errorHandler: ErrorHandler) {
   }
 
   ngOnInit() {
-    if (this.configurationService.isInitialised()) {
-      this.fetchSharedWishLists();
-    } else {
-      this.configurationService.load().subscribe(_ => this.fetchSharedWishLists());
-    }
-  }
-
-  private fetchSharedWishLists() {
-    this.wishListService.fetchShared().subscribe(wishLists => this.wishLists = wishLists,
-        _ => this.errorHandler.handle('fetchSharedLists'));
   }
 
   publishSelection(wishIds: WishIds) {
@@ -45,9 +33,9 @@ export class AllSharedComponent implements OnInit {
   }
 
   public handleResponse(deleted: boolean, wishListId) {
-    let index = this.wishLists.findIndex(it => it.id == wishListId);
+    let index = this.sharedWishLists.findIndex(it => it.id == wishListId);
     if (index >= 0) {
-      this.wishLists.splice(index, 1);
+      this.sharedWishLists.splice(index, 1);
     }
   }
 }

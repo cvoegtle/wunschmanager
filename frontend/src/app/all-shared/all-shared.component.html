@@ -1,5 +1,5 @@
 <mat-accordion>
-  @for (list of wishLists; track list) {
+  @for (list of sharedWishLists; track list) {
     <wish-list-view [wishList]="list" (deleted)="onDeleteList($event)" (selection)="publishSelection($event)"></wish-list-view>
   }
 </mat-accordion>
