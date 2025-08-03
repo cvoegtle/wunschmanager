@@ -32,6 +32,7 @@ class SecurityConfig {
                            "/app/**",
                            "/user/status",
                            "/wishlist/get",
+                           "/wishlist/shared",
                            "/wish/list").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
       }
