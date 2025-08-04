@@ -1,2 +1,9 @@
 runtime: java21
 instance_class: F1
+
+handlers:
+# Force all connections to be HTTPS
+- url: /.*
+  script: auto
+  secure: always
+  redirect_http_response_code: 301
