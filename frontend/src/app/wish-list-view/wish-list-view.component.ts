@@ -22,6 +22,7 @@ import { SuggestGroupDialogComponent } from "../suggest-group-dialog/suggest-gro
     standalone: false
 })
 export class WishListViewComponent implements OnInit {
+  @Input() user: string;
   @Input() wishList: WishList;
   @Input() deleteEnabled: boolean = true;
   @Input() restricted: boolean = false;
@@ -30,7 +31,6 @@ export class WishListViewComponent implements OnInit {
   @Output() selection = new EventEmitter<WishIds>();
 
   wishes: Wish[];
-  userStatus: UserStatus;
   wishesSelected: boolean = false;
 
   panelOpenState: boolean;
@@ -39,7 +39,6 @@ export class WishListViewComponent implements OnInit {
   wishColumns: WishViewMultiColumnComponent;
 
   constructor(private wishService: WishService,
-              private userService: UserService,
               private router: Router,
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
@@ -47,7 +46,6 @@ export class WishListViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.fetchStatus().subscribe(status => this.userStatus = status);
   }
 
   panelOpened() {
@@ -78,8 +76,8 @@ export class WishListViewComponent implements OnInit {
   }
 
   reserveClicked(wish: Wish) {
-    if (this.userStatus.loggedIn) {
-      if (wish.groupGift && !isReservedByUser(wish, this.userStatus.name)) {
+    if (this.user) {
+      if (wish.groupGift && !isReservedByUser(wish, this.user)) {
         this.participateInGroupGift(wish);
       } else {
         this.callReservationService(wish);
@@ -90,7 +88,7 @@ export class WishListViewComponent implements OnInit {
   }
 
   suggestGroupClicked(wish: Wish) {
-    if (this.userStatus.loggedIn) {
+    if (this.user) {
       this.openGroupSuggestionDialog(wish);
     } else {
       this.askForLogin('um ein Gruppengeschenk vorzuschlagen, musst Du Dich anmelden.');

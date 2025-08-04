@@ -1,5 +1,10 @@
 <mat-accordion>
   @for (list of sharedWishLists; track list) {
-    <wish-list-view [wishList]="list" (deleted)="onDeleteList($event)" (selection)="publishSelection($event)"></wish-list-view>
+    <wish-list-view [user]="user"
+                    [wishList]="list"
+                    (deleted)="onDeleteList($event)"
+                    (selection)="publishSelection($event)">
+
+    </wish-list-view>
   }
 </mat-accordion>

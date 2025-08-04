@@ -4,6 +4,7 @@ import { WishListService } from '../services/wish-list.service';
 import { ConfigurationService } from '../services/configuration.service';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { WishIds } from "../services/wish-copy-task";
+import { UserStatus } from "../services/user.status";
 
 @Component({
     selector: 'all-shared',
@@ -12,6 +13,7 @@ import { WishIds } from "../services/wish-copy-task";
     standalone: false
 })
 export class AllSharedComponent implements OnInit {
+  @Input() user: string;
   @Input() sharedWishLists: WishList[];
   @Output() selection = new EventEmitter<WishIds>()
 

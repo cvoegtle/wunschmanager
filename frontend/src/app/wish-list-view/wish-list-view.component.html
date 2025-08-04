@@ -12,7 +12,7 @@
     </mat-panel-description>
   </mat-expansion-panel-header>
   <div class="mat-body-2 wish-list-info">{{wishList.description}}</div>
-  <wish-view-multi-column #wishColumns [wishes]="wishes" [user]="userStatus?.name" [restricted]="restricted"
+  <wish-view-multi-column #wishColumns [wishes]="wishes" [user]="user" [restricted]="restricted"
     (wishSelection)="onWishSelection()"
     (reserved)="reserveClicked($event)"
     (suggestGroup)="suggestGroupClicked($event)"
