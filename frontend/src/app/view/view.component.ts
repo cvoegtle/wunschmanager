@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationService } from '../services/configuration.service';
 import { WishListService } from '../services/wish-list.service';
@@ -17,6 +17,7 @@ import { UserStatus } from "../services/user.status";
 })
 export class ViewComponent implements OnInit {
   wishList: WishList;
+  loggedInUser: string;
   lastKnownUser: string;
   ownWishList: boolean;
 
@@ -45,6 +46,8 @@ export class ViewComponent implements OnInit {
 
   private checkStatus(status: UserStatus) {
     if (status.loggedIn) {
+      this.loggedInUser=status.name;
+      this.lastKnownUser=status.name;
       this.fetchAndKeepWishList();
     } else {
       this.fetchWishList();

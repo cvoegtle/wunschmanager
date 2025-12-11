@@ -12,7 +12,7 @@ def angularOutputDir = "$projectDir/dist"
 
 task build(type:Exec) {
     dependsOn 'compile'
-    commandLine "appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets//*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
+    commandLine "/Users/cv/Documents/workspace/wunschmanager/node_modules/.bin/appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets//*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
 }
 
 task compile(type:Exec) {
@@ -22,7 +22,7 @@ task compile(type:Exec) {
     inputs.dir "."
     outputs.dir "$angularOutputDir"
     group = BasePlugin.BUILD_GROUP
-    commandLine "ng", "build", "--configuration=production", "--output-path=$angularOutputDir"
+    commandLine "/Users/cv/.nvm/versions/node/v25.2.0/bin/ng", "build", "--configuration=production", "--output-path=$angularOutputDir"
 }
 
 task clean(type:Delete) {
@@ -40,6 +40,6 @@ task installAngular(type:Exec) {
     workingDir "."
     inputs.dir "."
     group = BasePlugin.BUILD_GROUP
-    commandLine "npm", "install"
+    commandLine "/Users/cv/.nvm/versions/node/v25.2.0/bin/npm", "install"
 }
 

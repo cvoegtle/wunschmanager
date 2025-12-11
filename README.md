@@ -17,9 +17,14 @@ Vorher in der build.gradle ggf. noch die Version hochsetzen
 
 ## Lokal testen
 
-Server starten mit
+um die Simulation des Datastore zu starten
 ```
-jdk 1.8
-./start_devserver.sh
+./start_datastore.sh
 ```
-
+backend/configuration/configuration.json wie folgt ändern, aber *nicht* committen:
+```
+{
+  "backendUrl" : "http://localhost:8085"
+}
+```
+Run Configuration "Wunschmanager" starten.

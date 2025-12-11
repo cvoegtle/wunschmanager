@@ -1,6 +1,11 @@
 <mat-accordion>
   @if (wishList) {
-    <wish-list-view [wishList]="wishList" [deleteEnabled]="false" [restricted]="true" [expanded]="true"></wish-list-view>
+    <wish-list-view [user]="loggedInUser"
+                    [wishList]="wishList"
+                    [deleteEnabled]="false"
+                    [restricted]="true"
+                    [expanded]="true">
+    </wish-list-view>
   }
   @if (ownWishList) {
     <p class="mat-body-2 wish-list-hint" >Diese Wunschliste ist nicht für Dich bestimmt.</p>
