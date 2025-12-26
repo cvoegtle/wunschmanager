@@ -41,7 +41,7 @@ export class EditComponent implements OnInit {
 
   createWishList() {
     this.wishListService.create(this.newWishListEvent, this.newListIsManaged)
-        .subscribe(wishList => this.wishLists.push(wishList), _ => this.errorHandler.handle('createList'));
+        .subscribe(wishList => this.wishLists.push(wishList), error => this.errorHandler.handle(error, 'createList'));
     this.newWishListEvent = '';
     this.newListIsManaged = false;
   }
@@ -49,12 +49,13 @@ export class EditComponent implements OnInit {
   onUpdateEvent(wishList: WishList) {
     this.wishListService.update(wishList).subscribe(_ => {
         },
-        _ => this.errorHandler.handle('renameList'));
+        error => this.errorHandler.handle(error, 'renameList'));
   }
 
   onDuplicate(duplicateRequest: DuplicateRequest) {
     this.wishListService.duplicate(duplicateRequest.wishList, duplicateRequest.templateId)
-        .subscribe(wishList => this.wishLists.push(wishList), _ => this.errorHandler.handle('duplicateList'));
+        .subscribe(wishList => this.wishLists.push(wishList),
+            error => this.errorHandler.handle(error, 'duplicateList'));
   }
 
   isCreatePossible(): boolean {
@@ -64,7 +65,7 @@ export class EditComponent implements OnInit {
   onDeleteList(id: number) {
     this.wishListService.delete(id).subscribe(result => {
       if (result) this.removeFromList(id)
-    }, _ => this.errorHandler.handle('deleteList'));
+    }, error => this.errorHandler.handle(error, 'deleteList'));
   }
 
   removeFromList(id: number) {
@@ -83,7 +84,7 @@ export class EditComponent implements OnInit {
     this.userService.fetchStatus().subscribe(status => {
           this.checkStatus(status);
         },
-        _ => this.errorHandler.handle('fetchStatus'))
+        error => this.errorHandler.handle(error, 'fetchStatus'))
   }
 
   private checkStatus(userStatus: UserStatus) {
@@ -98,12 +99,12 @@ export class EditComponent implements OnInit {
 
   private fetchWishLists(): void {
     this.wishListService.fetch().subscribe(wishLists => this.wishLists = wishLists,
-        _ => this.errorHandler.handle('fetchLists'));
+        error => this.errorHandler.handle(error, 'fetchLists'));
   }
 
   private fetchSharedWishLists() {
     this.wishListService.fetchShared().subscribe(wishLists => this.sharedWishLists = wishLists,
-        _ => this.errorHandler.handle('fetchSharedLists'));
+        error => this.errorHandler.handle(error,'fetchSharedLists'));
   }
 
 }

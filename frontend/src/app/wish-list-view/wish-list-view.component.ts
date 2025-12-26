@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { containsSelectedWish, copyDonationInformation, Donation, DonationImpl, isReservedByUser, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
-import { UserService } from '../services/user.service';
-import { UserStatus } from '../services/user.status';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
@@ -54,7 +52,7 @@ export class WishListViewComponent implements OnInit {
           this.panelOpenState = this.wishList.background == null;
           this.wishColumns.render(wishes);
         },
-        _ => this.errorHandler.handle('fetchWishes'))
+        error => this.errorHandler.handle(error, 'fetchWishes'))
   }
 
   panelClosed() {
@@ -162,7 +160,7 @@ export class WishListViewComponent implements OnInit {
     this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
           copyDonationInformation(wish, updatedWish);
         },
-        _ => this.errorHandler.handle('reserveWish'));
+        error => this.errorHandler.handle(error, 'reserveWish'));
   }
 
   private askForLogin(message: string) {

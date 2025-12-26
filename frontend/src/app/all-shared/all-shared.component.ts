@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import { WishListService } from '../services/wish-list.service';
-import { ConfigurationService } from '../services/configuration.service';
 import { ErrorHandler } from '../error-handler/error-handler.component';
 import { WishIds } from "../services/wish-copy-task";
-import { UserStatus } from "../services/user.status";
 
 @Component({
     selector: 'all-shared',
@@ -31,7 +29,7 @@ export class AllSharedComponent implements OnInit {
   onDeleteList(wishListId: number) {
 
     this.wishListService.unshare(wishListId).subscribe(deleted => this.handleResponse(deleted, wishListId),
-        _ => this.errorHandler.handle('unshareList'));
+        error => this.errorHandler.handle(error, 'unshareList'));
   }
 
   public handleResponse(deleted: boolean, wishListId) {

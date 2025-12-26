@@ -82,18 +82,23 @@ import { SuggestGroupDialogComponent } from './suggest-group-dialog/suggest-grou
 import { EuroFormatPipe } from './util/euro-format.pipe';
 import { ContentEditComponent } from './link-edit/content-edit.component';
 import { ContentViewerComponent } from './link-viewer/content-viewer.component';
-import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { ErrorSessionDialogComponent } from "./error-session-dialog/error-session-dialog.component";
 
 @NgModule({ declarations: [
         AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
-        WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, WishListDuplicateDialogComponent,
+        WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, ErrorSessionDialogComponent, WishListDuplicateDialogComponent,
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
         ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
         GroupGiftButtonComponent, SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
-        ReactiveFormsModule, AppRoutingModule, MatListModule, MatDialogModule, MatAutocompleteModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        MatListModule,
+        MatDialogModule,
+        MatAutocompleteModule,
         A11yModule,
         CdkStepperModule,
         CdkTableModule,
@@ -104,11 +109,14 @@ import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
         MatCardModule,
         MatCheckboxModule,
         MatChipsModule,
-        MatDatepickerModule, MatExpansionModule,
+        MatDatepickerModule,
+        MatExpansionModule,
         MatFormFieldModule,
         MatGridListModule,
         MatIconModule,
-        MatInputModule, MatMenuModule, MatPaginatorModule,
+        MatInputModule,
+        MatMenuModule,
+        MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatRadioModule,
@@ -123,6 +131,14 @@ import { MatFormFieldModule, MatLabel } from "@angular/material/form-field";
         MatTableModule,
         MatTabsModule,
         MatToolbarModule,
-        MatTooltipModule], providers: [WishService, WishListService, LocalStorageService, UserService, ConfigurationService, ErrorHandler, provideHttpClient(withInterceptorsFromDi())] })
+        MatTooltipModule],
+    providers: [WishService,
+        WishListService,
+        LocalStorageService,
+        UserService,
+        ConfigurationService,
+        ErrorHandler,
+        provideHttpClient(withInterceptorsFromDi())]
+})
 export class AppModule {
 }

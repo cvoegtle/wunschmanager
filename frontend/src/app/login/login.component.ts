@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
             this.navigate();
           }
         },
-        _ => this.errorHandler.handle('fetchStatus'));
+        error => this.errorHandler.handle(error, 'fetchStatus'));
   }
 
   private updateStatus(status : UserStatus) {

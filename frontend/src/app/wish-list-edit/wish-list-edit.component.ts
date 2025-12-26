@@ -53,13 +53,13 @@ export class WishListEditComponent {
   }
 
   panelOpened() {
-    this.wishService.fetchWishes(this.wishList.id).subscribe(wishes => {
+    this.wishService.fetchWishes(this.wishList.id, this.user).subscribe(wishes => {
           this.orderMode = false;
           this.wishes = wishes;
           this.panelOpenState = this.wishList.background == null;
           this.wishColumns.render(wishes, this.orderMode);
         },
-        _ => this.errorHandler.handle('fetchWishes'))
+        error => this.errorHandler.handle(error, 'fetchWishes'))
   }
 
   panelClosed() {
@@ -71,7 +71,7 @@ export class WishListEditComponent {
     this.wishService.add(this.wishList.id).subscribe(wish => {
           this.wishes.push(wish);
           this.wishColumns.render();
-        }, _ => this.errorHandler.handle('addWish')
+        }, error => this.errorHandler.handle(error, 'addWish')
     )
   }
 
@@ -80,7 +80,7 @@ export class WishListEditComponent {
           if (!result) {
             alert('Update fehlgeschlagen')
           }
-        }, _ => this.errorHandler.handle('updateWish')
+        }, error => this.errorHandler.handle(error, 'updateWish')
     )
   }
 
@@ -90,7 +90,7 @@ export class WishListEditComponent {
       if (!result) {
         alert('Update der Reihenfolge fehlgeschlagen')
       }
-    }, _ => this.errorHandler.handle('update Order'));
+    }, error => this.errorHandler.handle(error, 'update Order'));
   }
 
   editEvent() {
@@ -206,7 +206,7 @@ export class WishListEditComponent {
       highlightNewIds(this.wishes, oldWishIds);
       this.wishColumns.render(wishes);
       this.snackBar.open(`${singularOrPluralWish(this.wishIds.wishIds.length)} eingefügt`, null, {duration: 2000});
-    }, _ => this.errorHandler.handle('fetchWishes'));
+    }, error => this.errorHandler.handle(error, 'fetchWishes'));
   }
 
   reserveClicked(wish: Wish) {
@@ -222,7 +222,7 @@ export class WishListEditComponent {
     this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
           copyDonationInformation(wish, updatedWish);
         },
-        _ => this.errorHandler.handle('reserveWish'));
+        error  => this.errorHandler.handle(error, 'reserveWish'));
   }
 
   private doProxyReservation(wish: Wish) {
@@ -244,7 +244,7 @@ export class WishListEditComponent {
       this.wishService.proxyReserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
             copyDonationInformation(wish, updatedWish);
           },
-          _ => this.errorHandler.handle('proxyReserveWish'));
+          error => this.errorHandler.handle(error, 'proxyReserveWish'));
     } else {
       this.runReservationInMyName(wish, donation)
     }
@@ -259,7 +259,7 @@ export class WishListEditComponent {
         this.wishColumns.render();
         this.selectionCount = countSelection(this.wishes);
       }
-    }, _ => this.errorHandler.handle('deleteWish'))
+    }, error => this.errorHandler.handle(error, 'deleteWish'))
   }
 
   private removeFromList(ids: number[]) {

@@ -19,9 +19,12 @@ export class WishService {
   constructor(private http: HttpClient, private configurationService: ConfigurationService) {
   }
 
-  fetchWishes(wishListId: number | string): Observable<Wish[]> {
-    return this.http.get<Wish[]>(`${this.getBaseUrl()}/wish/list?list=${wishListId}&unique=${unique()}`, httpOptions).pipe(
-        catchError(handleError<Wish[]>('wish/list')));
+  fetchWishes(wishListId: number | string, user: string = null): Observable<Wish[]> {
+    let url = `${this.getBaseUrl()}/wish/list?list=${wishListId}&unique=${unique()}`;
+    if (user) {
+      url += `&user=${user}`;
+    }
+    return this.http.get<Wish[]>(url, httpOptions);
   }
 
   copy(copyTask: WishCopyTask): Observable<Wish[]> {

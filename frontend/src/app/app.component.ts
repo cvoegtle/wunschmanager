@@ -62,6 +62,6 @@ export class AppComponent implements OnInit {
 
   private fetchStatus() {
     return this.userService.fetchStatus().subscribe(status => this.userStatus = status,
-        _ => this.errorHandler.handle('fetchStatus'));
+        error => this.errorHandler.handle(error, 'fetchStatus'));
   }
 }

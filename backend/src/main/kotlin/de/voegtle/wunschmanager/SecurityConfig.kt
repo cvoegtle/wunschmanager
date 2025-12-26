@@ -1,8 +1,8 @@
 package de.voegtle.wunschmanager
 
-import com.google.cloud.Identity.user
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest
@@ -10,8 +10,9 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler
+import org.springframework.security.web.util.matcher.RequestMatcher
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +36,19 @@ class SecurityConfig {
                            "/wishlist/shared",
                            "/wish/list").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
+      }
+      .exceptionHandling { exception ->
+        val apiEntryPoint = HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
+
+        val apiRequestMatcher = RequestMatcher { request ->
+          val path = request.servletPath
+          path.startsWith("/wish/") ||
+          path.startsWith("/wishlist/") ||
+          path.startsWith("/user/") ||
+          "XMLHttpRequest" == request.getHeader("X-Requested-With")
+        }
+
+        exception.defaultAuthenticationEntryPointFor(apiEntryPoint, apiRequestMatcher)
       }
       .oauth2Login { oauth2Login ->
         oauth2Login

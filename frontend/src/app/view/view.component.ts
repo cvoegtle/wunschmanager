@@ -41,7 +41,7 @@ export class ViewComponent implements OnInit {
 
   private fetchStatus() {
     this.userService.fetchStatus().subscribe(status => this.checkStatus(status),
-        _ => this.errorHandler.handle('fetchStatus'))
+        error => this.errorHandler.handle(error, 'fetchStatus'))
   }
 
   private checkStatus(status: UserStatus) {
@@ -61,13 +61,13 @@ export class ViewComponent implements OnInit {
             this.processWishList(wishLists[0])
           }
         },
-        _ => this.errorHandler.handle('fetchSharedLists'));
+        error => this.errorHandler.handle(error, 'fetchSharedLists'));
   }
 
   private fetchWishList() {
     const id = this.route.snapshot.paramMap.get('id');
     this.wishListService.get(id).subscribe(wishList => this.processWishList(wishList),
-        _ => this.errorHandler.handle('fetchLists'));
+        error => this.errorHandler.handle(error, 'fetchLists'));
   }
 
   private processWishList(wishList: WishList) {

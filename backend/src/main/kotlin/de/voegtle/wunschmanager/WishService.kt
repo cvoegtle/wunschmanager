@@ -30,10 +30,10 @@ import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
 
 @RestController() class WishService {
-  @GetMapping("/wish/list") fun list(@RequestParam() list: Long, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {
+  @GetMapping("/wish/list") fun list(@RequestParam() list: Long, @RequestParam() user: String?, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
-    val userName = extractUserId(oidcUser, false)
+    val userName = extractUserId(oidcUser, user != null)
 
     return loadReducedListOfWishes(wishList, userName)
   }
