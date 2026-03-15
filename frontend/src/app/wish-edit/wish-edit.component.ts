@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Alternative, isAvailable, isReservedByUser, reduceToOneEmptyAlternative, Wish } from "../services/wish";
+import { Alternative, ensureEmptyAlternative, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish } from "../services/wish";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
@@ -24,7 +24,7 @@ export class WishEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    reduceToOneEmptyAlternative(this.wish);
+    removeEmptyAlternatives(this.wish);
   }
 
   isAvailable() {
@@ -93,6 +93,14 @@ export class WishEditComponent implements OnInit {
     this.wishChange.emit(this.wish);
 
     // deferred ausführen, da sonst der letzte Link von Angular dupliziert wird
-    setTimeout(reduceToOneEmptyAlternative, 10, this.wish);
+    setTimeout(removeEmptyAlternatives, 10, this.wish);
+  }
+
+  protected addAlternative() {
+    ensureEmptyAlternative(this.wish)
+  }
+
+  protected addPhoto() {
+
   }
 }

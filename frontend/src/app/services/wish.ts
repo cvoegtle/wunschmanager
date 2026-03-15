@@ -216,11 +216,6 @@ export function ensureEmptyAlternative(wish: Wish) {
   }
 }
 
-export function reduceToOneEmptyAlternative(wish: Wish) {
-  removeEmptyAlternatives(wish);
-  ensureEmptyAlternative(wish);
-}
-
 export function removeEmptyAlternatives(wish: Wish) {
   wish.alternatives = wish.alternatives.filter(function (alternative, index, links) {
     return isWithDescriptionOrLink(alternative);

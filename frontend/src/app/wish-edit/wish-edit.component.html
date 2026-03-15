@@ -48,6 +48,20 @@
           [loggedIn]="true" [myPresent]="isMyPresent()">
         </donor-viewer>
       }
+
+      @if (!orderMode) {
+        <div class="wish-line">
+          <button #settings mat-icon-button
+                  (click)="addAlternative()" matTooltip="Eigenschaften bearbeiten">
+            <mat-icon>add_link_24</mat-icon>
+          </button>
+          <button #settings mat-icon-button [disabled]="true"
+                  (click)="addPhoto()" matTooltip="Eigenschaften bearbeiten">
+            <mat-icon>add_a_photo_24</mat-icon>
+          </button>
+
+        </div>
+      }
     </form>
   </div>
 </mat-card>
