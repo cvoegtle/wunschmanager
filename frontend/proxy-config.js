@@ -3,6 +3,7 @@ const PROXY_CONFIG = [{
     "/wishlist",
     "/wish",
     "/user/status",
+    "/image/upload",
     "/_ah",
     "/logout",
     "/oauth2/authorization/google"

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { adjustPriority2Order, clearHighlight, highlightByIndex, Wish } from "../services/wish";
+import { adjustPriority2Order, clearHighlight, highlightByIndex, ImageUpload, Wish } from "../services/wish";
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 @Component({
@@ -15,6 +15,7 @@ export class WishColumnComponent {
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
   @Output() orderChange = new EventEmitter<void>();
+  @Output() wishImageAppended = new EventEmitter<ImageUpload>();
 
   constructor() {
   }
@@ -30,7 +31,11 @@ export class WishColumnComponent {
   reserveClicked(wish: Wish) {
     this.reserved.emit(wish);
   }
-  
+
+  protected onWishImageAppended(imageUpload: ImageUpload) {
+    this.wishImageAppended.emit(imageUpload);
+  }
+
   drop(event: CdkDragDrop<Wish[]>) {
     moveItemInArray(this.wishes, event.previousIndex, event.currentIndex);
 

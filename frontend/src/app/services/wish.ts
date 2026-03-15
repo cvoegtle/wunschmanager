@@ -22,6 +22,11 @@ export interface Wish {
   donations: Donation[];
 }
 
+export interface ImageUpload {
+  wish: Wish;
+  file: File;
+}
+
 export interface Donation {
   donor: string;
   proxyDonor: string;

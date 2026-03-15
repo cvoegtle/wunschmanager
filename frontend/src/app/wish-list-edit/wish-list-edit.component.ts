@@ -6,7 +6,7 @@ import {
   Donation,
   DonationImpl,
   extractIds,
-  highlightNewIds,
+  highlightNewIds, ImageUpload,
   isReservedByUser,
   removeWishSelection,
   Wish
@@ -153,6 +153,19 @@ export class WishListEditComponent {
     }
     this.wishColumns.render(null, this.orderMode);
   }
+
+  protected onWishImageAppended(imageUpload: ImageUpload) {
+    this.wishService.uploadImage(imageUpload.file).subscribe({
+      next: (imageUrl: string) => {
+        // TODO: The returned imageUrl should be assigned to the corresponding wish.
+        // The 'imageUpload' object likely contains the wish or its ID to identify it.
+        // Example: imageUpload.wish.imageUrl = imageUrl;
+      },
+      error: error => this.errorHandler.handle(error, 'uploadImage')
+    });
+  }
+
+
 
   duplicateClicked() {
     let duplicateDialog = this.dialog.open(WishListDuplicateDialogComponent, {

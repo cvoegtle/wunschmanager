@@ -34,7 +34,10 @@ class SecurityConfig {
                            "/user/status",
                            "/wishlist/get",
                            "/wishlist/shared",
-                           "/wish/list").permitAll()
+                           "/wish/list",
+                           "/image/upload",
+                           "/image/delete",
+                           "/image/rotate").permitAll()
           .anyRequest().authenticated() // Alle anderen Pfade erfordern Authentifizierung
       }
       .exceptionHandling { exception ->
@@ -45,6 +48,7 @@ class SecurityConfig {
           path.startsWith("/wish/") ||
           path.startsWith("/wishlist/") ||
           path.startsWith("/user/") ||
+          path.startsWith("/image/") ||
           "XMLHttpRequest" == request.getHeader("X-Requested-With")
         }
 

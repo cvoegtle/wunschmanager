@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
-import { Wish } from "../services/wish";
+import { ImageUpload, Wish } from "../services/wish";
 import { sort, splitIntoColumns } from "../util/wishlist-helper";
 
 @Component({
@@ -16,6 +16,7 @@ export class WishMultiColumnComponent {
   @Output() wishSelection = new EventEmitter<Wish>();
   @Output() reserved = new EventEmitter<Wish>();
   @Output() orderChange = new EventEmitter<void>();
+  @Output() wishImageAppended = new EventEmitter<ImageUpload>();
 
   wishLists: Wish[][] = [];
 
@@ -56,7 +57,11 @@ export class WishMultiColumnComponent {
   reserveClicked(wish: Wish) {
     this.reserved.emit(wish);
   }
-  
+
+  protected onWishImageAppended(imageUpload: ImageUpload) {
+    this.wishImageAppended.emit(imageUpload);
+  }
+
   onOrderChange() {
     this.orderChange.emit();
   }

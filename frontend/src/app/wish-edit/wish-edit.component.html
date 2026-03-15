@@ -51,12 +51,13 @@
 
       @if (!orderMode) {
         <div class="wish-line">
-          <button #settings mat-icon-button
-                  (click)="addAlternative()" matTooltip="Eigenschaften bearbeiten">
+          <button #add_link mat-icon-button
+                  (click)="addAlternative()" matTooltip="Weiteren Link hinzufügen">
             <mat-icon>add_link_24</mat-icon>
           </button>
-          <button #settings mat-icon-button [disabled]="true"
-                  (click)="addPhoto()" matTooltip="Eigenschaften bearbeiten">
+          <input type="file" (change)="onFileSelected($event)" #fileInput style="display: none" accept="image/*">
+          <button #add_photo mat-icon-button [disabled]="true"
+                  (click)="fileInput.click()" matTooltip="Bild hinzufügen">
             <mat-icon>add_a_photo_24</mat-icon>
           </button>
 

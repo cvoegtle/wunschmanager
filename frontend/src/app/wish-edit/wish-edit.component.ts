@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Alternative, ensureEmptyAlternative, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish } from "../services/wish";
+import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish } from "../services/wish";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
@@ -16,6 +16,7 @@ export class WishEditComponent implements OnInit {
   @Input() orderMode: boolean;
   @Output() reserved = new EventEmitter<Wish>();
   @Output() wishChange = new EventEmitter<Wish>();
+  @Output() wishImageAppended = new EventEmitter<ImageUpload>();
   @Output() wishSelection = new EventEmitter<Wish>();
 
   @ViewChild("settings", {static: true}) settings: HTMLElement;
@@ -100,7 +101,11 @@ export class WishEditComponent implements OnInit {
     ensureEmptyAlternative(this.wish)
   }
 
-  protected addPhoto() {
+  protected onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
 
+    if (input.files && input.files.length > 0) {
+      this.wishImageAppended.emit({wish: this.wish, file: input.files[0]})
+    }
   }
 }

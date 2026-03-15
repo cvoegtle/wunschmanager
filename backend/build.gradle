@@ -29,6 +29,7 @@ dependencies {
 
     implementation 'com.google.guava:guava:33.3.1-jre'
     implementation 'com.googlecode.objectify:objectify:6.1.2'
+    implementation 'com.google.cloud:google-cloud-storage:2.40.0'
 
     // Versions for these are managed by the Spring Boot plugin, ensuring compatibility
     implementation "org.springframework.boot:spring-boot-starter-web"
@@ -49,7 +50,7 @@ bootJar {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '112'
+        version = '115'
         projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true

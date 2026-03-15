@@ -44,6 +44,13 @@ export class WishService {
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions);
   }
 
+  uploadImage(file: File): Observable<String> {
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+    let url = `${this.getBaseUrl()}/image/upload`;
+    return this.http.post<String>(url, formData);
+  }
+
   updateOrder(listId: number, wishOrders: WishOrder[]): Observable<boolean> {
     let updateRequest = {listId: listId, wishOrders: wishOrders};
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions);

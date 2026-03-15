@@ -1,10 +1,7 @@
 @if (orderMode) {
   <div cdkDropList (cdkDropListDropped)="drop($event)">
     @for (wish of wishes; track wish) {
-      <wish-edit [wish]="wish" [orderMode]="orderMode" [user]="user"
-        (wishChange)="wishChanged($event)"
-        (reserved)="reserveClicked($event)"
-        (wishSelection)="onWishSelection($event)" cdkDrag>
+      <wish-edit [wish]="wish" [orderMode]="orderMode" [user]="user" cdkDrag>
       </wish-edit>
     }
   </div>
@@ -15,7 +12,8 @@
       <wish-edit [wish]="wish" [orderMode]="orderMode" [user]="user"
         (wishChange)="wishChanged($event)"
         (reserved)="reserveClicked($event)"
-        (wishSelection)="onWishSelection($event)">
+        (wishSelection)="onWishSelection($event)"
+        (wishImageAppended)="onWishImageAppended($event)">
       </wish-edit>
     }
   </div>
