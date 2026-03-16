@@ -155,11 +155,13 @@ export class WishListEditComponent {
   }
 
   protected onWishImageAppended(imageUpload: ImageUpload) {
-    this.wishService.uploadImage(imageUpload.file).subscribe({
-      next: (imageUrl: string) => {
-        // TODO: The returned imageUrl should be assigned to the corresponding wish.
-        // The 'imageUpload' object likely contains the wish or its ID to identify it.
-        // Example: imageUpload.wish.imageUrl = imageUrl;
+    this.wishService.uploadImage(this.wishList.id, imageUpload.wish.id, imageUpload.file).subscribe({
+      next: (wish: Wish) => {
+        const index = this.wishes.findIndex(w => w.id === wish.id);
+        if (index !== -1) {
+          this.wishes[index] = wish;
+          this.wishColumns.render();
+        }
       },
       error: error => this.errorHandler.handle(error, 'uploadImage')
     });

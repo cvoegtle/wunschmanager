@@ -64,6 +64,7 @@ import java.util.Date
       existingWish.description = it.description
       existingWish.link = it.link
       existingWish.alternatives = it.alternatives
+      existingWish.images = it.images
       existingWish.priority = it.priority
       existingWish.background = it.background
       existingWish.invisible = it.invisible
@@ -183,14 +184,14 @@ import java.util.Date
 
     return loadReducedListOfWishes(destinationList, userName)
   }
+}
 
-  private fun loadWish(wishList: WishList, wishId: Long): Wish {
-    val wish = ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).id(wishId).now()
-    wish.migrateDonor()
-    return wish
-  }
+fun loadWish(wishList: WishList, wishId: Long): Wish {
+  val wish = ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).id(wishId).now()
+  wish.migrateDonor()
+  return wish
+}
 
-  private fun saveWish(existingWish: Wish?) {
-    ObjectifyService.ofy().save().entity(existingWish).now()
-  }
+fun saveWish(existingWish: Wish?) {
+  ObjectifyService.ofy().save().entity(existingWish).now()
 }

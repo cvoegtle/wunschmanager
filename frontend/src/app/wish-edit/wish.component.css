@@ -83,3 +83,18 @@ mat-card {
 .top-space {
     margin-top: 10px;
 }
+
+.wish-image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.wish-img-preview {
+    max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

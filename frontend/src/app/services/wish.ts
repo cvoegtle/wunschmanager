@@ -9,6 +9,7 @@ export interface Wish {
   description: string;
   link: string;
   alternatives: Alternative[];
+  images: Image[];
   donor: string;
   proxyDonor: string
   createTimestamp: number;
@@ -39,6 +40,10 @@ export interface Alternative {
   link: string;
 }
 
+export interface Image {
+  url: string;
+}
+
 export class DonationImpl implements Donation {
   donor: string;
   proxyDonor: string;
@@ -56,6 +61,7 @@ class WishImpl implements Wish {
     this.description = wish.description;
     this.link = wish.link;
     this.alternatives = wish.alternatives;
+    this.images = wish.images;
     this.createTimestamp = wish.createTimestamp;
     this.priority = wish.priority;
     this.background = wish.background;
@@ -70,6 +76,7 @@ class WishImpl implements Wish {
   description: string;
   link: string;
   alternatives: Alternative[] = [];
+  images: Image[] = [];
   donor: string;
   proxyDonor: string
   createTimestamp: number;

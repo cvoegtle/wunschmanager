@@ -18,6 +18,7 @@ import java.util.TreeSet
                    @Index var description: String = "",
                    var link: String? = null,
                    var alternatives: List<Alternative> = ArrayList(),
+                   var images: List<Image> = ArrayList(),
                    @Index var donor: String? = null,
                    @Index var proxyDonor: String? = null,
                    @Index var createTimestamp: Long = 0,

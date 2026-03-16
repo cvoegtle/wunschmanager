@@ -44,11 +44,11 @@ export class WishService {
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update`, updateRequest, httpOptions);
   }
 
-  uploadImage(file: File): Observable<String> {
+  uploadImage(listId: number, wishId: number, file: File): Observable<Wish> {
     const formData = new FormData();
     formData.append('image', file, file.name);
-    let url = `${this.getBaseUrl()}/image/upload`;
-    return this.http.post<String>(url, formData);
+    let url = `${this.getBaseUrl()}/image/upload?listId=${listId}&wishId=${wishId}`;
+    return this.http.post<Wish>(url, formData);
   }
 
   updateOrder(listId: number, wishOrders: WishOrder[]): Observable<boolean> {

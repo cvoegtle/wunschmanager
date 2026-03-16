@@ -40,6 +40,14 @@
         </content-edit>
       }
 
+      @if (wish.images && wish.images.length > 0) {
+        <div class="wish-image-gallery">
+          @for (image of wish.images; track image) {
+            <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
+          }
+        </div>
+      }
+
       @if (wish.groupGift && isManagedList() ) {
         <price-information [wish]="wish"></price-information>
       }
@@ -56,7 +64,7 @@
             <mat-icon>add_link_24</mat-icon>
           </button>
           <input type="file" (change)="onFileSelected($event)" #fileInput style="display: none" accept="image/*">
-          <button #add_photo mat-icon-button [disabled]="true"
+          <button #add_photo mat-icon-button
                   (click)="fileInput.click()" matTooltip="Bild hinzufügen">
             <mat-icon>add_a_photo_24</mat-icon>
           </button>

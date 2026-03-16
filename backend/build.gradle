@@ -50,7 +50,7 @@ bootJar {
 // [START model]
 appengine {  // App Engine tasks configuration
     deploy {
-        version = '115'
+        version = '118'
         projectId = 'wunschmanager'
         stopPreviousVersion = true
         promote = true
