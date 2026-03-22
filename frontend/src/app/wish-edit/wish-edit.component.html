@@ -40,17 +40,10 @@
         </content-edit>
       }
 
-      @if (wish.images && wish.images.length > 0) {
+      @if (wish.images && wish.images.length > 0 && !orderMode) {
         <div class="wish-image-gallery">
           @for (image of wish.images; track image) {
-            <div class="wish-img-container">
-              <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
-              @if (!orderMode) {
-                <button mat-icon-button class="delete-image-btn" (click)="deleteImage(image)" matTooltip="Bild löschen">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              }
-            </div>
+            <wish-image-gallery [image]="image" [deleteVisible]="true" (delete)="deleteImage(image)"></wish-image-gallery>
           }
         </div>
       }

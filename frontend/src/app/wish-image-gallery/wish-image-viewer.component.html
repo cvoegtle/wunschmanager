@@ -1,0 +1,8 @@
+<div class="wish-img-container">
+  <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
+    @if (deleteVisible) {
+      <button mat-icon-button class="delete-image-btn" (click)="onDelete()" matTooltip="Bild löschen">
+        <mat-icon>delete</mat-icon>
+      </button>
+    }
+</div>

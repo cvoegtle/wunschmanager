@@ -33,7 +33,7 @@
         @if (wish.images && wish.images.length > 0) {
           <div class="wish-image-gallery">
             @for (image of wish.images; track image) {
-              <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
+              <wish-image-gallery [image]="image" [deleteVisible]="false"></wish-image-gallery>
             }
           </div>
         }
