@@ -3,6 +3,8 @@ import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReserv
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
+import { resizeImage } from "../util/image-processing";
+
 
 @Component({
     selector: 'wish-edit',
@@ -105,7 +107,10 @@ export class WishEditComponent implements OnInit {
     const input = event.target as HTMLInputElement;
 
     if (input.files && input.files.length > 0) {
-      this.wishImageAppended.emit({wish: this.wish, file: input.files[0]})
+      const file = input.files[0];
+      resizeImage(file, 1600).then(resizedFile => {
+        this.wishImageAppended.emit({wish: this.wish, file: resizedFile});
+      });
     }
   }
 }
