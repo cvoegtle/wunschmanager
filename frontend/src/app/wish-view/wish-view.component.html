@@ -22,6 +22,15 @@
               }
             </div>
           }
+
+          @if (wish.images && wish.images.length > 0) {
+            <div class="wish-image-gallery">
+              @for (image of wish.images; track image) {
+                <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
+              }
+            </div>
+          }
+
         </div>
         @if (wish.link || wish.description) {
           <content-viewer [content]="wish" [index]="withAlternatives() ? 1 : null"></content-viewer>
