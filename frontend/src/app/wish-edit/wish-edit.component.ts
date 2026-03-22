@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish } from "../services/wish";
+import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish, Image } from "../services/wish";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
 import { resizeImage } from "../util/image-processing";
-
+import { DeleteItemDialogComponent } from '../delete-item-dialog/delete-item-dialog.component';
 
 @Component({
     selector: 'wish-edit',
@@ -112,5 +112,24 @@ export class WishEditComponent implements OnInit {
         this.wishImageAppended.emit({wish: this.wish, file: resizedFile});
       });
     }
+  }
+
+  deleteImage(image: Image | any) {
+    let deleteDialog = this.dialog.open(DeleteItemDialogComponent, {
+      data: {
+        item: "Bild",
+        id: image
+      }
+    });
+
+    deleteDialog.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.wish.images.indexOf(image);
+        if (index > -1) {
+          this.wish.images.splice(index, 1);
+          this.wishChange.emit(this.wish);
+        }
+      }
+    });
   }
 }
