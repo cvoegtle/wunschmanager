@@ -22,15 +22,6 @@
               }
             </div>
           }
-
-          @if (wish.images && wish.images.length > 0) {
-            <div class="wish-image-gallery">
-              @for (image of wish.images; track image) {
-                <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
-              }
-            </div>
-          }
-
         </div>
         @if (wish.link || wish.description) {
           <content-viewer [content]="wish" [index]="withAlternatives() ? 1 : null"></content-viewer>
@@ -38,6 +29,13 @@
         @for (content of wish.alternatives; track content; let contentIndex = $index) {
           <content-viewer [content]="content"
           [index]="contentIndex+2"></content-viewer>
+        }
+        @if (wish.images && wish.images.length > 0) {
+          <div class="wish-image-gallery">
+            @for (image of wish.images; track image) {
+              <img [src]="image.url || image" alt="Wunsch-Bild" class="wish-img-preview">
+            }
+          </div>
         }
         @if (wish.groupGift) {
           <price-information [wish]="wish"></price-information>
