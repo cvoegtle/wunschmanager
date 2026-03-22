@@ -2,6 +2,7 @@ package de.voegtle.wunschmanager
 
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
+import de.voegtle.wunschmanager.util.ImageAccess
 import de.voegtle.wunschmanager.util.PermissionDenied
 import de.voegtle.wunschmanager.util.assertManagedOwnership
 import de.voegtle.wunschmanager.util.assertNotEmpty
@@ -30,6 +31,8 @@ import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
 
 @RestController() class WishService {
+  val imageAccess: ImageAccess = ImageAccess()
+
   @GetMapping("/wish/list") fun list(@RequestParam() list: Long, @RequestParam() user: String?, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
 
@@ -64,6 +67,14 @@ import java.util.Date
       existingWish.description = it.description
       existingWish.link = it.link
       existingWish.alternatives = it.alternatives
+
+      // Delete removed images
+      existingWish.images.forEach { existingImage ->
+        if (it.images.none { newImage -> newImage.url == existingImage.url }) {
+          existingImage.url?.let { url -> imageAccess.deleteImage(url) }
+        }
+      }
+
       existingWish.images = it.images
       existingWish.priority = it.priority
       existingWish.background = it.background
@@ -91,6 +102,13 @@ import java.util.Date
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(wishIds.sourceListId).now()
 
     assertOwnership(oidcUser, wishList, "You must be owner of the list to delete wishes")
+
+    val wishesToDelete = ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).ids(wishIds.wishIds).values
+    wishesToDelete.forEach { wish ->
+      wish.images.forEach { image ->
+        image.url?.let { imageAccess.deleteImage(it) }
+      }
+    }
 
     ObjectifyService.ofy().delete().type(Wish::class.java).parent(wishList).ids(wishIds.wishIds).now()
     return true

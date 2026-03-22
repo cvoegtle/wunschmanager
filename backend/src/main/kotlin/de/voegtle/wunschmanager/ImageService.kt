@@ -6,6 +6,7 @@ import com.google.cloud.storage.Storage
 import com.google.cloud.storage.StorageOptions
 import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.FileTooLargeException
+import de.voegtle.wunschmanager.util.ImageAccess
 import de.voegtle.wunschmanager.util.assertOwnership
 import de.voegtle.wunschmanager.util.extractUserIdNotNull
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -21,13 +22,11 @@ import org.voegtle.wunschmanager.data.WishList
 import java.util.logging.Logger
 
 @RestController
-class   ImageService(val wishService: WishService) {
-  val log = Logger.getLogger("ImageService")
-
-  private val storage: Storage = StorageOptions.getDefaultInstance().service
-  private val googleApisUrl = "https://storage.googleapis.com"
-  private val bucketName = "wunschmanager.appspot.com"
+class ImageService {
+  val log: Logger = Logger.getLogger("ImageService")
+  val imageAccess: ImageAccess = ImageAccess()
   private val maxImageSize = 2*1024*1024
+
 
   @PostMapping("/image/upload")
   @CrossOrigin(origins = ["https://wunschmanager.appspot.com"])
@@ -36,25 +35,18 @@ class   ImageService(val wishService: WishService) {
     val userName = extractUserIdNotNull(oidcUser)
     assertImageIsBelowSizeLimit(image)
 
-    val blobId = saveImage(userName, image)
-    val imageUrl = "$googleApisUrl/$bucketName/${blobId.name}"
-
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
     assertOwnership(oidcUser, wishList, "You must be the owner of the list to append an image")
     val wish = loadWish(wishList, wishId)
-    wish.images = wish.images + Image(imageUrl)
+
+    val imageUrl = imageAccess.saveImage(userName, image)
+    wish.images += Image(imageUrl)
     saveWish(wish)
 
     log.warning("saved image with url $imageUrl")
     return wish
   }
 
-  private fun saveImage(userName: String, image: MultipartFile): BlobId {
-    val blobId = BlobId.of(bucketName, "images/$userName/${image.originalFilename}-${System.currentTimeMillis()}")
-    val blobInfo = BlobInfo.newBuilder(blobId).setContentType(image.contentType).build()
-    storage.create(blobInfo, image.bytes)
-    return blobId
-  }
 
   private fun assertImageIsBelowSizeLimit(image: MultipartFile) {
     if (image.size > maxImageSize) {

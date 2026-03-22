@@ -2,9 +2,11 @@ package de.voegtle.wunschmanager
 
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
+import de.voegtle.wunschmanager.util.ImageAccess
 import de.voegtle.wunschmanager.util.assertOwnership
 import de.voegtle.wunschmanager.util.duplicateUnusedWishes
 import de.voegtle.wunschmanager.util.extractUserId
+import de.voegtle.wunschmanager.util.loadFullListOfWishes
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.voegtle.wunschmanager.data.SharedWishList
 import org.voegtle.wunschmanager.data.WishList
+import org.voegtle.wunschmanager.data.Wish
 import java.util.Date
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -19,6 +22,8 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
 @RestController
 class WishListService {
+  val imageAccess: ImageAccess = ImageAccess()
+
   @GetMapping("/wishlist/create")
   fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, @AuthenticationPrincipal oidcUser: OidcUser?): WishList {
     val userName = extractUserId(oidcUser, true)
@@ -76,8 +81,19 @@ class WishListService {
 
     assertOwnership(oidcUser, deleteCandidate, "You do not have the permission to delete the list.")
 
+    deleteAttachedImages(deleteCandidate)
+
     ObjectifyService.ofy().delete().type(WishList::class.java).id(id).now()
     return true
+  }
+
+  private fun deleteAttachedImages(deleteCandidate: WishList) {
+    val wishesToDelete = loadFullListOfWishes(deleteCandidate)
+    wishesToDelete.forEach { wish ->
+      wish.images.forEach { image ->
+        image.url?.let { imageAccess.deleteImage(it) }
+      }
+    }
   }
 
 
