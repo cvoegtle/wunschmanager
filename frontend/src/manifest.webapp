@@ -2,9 +2,9 @@
   "name": "Wunschmanager",
   "short_name": "Wunschmanager",
     "icons": [{
-          "src": "assets/wunschmanager.png",
-          "sizes": "96x96",
-          "type": "image/png"
+          "src": "assets/wunschmanager.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
         }],
   "start_url": "https://wunschmanager.appspot.com/",
   "display": "standalone"
