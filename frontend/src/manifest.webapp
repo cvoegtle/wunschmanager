@@ -6,6 +6,6 @@
           "sizes": "96x96",
           "type": "image/png"
         }],
-  "start_url": "http://localhost:8085/",
+  "start_url": "https://wunschmanager.appspot.com/",
   "display": "standalone"
 }
