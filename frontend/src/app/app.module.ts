@@ -84,6 +84,7 @@ import { ContentViewerComponent } from './link-viewer/content-viewer.component';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { ErrorSessionDialogComponent } from "./error-session-dialog/error-session-dialog.component";
 import { WishImageViewerComponent } from "./wish-image-gallery/wish-image-viewer.component";
+import { ReserveActionDialogComponent } from './reserve-action-dialog/reserve-action-dialog.component';
 
 @NgModule({ declarations: [
         AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
@@ -91,7 +92,7 @@ import { WishImageViewerComponent } from "./wish-image-gallery/wish-image-viewer
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
         ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
-        SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
+        SuggestGroupDialogComponent, ReserveActionDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
         ReactiveFormsModule,

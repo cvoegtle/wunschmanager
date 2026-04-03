@@ -30,7 +30,7 @@ export class SuggestGroupDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  reserve(): void {
+  startGroupGift(): void {
     this.wish.groupGift=true
     this.dialogRef.close(this.donation);
   }

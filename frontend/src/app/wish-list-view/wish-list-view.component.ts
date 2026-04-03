@@ -12,6 +12,7 @@ import { WishViewMultiColumnComponent } from "../wish-view-multi-column/wish-vie
 import { Router } from "@angular/router";
 import { ParticipateDialogComponent } from "../participate-dialog/participate-dialog.component";
 import { SuggestGroupDialogComponent } from "../suggest-group-dialog/suggest-group-dialog.component";
+import { ReserveAction, ReserveActionDialogComponent } from "../reserve-action-dialog/reserve-action-dialog.component";
 
 @Component({
     selector: 'wish-list-view',
@@ -75,14 +76,32 @@ export class WishListViewComponent implements OnInit {
 
   reserveClicked(wish: Wish) {
     if (this.user) {
-      if (wish.groupGift && !isReservedByUser(wish, this.user)) {
+      if (isReservedByUser(wish, this.user)) {
+        this.callReservationService(wish);
+      } else if (wish.groupGift) {
         this.participateInGroupGift(wish);
       } else {
-        this.callReservationService(wish);
+        this.openReserveDialog(wish);
       }
     } else {
       this.askForLogin('für eine Reservierung musst Du Dich anmelden.');
     }
+  }
+
+  private openReserveDialog(wish: Wish) {
+    let reserveActionDialog = this.dialog.open(ReserveActionDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    reserveActionDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet === ReserveAction.RESERVE_FOR_ME) {
+        this.callReservationService(wish);
+      } else if (dialogRet === ReserveAction.SUGGEST_GROUP) {
+        this.openGroupSuggestionDialog(wish);
+      }
+    });
   }
 
   private openGroupSuggestionDialog(wish: Wish) {
