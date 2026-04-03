@@ -1,15 +1,12 @@
 <button mat-icon-button matTooltip="{{getToolTip()}}">
   @if (!reserved && !groupGift) {
-    <i class="material-icons">shopping_cart</i>
+    <i class="material-symbols-outlined">hand_package</i>
   }
-  @if (reserved && !groupGift) {
-    <i class="material-icons">remove_shopping_cart</i>
+  @if (reserved) {
+    <i class="material-icons">person_remove</i>
   }
 
   @if (!reserved && groupGift) {
     <i class="material-icons">person_add</i>
-  }
-  @if (reserved && groupGift) {
-    <i class="material-icons">person_remove</i>
   }
 </button>

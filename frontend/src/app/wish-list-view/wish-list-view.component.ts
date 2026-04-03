@@ -85,14 +85,6 @@ export class WishListViewComponent implements OnInit {
     }
   }
 
-  suggestGroupClicked(wish: Wish) {
-    if (this.user) {
-      this.openGroupSuggestionDialog(wish);
-    } else {
-      this.askForLogin('um ein Gruppengeschenk vorzuschlagen, musst Du Dich anmelden.');
-    }
-  }
-
   private openGroupSuggestionDialog(wish: Wish) {
     let suggestGroupDialog = this.dialog.open(SuggestGroupDialogComponent, {
       data: {

@@ -10,12 +10,12 @@ buildscript {    // Configuration for building
 
 def angularOutputDir = "$projectDir/dist"
 
-task build(type:Exec) {
+tasks.register('build', Exec) {
     dependsOn 'compile'
-    commandLine "/Users/cv/Documents/workspace/wunschmanager/node_modules/.bin/appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets//*.{ico,html,js,webapp,css,png}", "--network-star", "-o",  "$angularOutputDir/wm.appcache"
+    commandLine "/Users/cv/Documents/workspace/wunschmanager/node_modules/.bin/appcache-manifest", "$angularOutputDir/*.{ico,html,js,webapp,css,png}", "$angularOutputDir/assets//*.{ico,html,js,webapp,css,png}", "--network-star", "-o", "$angularOutputDir/wm.appcache"
 }
 
-task compile(type:Exec) {
+tasks.register('compile', Exec) {
     dependsOn "installAngular"
 
     workingDir "."
@@ -25,7 +25,7 @@ task compile(type:Exec) {
     commandLine "/Users/cv/.nvm/versions/node/v25.2.0/bin/ng", "build", "--configuration=production", "--output-path=$angularOutputDir"
 }
 
-task clean(type:Delete) {
+tasks.register('clean', Delete) {
     delete fileTree("$angularOutputDir/assets") {
         include "*"
     }
@@ -36,7 +36,7 @@ task clean(type:Delete) {
     }
 }
 
-task installAngular(type:Exec) {
+tasks.register('installAngular', Exec) {
     workingDir "."
     inputs.dir "."
     group = BasePlugin.BUILD_GROUP

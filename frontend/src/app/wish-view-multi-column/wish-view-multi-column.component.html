@@ -2,7 +2,6 @@
   @for (wishList of wishLists; track wishList) {
     <wish-view-column class="content-column" [wishes]="wishList" [user]="user" [restricted]="restricted"
       (reserved)="reserveClicked($event)"
-      (suggestGroup)="suggestGroupClicked($event)"
       (showDonor)="showDonorClicked($event)"
       (wishSelection)="onWishSelection($event)">
     </wish-view-column>

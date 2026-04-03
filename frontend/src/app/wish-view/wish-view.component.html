@@ -52,9 +52,6 @@
           <donate-button [groupGift]="wish.groupGift" [reserved]="isMyPresent()" (click)="reserveClicked()">
           </donate-button>
         }
-        @if (isAvailable() && !wish.groupGift) {
-          <group-gift-button (click)="suggestGroupClicked()"></group-gift-button>
-        }
       </div>
     </div>
   </mat-card>

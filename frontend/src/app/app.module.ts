@@ -77,7 +77,6 @@ import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
 import { ParticipateDialogComponent } from './participate-dialog/participate-dialog.component';
 import { PriceInformationComponent } from './price-information/price-information.component';
 import { DonateButtonComponent } from './donate-button/donate-button.component';
-import { GroupGiftButtonComponent } from './group-gift-button/group-gift-button.component';
 import { SuggestGroupDialogComponent } from './suggest-group-dialog/suggest-group-dialog.component';
 import { EuroFormatPipe } from './util/euro-format.pipe';
 import { ContentEditComponent } from './link-edit/content-edit.component';
@@ -92,7 +91,7 @@ import { WishImageViewerComponent } from "./wish-image-gallery/wish-image-viewer
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
         ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
-        GroupGiftButtonComponent, SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
+        SuggestGroupDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
         ReactiveFormsModule,

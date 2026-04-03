@@ -16,28 +16,28 @@ def angularOutputDir = "$projectDir/frontend/dist/browser"
 def frontendStaticDir = "$projectDir/frontend/static"
 def webappDir = "$projectDir/backend/src/main/resources/static"
 
-task appengineDeploy {
+tasks.register('appengineDeploy') {
     dependsOn 'build'
     finalizedBy 'backend:appengineDeploy'
 }
 
-task appengineRun {
+tasks.register('appengineRun') {
     dependsOn 'build'
     finalizedBy 'backend:appengineRun'
 }
 
-task build(type: GradleBuild) {
+tasks.register('build', GradleBuild) {
     dependsOn 'copyToWebApp'
     finalizedBy ':backend:build'
 }
 
-task explodedWar(type: Sync) {
+tasks.register('explodedWar', Sync) {
     dependsOn ':backend:explodedWar'
 }
 
-task copyToWebApp(type:Copy) {
+tasks.register('copyToWebApp', Copy) {
     dependsOn ':frontend:build'
-    delete fileTree("$webappDir") {
+    delete fileTree("$webappDir/app") {
         include "*.js"
     }
     copy {
@@ -57,7 +57,7 @@ task copyToWebApp(type:Copy) {
     }
 }
 
-task clean(type:Delete) {
+tasks.register('clean', Delete) {
     dependsOn ':frontend:clean', ':backend:clean'
 }
 
