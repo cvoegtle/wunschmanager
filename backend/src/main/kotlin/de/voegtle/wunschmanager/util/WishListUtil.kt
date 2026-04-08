@@ -13,7 +13,6 @@ fun loadReducedListOfWishes(wishList: WishList, userName: String?): MutableList<
 fun loadFullListOfWishes(wishList: WishList): MutableList<Wish> {
   val wishes = ObjectifyService.ofy().load().type(Wish::class.java).ancestor(wishList).order("createTimestamp").list() as MutableList<Wish>
   wishes.sort()
-  wishes.stream().forEach { it.migrateDonor() }
   return wishes
 }
 

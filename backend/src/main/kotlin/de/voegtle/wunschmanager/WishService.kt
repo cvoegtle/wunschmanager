@@ -206,7 +206,6 @@ import java.util.Date
 
 fun loadWish(wishList: WishList, wishId: Long): Wish {
   val wish = ObjectifyService.ofy().load().type(Wish::class.java).parent(wishList).id(wishId).now()
-  wish.migrateDonor()
   return wish
 }
 

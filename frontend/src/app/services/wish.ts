@@ -1,5 +1,3 @@
-import { WishIds } from "./wish-copy-task";
-
 export interface Wish {
   id: number;
   caption: string;
@@ -10,8 +8,6 @@ export interface Wish {
   link: string;
   alternatives: Alternative[];
   images: Image[];
-  donor: string;
-  proxyDonor: string
   createTimestamp: number;
   priority: number; // higher is better
   background: string;

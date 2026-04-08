@@ -19,8 +19,6 @@ import java.util.TreeSet
                    var link: String? = null,
                    var alternatives: List<Alternative> = ArrayList(),
                    var images: List<Image> = ArrayList(),
-                   @Index var donor: String? = null,
-                   @Index var proxyDonor: String? = null,
                    @Index var createTimestamp: Long = 0,
                    @Index var priority: Int = 0,
                    var background: Color? = null,
@@ -62,14 +60,6 @@ import java.util.TreeSet
   }
 
   fun firstDonor() = donations.first()!!.donor
-
-  fun migrateDonor() {
-    donor?.let {
-      addDonation(it, proxyDonor)
-      donor = null
-      proxyDonor = null
-    }
-  }
 
   fun replaceDonations(replacementDonor: String) {
     donations.clear()
