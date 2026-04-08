@@ -38,6 +38,10 @@ export class WishEditComponent implements OnInit {
     return isReservedByUser(this.wish, this.user)
   }
 
+  isGroupGift(): boolean {
+    return this.wish.groupGift;
+  }
+
   isManagedList(): boolean {
     return this.user != null;
   }

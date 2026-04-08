@@ -11,7 +11,7 @@
             <input matInput [(ngModel)]="wish.caption" (change)="onWishChange()" name="editCaption">
           </mat-form-field>
           @if (isManagedList() && (isAvailable() || isMyPresent())) {
-            <donate-button [reserved]="isMyPresent()"
+            <donate-button [reserved]="isMyPresent() && !isGroupGift()"
               (click)="reserveClicked()">
             </donate-button>
           }
