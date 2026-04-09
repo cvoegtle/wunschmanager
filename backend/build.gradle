@@ -91,3 +91,8 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         jvmTarget = "21"
     }
 }
+
+// Ensure backend resources are processed only after frontend artifacts have been copied.
+tasks.named("processResources") {
+    dependsOn rootProject.tasks.named("copyToWebApp")
+}

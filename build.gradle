@@ -35,29 +35,39 @@ tasks.register('explodedWar', Sync) {
     dependsOn ':backend:explodedWar'
 }
 
-tasks.register('copyToWebApp', Copy) {
+tasks.register('copyToWebApp') {
     dependsOn ':frontend:build'
-    delete fileTree("$webappDir/app") {
-        include "*.js"
-    }
-    copy {
-        from "$angularOutputDir"
-        into "$webappDir/app"
-        include '**'
-    }
-    copy {
-        from "$frontendStaticDir"
-        into "$webappDir"
-        include '**'
-    }
-    copy {
-        from "$projectDir/backend/configuration"
-        into "$webappDir/app"
-        include "configuration.json"
+
+    // Declare inputs for Gradle's up-to-date checks
+    inputs.dir(angularOutputDir)
+    inputs.dir(frontendStaticDir)
+    inputs.file("$projectDir/backend/configuration/configuration.json")
+
+    // Declare outputs for Gradle's up-to-date checks
+    outputs.dir(webappDir)
+
+    doLast {
+        delete fileTree("$webappDir/app") {
+            include "*.js"
+        }
+        copy {
+            from "$angularOutputDir"
+            into "$webappDir/app"
+            include '**'
+        }
+        copy {
+            from "$frontendStaticDir"
+            into "$webappDir"
+            include '**'
+        }
+        copy {
+            from "$projectDir/backend/configuration"
+            into "$webappDir/app"
+            include "configuration.json"
+        }
     }
 }
 
 tasks.register('clean', Delete) {
     dependsOn ':frontend:clean', ':backend:clean'
 }
-
