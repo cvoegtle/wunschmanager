@@ -72,7 +72,7 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { LocalStorageService } from "./services/local-storage.service";
-import { ProxyReserveDialogComponent } from './proxy-reserve-dialog/proxy-reserve-dialog.component';
+import { ProxySuggestGroupDialogComponent } from './proxy-suggest-group-dialog/proxy-suggest-group-dialog.component';
 import { DonorViewerComponent } from './donor-viewer/donor-viewer.component';
 import { ParticipateDialogComponent } from './participate-dialog/participate-dialog.component';
 import { PriceInformationComponent } from './price-information/price-information.component';
@@ -85,14 +85,16 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { ErrorSessionDialogComponent } from "./error-session-dialog/error-session-dialog.component";
 import { WishImageViewerComponent } from "./wish-image-gallery/wish-image-viewer.component";
 import { ReserveActionDialogComponent } from './reserve-action-dialog/reserve-action-dialog.component';
+import { ProxyReserveActionDialogComponent } from "./proxy-reserve-action-dialog/proxy-reserve-action-dialog.component";
+import { ProxyParticipateDialogComponent } from "./proxy-participate-dialog/proxy-participate-dialog.component";
 
 @NgModule({ declarations: [
         AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
         WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, ErrorSessionDialogComponent, WishListDuplicateDialogComponent,
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-        ProxyReserveDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
-        SuggestGroupDialogComponent, ReserveActionDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
+        ProxySuggestGroupDialogComponent, ProxyParticipateDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
+        SuggestGroupDialogComponent, ReserveActionDialogComponent, ProxyReserveActionDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
         ReactiveFormsModule,

@@ -5,7 +5,7 @@ import {
   countSelection,
   Donation,
   DonationImpl,
-  extractIds,
+  extractIds, hasDonations,
   highlightNewIds, ImageUpload,
   isReservedByUser,
   removeWishSelection,
@@ -23,7 +23,12 @@ import { WishListDuplicateDialogComponent } from "../wish-list-duplicate-dialog/
 import { extractWishIds, singularOrPluralWish, WishIds } from "../services/wish-copy-task";
 import { WishMultiColumnComponent } from "../wish-multi-column/wish-multi-column.component";
 import { convertToWishOrder } from "../services/wish.order";
-import { ProxyReserveDialogComponent } from "../proxy-reserve-dialog/proxy-reserve-dialog.component";
+import { ProxySuggestGroupDialogComponent } from "../proxy-suggest-group-dialog/proxy-suggest-group-dialog.component";
+import { ReserveAction, ReserveActionDialogComponent } from "../reserve-action-dialog/reserve-action-dialog.component";
+import { SuggestGroupDialogComponent } from "../suggest-group-dialog/suggest-group-dialog.component";
+import { ProxyReserveAction, ProxyReserveActionDialogComponent } from "../proxy-reserve-action-dialog/proxy-reserve-action-dialog.component";
+import { ParticipateDialogComponent } from "../participate-dialog/participate-dialog.component";
+import { ProxyParticipateDialogComponent } from "../proxy-participate-dialog/proxy-participate-dialog.component";
 
 
 @Component({
@@ -225,11 +230,40 @@ export class WishListEditComponent {
   }
 
   reserveClicked(wish: Wish) {
-    if (isReservedByUser(wish, this.user)) {
+    if (!hasDonations(wish)) {
+      this.openReserveDialog(wish);
+    } else if (isReservedByUser(wish, this.user)) {
       this.runReservationInMyName(wish, new DonationImpl());
-    } else {
-      this.doProxyReservation(wish);
+    } else if (wish.groupGift) {
+      this.participate(wish);
     }
+  }
+
+  private openReserveDialog(wish: Wish) {
+    let reserveActionDialog = this.dialog.open(ProxyReserveActionDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    reserveActionDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet && dialogRet.action === ProxyReserveAction.RESERVE) {
+        if (dialogRet.donor) {
+          this.callProxyReservationService(wish, {donor: dialogRet.donor} as Donation);
+        } else {
+          this.runReservationInMyName(wish, new DonationImpl());
+        }
+      } else if (dialogRet && dialogRet.action === ProxyReserveAction.SUGGEST_GROUP) {
+        this.suggestGroupGift(wish, dialogRet.donor);
+      }
+    });
+  }
+
+  private callProxyReservationService(wish: Wish, donation: Donation) {
+    this.wishService.proxyReserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
+          copyDonationInformation(wish, updatedWish);
+        },
+        error => this.errorHandler.handle(error, 'proxyReserveWish'));
   }
 
   private runReservationInMyName(wish: Wish, donation: Donation) {
@@ -240,10 +274,11 @@ export class WishListEditComponent {
         error  => this.errorHandler.handle(error, 'reserveWish'));
   }
 
-  private doProxyReservation(wish: Wish) {
-    let reserveDialog = this.dialog.open(ProxyReserveDialogComponent, {
+  private suggestGroupGift(wish: Wish, donor: string) {
+    let reserveDialog = this.dialog.open(ProxySuggestGroupDialogComponent, {
       data: {
-        wish: wish
+        wish: wish,
+        donor: donor
       }
     });
 
@@ -253,6 +288,21 @@ export class WishListEditComponent {
       }
     })
   }
+
+  private participate(wish: Wish) {
+    let participateDialog = this.dialog.open(ProxyParticipateDialogComponent, {
+      data: {
+        wish: wish
+      }
+    });
+
+    participateDialog.afterClosed().subscribe(dialogRet => {
+      if (dialogRet) {
+        this.callReservationService(dialogRet, wish);
+      }
+    })
+  }
+
 
   private callReservationService(donation: Donation, wish: Wish) {
     if (donation.donor) {

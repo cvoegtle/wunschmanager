@@ -113,7 +113,11 @@ export function copyDonationInformation(target: Wish, source: Wish) {
 }
 
 export function isAvailable(wish: Wish): boolean {
-  return (wish.donations.length == 0 || isGroupGifOpenForParticipation(wish)) && !wish.invisible;
+  return (!hasDonations(wish) || isGroupGifOpenForParticipation(wish)) && !wish.invisible;
+}
+
+export function hasDonations(wish: Wish): boolean {
+  return wish.donations.length > 0;
 }
 
 export function isGroupGifOpenForParticipation(wish: Wish): boolean {

@@ -3,18 +3,18 @@ import { Donation, DonationImpl, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
-    selector: 'proxy-reserve-dialog',
-    templateUrl: './proxy-reserve-dialog.component.html',
-    styleUrls: ['./proxy-reserve-dialog.component.css'],
+    selector: 'proxy-suggest-group-dialog',
+    templateUrl: './proxy-suggest-group-dialog.component.html',
+    styleUrls: ['./proxy-suggest-group-dialog.component.css'],
     standalone: false
 })
-export class ProxyReserveDialogComponent implements OnInit {
+export class ProxySuggestGroupDialogComponent implements OnInit {
 
   wish: Wish;
   donation: Donation;
   wishChanged: boolean;
 
-  constructor(public dialogRef: MatDialogRef<ProxyReserveDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<ProxySuggestGroupDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.wish = data.wish;
     this.dialogRef.backdropClick().subscribe(result => this.closeDialog())
@@ -22,6 +22,7 @@ export class ProxyReserveDialogComponent implements OnInit {
       if (key.code == "Escape") this.closeDialog();
     });
     this.donation = new DonationImpl();
+    this.donation.donor = data.donor;
     this.donation.amount = this.wish.suggestedParticipation
   }
 
@@ -32,16 +33,7 @@ export class ProxyReserveDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  reserveForMe(): void {
-    this.donation.donor = null;
-    this.reserve();
-  }
-
-  reserveForSomeoneElse(): void {
-    this.reserve();
-  }
-
-  private reserve() {
+  reserve() {
     this.dialogRef.close({donation: this.donation, wishChanged: this.wishChanged});
   }
 

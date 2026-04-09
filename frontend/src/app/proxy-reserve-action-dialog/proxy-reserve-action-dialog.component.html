@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{wish.caption}} reservieren</h1>
+<div mat-dialog-content>
+  <mat-form-field class="reserve-donor">
+    <input #real_donor placeholder="für wen" matInput [(ngModel)]="donor" cdkFocusInitial/>
+  </mat-form-field>
+</div>
+<mat-dialog-actions class="action-buttons">
+  <button mat-raised-button (click)="reserve()" cdkFocusInitial>
+    {{donor ? "für " + donor + " reservieren" : "für mich reservieren"}}</button>
+  <button mat-raised-button (click)="suggestGroup()">Gruppengeschenk vorschlagen</button>
+</mat-dialog-actions>

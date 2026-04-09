@@ -1,7 +1,6 @@
 
 buildscript {    // Configuration for building
     repositories {
-        jcenter()    // Bintray's repository - a fast Maven Central mirror & more
         mavenCentral()
     }
     dependencies {

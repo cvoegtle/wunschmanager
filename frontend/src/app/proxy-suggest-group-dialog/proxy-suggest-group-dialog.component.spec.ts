@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProxyReserveDialogComponent } from './proxy-reserve-dialog.component';
+import { ProxySuggestGroupDialogComponent } from './proxy-suggest-group-dialog.component';
 
 describe('ReserveDialogComponent', () => {
-  let component: ProxyReserveDialogComponent;
-  let fixture: ComponentFixture<ProxyReserveDialogComponent>;
+  let component: ProxySuggestGroupDialogComponent;
+  let fixture: ComponentFixture<ProxySuggestGroupDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProxyReserveDialogComponent ]
+      declarations: [ ProxySuggestGroupDialogComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProxyReserveDialogComponent);
+    fixture = TestBed.createComponent(ProxySuggestGroupDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
