@@ -11,6 +11,14 @@ data class Donation (var donor: String = "",
   override fun hashCode(): Int {
     return donor.hashCode()
   }
+
+  fun ensureDonor(userName: String) {
+    if (donor.isEmpty()) {
+      donor = userName
+    } else {
+      proxyDonor = userName
+    }
+  }
 }
 
 class DonationComparator : Comparator<Donation> {

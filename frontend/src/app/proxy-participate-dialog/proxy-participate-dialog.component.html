@@ -3,9 +3,11 @@
   <div class="participate-dialog">
     @for (donationInEdit of donationsInEdit; track donationInEdit) {
       @if (!donationInEdit.isDeleted) {
-        <donor-editor [donationInEdit]="donationInEdit" (remove)="removeDonation($event)" (edit)="editDonation($event)"/>
+        <donor-editor [donationInEdit]="donationInEdit" [userName]="user" (remove)="removeDonation($event)" (edit)="editDonation($event)"/>
       }
     }
+
+    <hr class="separator-line">
 
     @if (donationInEdit) {
       <mat-form-field class="reserve-donor">
@@ -20,10 +22,6 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  @if (!donationInEdit) {
-    <button mat-raised-button (click)="newParticipation()" >Beteiligung hinzufügen</button>
-  }
-  @if (donationInEdit) {
-    <button mat-raised-button (click)="participate()" >{{donationInEdit.donation.donor}} beteiligen</button>
-  }
+  <button mat-raised-button (click)="newDonation()" >Beteiligung hinzufügen</button>
+  <button mat-raised-button (click)="saveDonations()" [disabled]="!donationChanged() || hasDuplicateDonors()">Beteiligungen speichern</button>
 </div>

@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { copyWish, Donation, Wish } from "./wish";
-import { catchError } from 'rxjs/operators';
 import { ConfigurationService } from "./configuration.service";
-import { handleError, unique } from "../util/url-helper";
+import { unique } from "../util/url-helper";
 import { WishCopyTask, WishIds } from "./wish-copy-task";
 import { WishOrder } from "./wish.order";
 
@@ -56,20 +55,29 @@ export class WishService {
     return this.http.post<boolean>(`${this.getBaseUrl()}/wish/update_order`, updateRequest, httpOptions);
   }
 
-  reserve(listId: number, wishId: number, donation: Donation, wish: Wish = null): Observable<Wish> {
+  reserve(listId: number, wishId: number, donation: Donation, wish: Wish): Observable<Wish> {
     let reserveRequest = this.buildReserveRequest(donation, wish);
     return this.http.post<Wish>(`${this.getBaseUrl()}/wish/reserve?listId=${listId}&wishId=${wishId}`, reserveRequest, httpOptions);
   }
 
-  proxyReserve(listId: number, wishId: number, donation: Donation, wish: Wish = null): Observable<Wish> {
-    let reserveRequest = this.buildReserveRequest(donation, wish);
+  proxyReserveSingle(listId: number, wishId: number, donation: Donation, wish: Wish): Observable<Wish> {
+    let donations = new Array<Donation>;
+    donations.push(donation);
+    return this.proxyReserve(listId, wishId, donations, wish);
+  }
+  proxyReserve(listId: number, wishId: number, donation: Donation[], wish: Wish): Observable<Wish> {
+    let reserveRequest = this.buildProxyReserveRequest(donation, wish);
     return this.http.post<Wish>(`${this.getBaseUrl()}/wish/proxy_reserve?listId=${listId}&wishId=${wishId}`, reserveRequest, httpOptions);
   }
 
   private buildReserveRequest(donation: Donation, wish: Wish) {
     let reserveWish = copyWish(wish);
-    let reserveRequest = {donation: donation, wish: reserveWish}
-    return reserveRequest;
+    return {donation: donation, wish: reserveWish};
+  }
+
+  private buildProxyReserveRequest(donations: Donation[], wish: Wish) {
+    let reserveWish = copyWish(wish);
+    return {donations: donations, wish: reserveWish};
   }
 
   private getBaseUrl() {

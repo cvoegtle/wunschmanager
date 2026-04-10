@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import {
+  copyDonation,
   copyDonationInformation,
   countSelection,
   Donation,
@@ -249,7 +250,7 @@ export class WishListEditComponent {
     reserveActionDialog.afterClosed().subscribe(dialogRet => {
       if (dialogRet && dialogRet.action === ProxyReserveAction.RESERVE) {
         if (dialogRet.donor) {
-          this.callProxyReservationService(wish, {donor: dialogRet.donor} as Donation);
+          this.callProxyReservationService(wish, [{donor: dialogRet.donor}] as Donation[]);
         } else {
           this.runReservationInMyName(wish, new DonationImpl());
         }
@@ -259,8 +260,8 @@ export class WishListEditComponent {
     });
   }
 
-  private callProxyReservationService(wish: Wish, donation: Donation) {
-    this.wishService.proxyReserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
+  private callProxyReservationService(wish: Wish, donations: Donation[]) {
+    this.wishService.proxyReserve(this.wishList.id, wish.id, donations, wish).subscribe(updatedWish => {
           copyDonationInformation(wish, updatedWish);
         },
         error => this.errorHandler.handle(error, 'proxyReserveWish'));
@@ -299,7 +300,13 @@ export class WishListEditComponent {
 
     participateDialog.afterClosed().subscribe(dialogRet => {
       if (dialogRet) {
-        this.callReservationService(dialogRet, wish);
+        let donations = new Array<Donation>;
+        for (let donationInEdit of dialogRet) {
+          if (!donationInEdit.isDeleted) {
+            donations.push(donationInEdit.donation);
+          }
+        }
+        this.callProxyReservationService(wish, donations);
       }
     })
   }
@@ -307,7 +314,7 @@ export class WishListEditComponent {
 
   private callReservationService(donation: Donation, wish: Wish) {
     if (donation.donor) {
-      this.wishService.proxyReserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
+      this.wishService.proxyReserveSingle(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
             copyDonationInformation(wish, updatedWish);
           },
           error => this.errorHandler.handle(error, 'proxyReserveWish'));

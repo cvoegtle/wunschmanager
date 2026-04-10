@@ -1,5 +1,6 @@
 package de.voegtle.wunschmanager
 
+import com.google.cloud.Identity.user
 import com.googlecode.objectify.Key
 import com.googlecode.objectify.ObjectifyService
 import de.voegtle.wunschmanager.util.ImageAccess
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.voegtle.wunschmanager.data.ProxyReserveRequest
 import org.voegtle.wunschmanager.data.ReserveRequest
 import org.voegtle.wunschmanager.data.UpdateOrderRequest
 import org.voegtle.wunschmanager.data.UpdateRequest
@@ -147,21 +149,31 @@ import java.util.Date
   @PostMapping("wish/proxy_reserve") fun proxyReserve(
     @RequestParam() listId: Long,
     @RequestParam() wishId: Long,
-    @RequestBody() reserveRequest: ReserveRequest,
+    @RequestBody() reserveRequest: ProxyReserveRequest,
     @AuthenticationPrincipal oidcUser: OidcUser?
   ): Wish {
     val userName = extractUserIdNotNull(oidcUser)
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(listId).now()
 
     assertManagedOwnership(userName, wishList, "You have to own the list and the list has to be a managed list")
-    assertNotEmpty(reserveRequest.donation.donor, "The donor must not be empty")
 
     val existingWish = loadWish(wishList, wishId)
     mergeGroupGiftInformation(existingWish, reserveRequest.wish)
 
-    if (existingWish.isAvailable(userName)) {
-      reserveRequest.donation.proxyDonor = userName
-      existingWish.addDonation(reserveRequest.donation)
+    if (existingWish.groupGift) {
+      existingWish.removeUsersDonations(userName)
+      reserveRequest.donations.forEach { donation -> {
+          donation.ensureDonor(userName)
+          existingWish.addDonation(donation)
+        }
+      }
+    } else if (existingWish.isAvailable(userName) || existingWish.isReservedForMe(userName)) {
+      existingWish.removeUsersDonations(userName)
+      if (reserveRequest.donations.isNotEmpty()) {
+        val donation = reserveRequest.donations[0]
+        donation.ensureDonor(userName)
+        existingWish.addDonation(donation)
+      }
     } else {
       throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }

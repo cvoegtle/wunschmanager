@@ -66,4 +66,8 @@ import java.util.TreeSet
     addDonation(replacementDonor)
   }
 
+  fun removeUsersDonations(userName: String) {
+    donations.removeIf { it.proxyDonor == userName || it.donor == userName }
+  }
+
 }

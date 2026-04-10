@@ -112,6 +112,18 @@ export function copyWish(wish: Wish): Wish {
   return null;
 }
 
+export function copyDonation(donation: Donation): Donation {
+  if (donation == null) {
+    return null;
+  }
+  return {
+    donor: donation.donor,
+    proxyDonor: donation.proxyDonor,
+    organiser: donation.organiser,
+    amount: donation.amount
+  };
+}
+
 export function copyDonationInformation(target: Wish, source: Wish) {
   target.groupGift = source.groupGift;
   target.estimatedPrice = source.estimatedPrice;

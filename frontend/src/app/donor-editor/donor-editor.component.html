@@ -3,6 +3,9 @@
     <span>{{donationInEdit.donation.amount | euro: 2}} </span>
   }
   <span class="highlighted">{{donationInEdit.donation.donor}}</span>
+  @if (!donationInEdit.donation.donor) {
+    <span class="highlighted">{{userName}}</span>
+  }
   @if (donationInEdit.donation.organiser) {
     <span> </span>
     } @if (donationInEdit.donation.organiser) {

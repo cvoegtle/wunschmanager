@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Donation, DonationImpl, DonationInEdit, donationOpenParticipation, Wish } from "../services/wish";
+import { Donation, DonationImpl, DonationInEdit, donationOpenParticipation, copyDonation, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { disabled } from "@angular/forms/signals";
 
 @Component({
     selector: 'proxy-participate-dialog',
@@ -19,15 +20,27 @@ export class ProxyParticipateDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.wish = data.wish;
     this.user = data.user;
+    this.copyMyDonations();
+    this.subscribeCloseHandler();
+  }
+
+  private copyMyDonations() {
     this.donationsInEdit = [];
     for (let donation of this.wish.donations) {
       if (this.isMyDonation(donation)) {
-        let donationInEdit = new DonationInEdit();
-        donationInEdit.donation = donation;
+        let donationInEdit = this.copyToDonationInEdit(donation);
         this.donationsInEdit.push(donationInEdit);
       }
     }
-    this.subscribeCloseHandler();
+  }
+
+  private copyToDonationInEdit(donation: Donation) {
+    let donationInEdit = new DonationInEdit();
+    donationInEdit.donation = copyDonation(donation);
+    if (donationInEdit.donation.donor == this.user) {
+      donationInEdit.donation.donor = null;
+    }
+    return donationInEdit;
   }
 
   private subscribeCloseHandler() {
@@ -52,7 +65,7 @@ export class ProxyParticipateDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  participate(): void {
+  saveDonations(): void {
     this.dialogRef.close(this.donationsInEdit);
   }
 
@@ -60,7 +73,7 @@ export class ProxyParticipateDialogComponent implements OnInit {
     return donation.donor == this.user || donation.proxyDonor == this.user;
   }
 
-  protected newParticipation() {
+  protected newDonation() {
     this.donationInEdit = new DonationInEdit();
     this.donationInEdit.donation = new DonationImpl();
     this.donationInEdit.donation.amount = this.calculationSuggestedParticipation()
@@ -70,6 +83,9 @@ export class ProxyParticipateDialogComponent implements OnInit {
   }
 
   protected removeDonation(donationInEdit: DonationInEdit) {
+    if (this.donationInEdit == donationInEdit) {
+      this.donationInEdit = null;
+    }
     donationInEdit.isDeleted = true;
   }
 
@@ -81,5 +97,27 @@ export class ProxyParticipateDialogComponent implements OnInit {
   protected onFieldChange() {
     this.donationInEdit.isUpdated = true;
   }
-}
 
+  public donationChanged(): boolean {
+    return this.donationsInEdit.some(d => d.isNew || d.isUpdated || d.isDeleted);
+  }
+
+  public hasDuplicateDonors(): boolean {
+    if (!this.donationsInEdit) {
+      return false;
+    }
+
+    const donors = this.donationsInEdit
+      .filter(d => !d.isDeleted)
+      .map(d => {
+        const donor = d.donation.donor;
+        return donor ? donor : "";
+      });
+
+    const uniqueDonors = new Set(donors);
+
+    return uniqueDonors.size < donors.length;
+  }
+
+  protected readonly disabled = disabled;
+}
