@@ -1,16 +1,29 @@
-<h1 mat-dialog-title>{{wish.caption}} reservieren</h1>
+<h1 mat-dialog-title>An {{wish.caption}} beteiligen</h1>
 <div mat-dialog-content>
   <div class="participate-dialog">
-    <mat-form-field class="reserve-donor">
-      <input #real_donor placeholder="für wen" matInput [(ngModel)]="dialogResult.donor" cdkFocusInitial/>
-    </mat-form-field>
+    @for (donationInEdit of donationsInEdit; track donationInEdit) {
+      @if (!donationInEdit.isDeleted) {
+        <donor-editor [donationInEdit]="donationInEdit" (remove)="removeDonation($event)" (edit)="editDonation($event)"/>
+      }
+    }
 
-    <mat-form-field class="participation-amount">
-      <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="dialogResult.amount"/>
-    </mat-form-field>
-    <mat-checkbox [(ngModel)]="dialogResult.organiser">ich kümmere mich um die Orga</mat-checkbox>
+    @if (donationInEdit) {
+      <mat-form-field class="reserve-donor">
+        <input #real_donor placeholder="für wen" matInput [(ngModel)]="donationInEdit.donation.donor" (ngModelChange)="onFieldChange()" cdkFocusInitial/>
+      </mat-form-field>
+
+      <mat-form-field class="participation-amount">
+        <input #amount placeholder="Anteil" matInput type="number" [(ngModel)]="donationInEdit.donation.amount" (ngModelChange)="onFieldChange()"/>
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="donationInEdit.donation.organiser" (ngModelChange)="onFieldChange()">ich kümmere mich um die Orga</mat-checkbox>
+    }
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="participate()" >{{dialogResult.donor}} beteiligen</button>
+  @if (!donationInEdit) {
+    <button mat-raised-button (click)="newParticipation()" >Beteiligung hinzufügen</button>
+  }
+  @if (donationInEdit) {
+    <button mat-raised-button (click)="participate()" >{{donationInEdit.donation.donor}} beteiligen</button>
+  }
 </div>

@@ -40,6 +40,13 @@ export interface Image {
   url: string;
 }
 
+export class DonationInEdit {
+  donation: Donation;
+  isUpdated: boolean;
+  isNew: boolean;
+  isDeleted: boolean;
+}
+
 export class DonationImpl implements Donation {
   donor: string;
   proxyDonor: string;

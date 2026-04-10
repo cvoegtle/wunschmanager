@@ -87,13 +87,14 @@ import { WishImageViewerComponent } from "./wish-image-gallery/wish-image-viewer
 import { ReserveActionDialogComponent } from './reserve-action-dialog/reserve-action-dialog.component';
 import { ProxyReserveActionDialogComponent } from "./proxy-reserve-action-dialog/proxy-reserve-action-dialog.component";
 import { ProxyParticipateDialogComponent } from "./proxy-participate-dialog/proxy-participate-dialog.component";
+import { DonorEditorComponent } from "./donor-editor/donor-editor.component";
 
 @NgModule({ declarations: [
         AppComponent, EditComponent, WishListEditComponent, WishEditComponent, LoginComponent, ShareDialogComponent,
         WishViewComponent, WishListViewComponent, AllSharedComponent, DeleteItemDialogComponent, ErrorSessionDialogComponent, WishListDuplicateDialogComponent,
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
-        ProxySuggestGroupDialogComponent, ProxyParticipateDialogComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
+        ProxySuggestGroupDialogComponent, ProxyParticipateDialogComponent, DonorEditorComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
         SuggestGroupDialogComponent, ReserveActionDialogComponent, ProxyReserveActionDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,

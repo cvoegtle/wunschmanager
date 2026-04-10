@@ -1,0 +1,22 @@
+<div matLine>
+  @if (donationInEdit.donation.amount) {
+    <span>{{donationInEdit.donation.amount | euro: 2}} </span>
+  }
+  <span class="highlighted">{{donationInEdit.donation.donor}}</span>
+  @if (donationInEdit.donation.organiser) {
+    <span> </span>
+    } @if (donationInEdit.donation.organiser) {
+    <span class="material-icons" style="vertical-align: bottom">manage_accounts</span>
+  }
+
+  <span>&nbsp;</span>
+  <button mat-icon-button
+          (click)="editClicked()" matTooltip="Beteiligung bearbeiten">
+    <mat-icon>edit_document</mat-icon>
+  </button>
+
+  <button mat-icon-button
+          (click)="deleteClicked()" matTooltip="Beteiligung löschen">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

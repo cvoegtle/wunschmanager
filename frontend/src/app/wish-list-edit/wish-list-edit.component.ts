@@ -232,10 +232,10 @@ export class WishListEditComponent {
   reserveClicked(wish: Wish) {
     if (!hasDonations(wish)) {
       this.openReserveDialog(wish);
+    } else if (wish.groupGift) {
+      this.manageParticipations(wish);
     } else if (isReservedByUser(wish, this.user)) {
       this.runReservationInMyName(wish, new DonationImpl());
-    } else if (wish.groupGift) {
-      this.participate(wish);
     }
   }
 
@@ -289,10 +289,11 @@ export class WishListEditComponent {
     })
   }
 
-  private participate(wish: Wish) {
+  private manageParticipations(wish: Wish) {
     let participateDialog = this.dialog.open(ProxyParticipateDialogComponent, {
       data: {
-        wish: wish
+        wish: wish,
+        user: this.user
       }
     });
 
