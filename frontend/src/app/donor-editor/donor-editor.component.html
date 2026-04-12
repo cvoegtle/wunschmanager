@@ -1,4 +1,4 @@
-<div matLine>
+<div matLine class="donor-container">
   @if (donationInEdit.donation.amount) {
     <span>{{donationInEdit.donation.amount | euro: 2}} </span>
   }
@@ -12,7 +12,7 @@
     <span class="material-icons" style="vertical-align: bottom">manage_accounts</span>
   }
 
-  <span>&nbsp;</span>
+  <span class="spacer"></span>
   <button mat-icon-button
           (click)="editClicked()" matTooltip="Beteiligung bearbeiten">
     <mat-icon>edit_document</mat-icon>
