@@ -161,19 +161,10 @@ import java.util.Date
     mergeGroupGiftInformation(existingWish, reserveRequest.wish)
 
     if (existingWish.groupGift) {
-      existingWish.removeUsersDonations(userName)
-      reserveRequest.donations.forEach { donation -> {
-          donation.ensureDonor(userName)
-          existingWish.addDonation(donation)
-        }
-      }
+      mergeDonations(existingWish, userName, reserveRequest)
+      removeGroupInformationWithoutDonation(existingWish)
     } else if (existingWish.isAvailable(userName) || existingWish.isReservedForMe(userName)) {
-      existingWish.removeUsersDonations(userName)
-      if (reserveRequest.donations.isNotEmpty()) {
-        val donation = reserveRequest.donations[0]
-        donation.ensureDonor(userName)
-        existingWish.addDonation(donation)
-      }
+      updateSingleDonor(existingWish, userName, reserveRequest)
     } else {
       throw PermissionDenied("This wish is reserved by ${existingWish.firstDonor()}")
     }
@@ -181,6 +172,32 @@ import java.util.Date
     saveWish(existingWish)
     return existingWish
   }
+
+  private fun mergeDonations(
+    existingWish: Wish,
+    userName: String,
+    reserveRequest: ProxyReserveRequest
+  ) {
+    existingWish.removeUsersDonations(userName)
+    reserveRequest.donations.forEach { donation ->
+      donation.ensureDonor(userName)
+      existingWish.addDonation(donation)
+    }
+  }
+
+  private fun updateSingleDonor(
+    existingWish: Wish,
+    userName: String,
+    reserveRequest: ProxyReserveRequest
+  ) {
+    existingWish.removeUsersDonations(userName)
+    if (reserveRequest.donations.isNotEmpty()) {
+      val donation = reserveRequest.donations[0]
+      donation.ensureDonor(userName)
+      existingWish.addDonation(donation)
+    }
+  }
+
 
   private fun mergeGroupGiftInformation(existingWish: Wish, clientWish: Wish?) {
     clientWish?.let {

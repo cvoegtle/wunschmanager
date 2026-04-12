@@ -143,6 +143,12 @@ export function isGroupGifOpenForParticipation(wish: Wish): boolean {
   return wish.groupGift && (donationOpenParticipation(wish) > 0 || wish.estimatedPrice == null);
 }
 
+export function resetGroupGift(wish: Wish) {
+  wish.groupGift=false;
+  wish.estimatedPrice=null;
+  wish.suggestedParticipation=null;
+}
+
 export function isReservedByUser(wish: Wish, user: string) {
   for (let index in wish.donations) {
     if (wish.donations[index].donor == user || wish.donations[index].proxyDonor == user) {

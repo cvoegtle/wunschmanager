@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Donation, DonationImpl, Wish } from "../services/wish";
+import { Donation, DonationImpl, resetGroupGift, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
@@ -27,6 +27,7 @@ export class ProxySuggestGroupDialogComponent implements OnInit {
   }
 
   closeDialog() {
+    resetGroupGift(this.wish);
     this.dialogRef.close();
   }
 
@@ -34,6 +35,7 @@ export class ProxySuggestGroupDialogComponent implements OnInit {
   }
 
   reserve() {
+    this.wish.groupGift=true;
     this.dialogRef.close({donation: this.donation, wishChanged: this.wishChanged});
   }
 

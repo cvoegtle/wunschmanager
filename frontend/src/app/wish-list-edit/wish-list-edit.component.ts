@@ -236,7 +236,7 @@ export class WishListEditComponent {
     } else if (wish.groupGift) {
       this.manageParticipations(wish);
     } else if (isReservedByUser(wish, this.user)) {
-      this.runReservationInMyName(wish, new DonationImpl());
+      this.callProxyReservationService(wish, []);
     }
   }
 
@@ -249,15 +249,18 @@ export class WishListEditComponent {
 
     reserveActionDialog.afterClosed().subscribe(dialogRet => {
       if (dialogRet && dialogRet.action === ProxyReserveAction.RESERVE) {
-        if (dialogRet.donor) {
-          this.callProxyReservationService(wish, [{donor: dialogRet.donor}] as Donation[]);
-        } else {
-          this.runReservationInMyName(wish, new DonationImpl());
-        }
+        this.callProxyReservationService(wish, [{donor: dialogRet.donor}] as Donation[]);
       } else if (dialogRet && dialogRet.action === ProxyReserveAction.SUGGEST_GROUP) {
         this.suggestGroupGift(wish, dialogRet.donor);
       }
     });
+  }
+
+  private callProxyReservationServiceSingle(donation: Donation, wish: Wish) {
+    this.wishService.proxyReserveSingle(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
+          copyDonationInformation(wish, updatedWish);
+        },
+        error => this.errorHandler.handle(error, 'proxyReserveWish'));
   }
 
   private callProxyReservationService(wish: Wish, donations: Donation[]) {
@@ -265,14 +268,6 @@ export class WishListEditComponent {
           copyDonationInformation(wish, updatedWish);
         },
         error => this.errorHandler.handle(error, 'proxyReserveWish'));
-  }
-
-  private runReservationInMyName(wish: Wish, donation: Donation) {
-    donation.donor = this.user;
-    this.wishService.reserve(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
-          copyDonationInformation(wish, updatedWish);
-        },
-        error  => this.errorHandler.handle(error, 'reserveWish'));
   }
 
   private suggestGroupGift(wish: Wish, donor: string) {
@@ -285,7 +280,7 @@ export class WishListEditComponent {
 
     reserveDialog.afterClosed().subscribe(dialogResponse => {
       if (dialogResponse) {
-        this.callReservationService(dialogResponse.donation, wish);
+        this.callProxyReservationServiceSingle(dialogResponse.donation, wish);
       }
     })
   }
@@ -309,18 +304,6 @@ export class WishListEditComponent {
         this.callProxyReservationService(wish, donations);
       }
     })
-  }
-
-
-  private callReservationService(donation: Donation, wish: Wish) {
-    if (donation.donor) {
-      this.wishService.proxyReserveSingle(this.wishList.id, wish.id, donation, wish).subscribe(updatedWish => {
-            copyDonationInformation(wish, updatedWish);
-          },
-          error => this.errorHandler.handle(error, 'proxyReserveWish'));
-    } else {
-      this.runReservationInMyName(wish, donation)
-    }
   }
 
   private deleteSelectedWishes() {
