@@ -99,28 +99,31 @@ export class WishImageZoomComponent {
   }
 
   startDrag(event: MouseEvent | TouchEvent) {
-    if (event instanceof TouchEvent && event.touches.length === 2) {
+    const isTouch = 'touches' in event;
+
+    if (isTouch && (event as TouchEvent).touches.length === 2) {
       this.isDragging = false;
-      this.lastTouchDistance = this.getTouchDistance(event);
+      this.lastTouchDistance = this.getTouchDistance(event as TouchEvent);
       return;
     }
 
-    if (this.scale <= 1) return;
-    this.isDragging = true;
-    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
-    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
-    this.startX = clientX - this.panX;
-    this.startY = clientY - this.panY;
-    
-    if (event instanceof MouseEvent) {
+    if (this.scale > 1) {
+      this.isDragging = true;
+      const clientX = isTouch ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX;
+      const clientY = isTouch ? (event as TouchEvent).touches[0].clientY : (event as MouseEvent).clientY;
+      this.startX = clientX - this.panX;
+      this.startY = clientY - this.panY;
+
       event.preventDefault();
     }
   }
 
   drag(event: MouseEvent | TouchEvent) {
-    if (event instanceof TouchEvent && event.touches.length === 2) {
+    const isTouch = 'touches' in event;
+
+    if (isTouch && (event as TouchEvent).touches.length === 2) {
       event.preventDefault();
-      const distance = this.getTouchDistance(event);
+      const distance = this.getTouchDistance(event as TouchEvent);
       if (this.lastTouchDistance > 0) {
         const factor = distance / this.lastTouchDistance;
         this.scale = Math.max(1, Math.min(this.scale * factor, 5));
@@ -129,11 +132,12 @@ export class WishImageZoomComponent {
       return;
     }
 
-    if (!this.isDragging) return;
-    const clientX = event instanceof MouseEvent ? event.clientX : event.touches[0].clientX;
-    const clientY = event instanceof MouseEvent ? event.clientY : event.touches[0].clientY;
-    this.panX = clientX - this.startX;
-    this.panY = clientY - this.startY;
+    if (this.isDragging) {
+      const clientX = isTouch ? (event as TouchEvent).touches[0].clientX : (event as MouseEvent).clientX;
+      const clientY = isTouch ? (event as TouchEvent).touches[0].clientY : (event as MouseEvent).clientY;
+      this.panX = clientX - this.startX;
+      this.panY = clientY - this.startY;
+    }
   }
 
   endDrag() {

@@ -80,6 +80,8 @@
     transition: transform 0.1s ease-out; /* Smooth transition for zooming */
     transform-origin: center center;
     pointer-events: none; /* Let drag events trigger on container */
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 .zoomable-image.dragging {
