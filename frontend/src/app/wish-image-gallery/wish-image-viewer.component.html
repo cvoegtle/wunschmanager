@@ -7,40 +7,4 @@
   }
 </div>
 
-<dialog #zoomDialog class="zoom-dialog" closedby="any" (close)="onDialogClose()" (click)="onDialogClick($event)">
-  <div class="dialog-header">
-    <span class="dialog-title">Wunsch-Bild vergrößern</span>
-    <div class="dialog-controls">
-      <button mat-icon-button (click)="zoomIn()" [disabled]="scale >= 5" matTooltip="Vergrößern">
-        <mat-icon>zoom_in</mat-icon>
-      </button>
-      <button mat-icon-button (click)="zoomOut()" [disabled]="scale <= 1" matTooltip="Verkleinern">
-        <mat-icon>zoom_out</mat-icon>
-      </button>
-      <button mat-icon-button (click)="resetZoom()" [disabled]="scale === 1 && panX === 0 && panY === 0" matTooltip="Zurücksetzen">
-        <mat-icon>restart_alt</mat-icon>
-      </button>
-      <button mat-icon-button (click)="closeZoom()" matTooltip="Schließen">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-  </div>
-  <div class="dialog-body" 
-       (mousedown)="startDrag($event)"
-       (mousemove)="drag($event)"
-       (mouseup)="endDrag()"
-       (mouseleave)="endDrag()"
-       (touchstart)="startDrag($event)"
-       (touchmove)="drag($event)"
-       (touchend)="endDrag()"
-       (wheel)="onWheel($event)"
-       (dblclick)="toggleZoom($event)">
-    <img [src]="image.url || image" 
-         alt="Wunsch-Bild vergrößert" 
-         class="zoomable-image" 
-         [style.transform]="'translate(' + panX + 'px, ' + panY + 'px) scale(' + scale + ')'"
-         [class.dragging]="isDragging"
-         [class.zoomable]="scale > 1">
-  </div>
-</dialog>
-
+<wish-image-zoom [image]="image"></wish-image-zoom>

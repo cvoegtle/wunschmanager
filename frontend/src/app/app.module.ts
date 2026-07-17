@@ -84,6 +84,7 @@ import { ContentViewerComponent } from './link-viewer/content-viewer.component';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { ErrorSessionDialogComponent } from "./error-session-dialog/error-session-dialog.component";
 import { WishImageViewerComponent } from "./wish-image-gallery/wish-image-viewer.component";
+import { WishImageZoomComponent } from "./wish-image-gallery/wish-image-zoom.component";
 import { ReserveActionDialogComponent } from './reserve-action-dialog/reserve-action-dialog.component';
 import { ProxyReserveActionDialogComponent } from "./proxy-reserve-action-dialog/proxy-reserve-action-dialog.component";
 import { ProxyParticipateDialogComponent } from "./proxy-participate-dialog/proxy-participate-dialog.component";
@@ -95,7 +96,7 @@ import { DonorEditorComponent } from "./donor-editor/donor-editor.component";
         SelectToggleComponent, WishMultiColumnComponent, WishColumnComponent, WishViewColumnComponent, WishViewMultiColumnComponent,
         WishPropertiesComponent, NamePartPipe, EditEventDialogComponent, ViewComponent, ErrorDialogComponent, ErrorHandler, FocusDirective,
         ProxySuggestGroupDialogComponent, ProxyParticipateDialogComponent, DonorEditorComponent, DonorViewerComponent, ParticipateDialogComponent, PriceInformationComponent, DonateButtonComponent,
-        SuggestGroupDialogComponent, ReserveActionDialogComponent, ProxyReserveActionDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent
+        SuggestGroupDialogComponent, ReserveActionDialogComponent, ProxyReserveActionDialogComponent, EuroFormatPipe, ContentEditComponent, ContentViewerComponent, BackgroundColorSelectionComponent, WishImageViewerComponent, WishImageZoomComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule, FormsModule, BrowserAnimationsModule, MatNativeDateModule,
         ReactiveFormsModule,
