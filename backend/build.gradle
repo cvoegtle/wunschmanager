@@ -96,3 +96,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 tasks.named("processResources") {
     dependsOn rootProject.tasks.named("copyToWebApp")
 }
+
+test {
+    useJUnitPlatform()
+}

@@ -48,10 +48,10 @@ export class DonationInEdit {
 }
 
 export class DonationImpl implements Donation {
-  donor: string;
-  proxyDonor: string;
-  organiser: boolean;
-  amount: number
+  donor: string = null;
+  proxyDonor: string = null;
+  organiser: boolean = false;
+  amount: number = 0;
 }
 
 class WishImpl implements Wish {
@@ -117,10 +117,10 @@ export function copyDonation(donation: Donation): Donation {
     return null;
   }
   return {
-    donor: donation.donor,
-    proxyDonor: donation.proxyDonor,
-    organiser: donation.organiser,
-    amount: donation.amount
+    donor: donation.donor !== undefined ? donation.donor : null,
+    proxyDonor: donation.proxyDonor !== undefined ? donation.proxyDonor : null,
+    organiser: donation.organiser !== undefined ? donation.organiser : false,
+    amount: donation.amount !== undefined ? donation.amount : 0
   };
 }
 
