@@ -37,7 +37,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { WishListEditComponent } from './wish-list-edit/wish-list-edit.component';
 import { WishService } from "./services/wish.service";
 import { WishEditComponent } from './wish-edit/wish-edit.component';
@@ -143,7 +143,7 @@ import { DonorEditorComponent } from "./donor-editor/donor-editor.component";
         UserService,
         ConfigurationService,
         ErrorHandler,
-        provideHttpClient(withInterceptorsFromDi())]
+        provideHttpClient(withXhr(), withInterceptorsFromDi())]
 })
 export class AppModule {
 }

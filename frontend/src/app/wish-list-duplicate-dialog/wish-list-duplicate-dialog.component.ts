@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { WishList, WishListImpl } from "../services/wish-list";
 import { DuplicateRequest } from "../services/duplicate-request";
@@ -7,6 +7,7 @@ import { DuplicateRequest } from "../services/duplicate-request";
     selector: 'app-wish-list-duplicate-dialog',
     templateUrl: './wish-list-duplicate-dialog.component.html',
     styleUrls: ['./wish-list-duplicate-dialog.component.css', '../util/color.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishListDuplicateDialogComponent {

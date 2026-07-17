@@ -8,7 +8,7 @@
   <span>Wunsch Manager</span>
   <span class="fill-remaining-space"></span>
   @if (isLoggedIn()) {
-    <button (click)="logoutClicked()" mat-raised-button color='accent'>{{userStatus?.name | name}}  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
+    <button (click)="logoutClicked()" mat-raised-button color='accent'>{{$safeNavigationMigration(userStatus?.name) | name}}  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>
   }
   @if (isViewer() && !isLoggedIn()) {
     <button (click)="loginClicked()" mat-raised-button color='accent'>anmelden  <i class="material-icons" style="display: inline;margin-left: 5px;">power_settings_new</i></button>

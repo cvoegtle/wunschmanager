@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UserStatus } from '../services/user.status';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { LocalStorageService } from "../services/local-storage.service";
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LoginComponent implements OnInit {

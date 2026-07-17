@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Donation, Wish } from "../services/wish";
 
 @Component({
     selector: 'donor-viewer',
     templateUrl: './donor-viewer.component.html',
     styleUrls: ['./donor-viewer.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DonorViewerComponent implements OnInit {

@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { WishImageZoomComponent } from './wish-image-zoom.component';
 
 @Component({
   selector: 'wish-image-gallery',
   templateUrl: './wish-image-viewer.component.html',
   styleUrls: ['./wish-image-viewer.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class WishImageViewerComponent {

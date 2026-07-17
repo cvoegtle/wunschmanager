@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish, Image } from "../services/wish";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { DeleteItemDialogComponent } from '../delete-item-dialog/delete-item-dia
     selector: 'wish-edit',
     templateUrl: './wish-edit.component.html',
     styleUrls: ['./wish.component.css', '../util/color.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishEditComponent implements OnInit {

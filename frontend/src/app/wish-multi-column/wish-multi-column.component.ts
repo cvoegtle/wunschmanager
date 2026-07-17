@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ImageUpload, Wish } from "../services/wish";
 import { sort, splitIntoColumns } from "../util/wishlist-helper";
 
@@ -6,6 +6,7 @@ import { sort, splitIntoColumns } from "../util/wishlist-helper";
     selector: 'wish-multi-column',
     templateUrl: './wish-multi-column.component.html',
     styleUrls: ['./wish-multi-column.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishMultiColumnComponent {

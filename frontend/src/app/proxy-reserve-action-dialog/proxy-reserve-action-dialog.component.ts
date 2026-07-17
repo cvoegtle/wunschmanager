@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
@@ -11,6 +11,7 @@ export enum ProxyReserveAction {
   selector: 'proxy-reserve-action-dialog',
   templateUrl: './proxy-reserve-action-dialog.component.html',
   styleUrls: ['./proxy-reserve-action-dialog.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class ProxyReserveActionDialogComponent implements OnInit {

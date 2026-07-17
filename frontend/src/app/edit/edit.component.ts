@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import { WishListService } from '../services/wish-list.service';
 import { UserService } from '../services/user.service';
@@ -13,6 +13,7 @@ import { WishIds } from "../services/wish-copy-task";
     selector: 'wish-editor',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class EditComponent implements OnInit {

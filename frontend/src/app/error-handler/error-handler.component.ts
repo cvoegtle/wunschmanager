@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
 import { HttpErrorResponse, HttpStatusCode } from "@angular/common/http";
@@ -9,6 +9,7 @@ import { ErrorSessionDialogComponent } from "../error-session-dialog/error-sessi
   selector: 'error-handler',
   template: '',
   styles: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class ErrorHandler {

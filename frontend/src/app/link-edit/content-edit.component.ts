@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Alternative, Donation, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 
@@ -6,6 +6,7 @@ import { makeValidUrl } from "../util/url-helper";
     selector: 'content-edit',
     templateUrl: './content-edit.component.html',
     styleUrls: ['../wish-edit/wish.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ContentEditComponent implements OnInit {

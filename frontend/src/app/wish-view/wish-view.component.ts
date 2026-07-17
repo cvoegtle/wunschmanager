@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { isAvailable, isWithAlternatives, Wish } from "../services/wish";
 import { makeValidUrl } from "../util/url-helper";
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
@@ -7,6 +7,7 @@ import { isBlue, isGreen, isRed, isYellow } from "../util/color";
     selector: 'wish-view',
     templateUrl: './wish-view.component.html',
     styleUrls: ['../wish-edit/wish.component.css', '../util/color.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishViewComponent implements OnInit {

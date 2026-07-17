@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Wish } from "../services/wish";
 
 @Component({
     selector: 'wish-view-column',
     templateUrl: './wish-view-column.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishViewColumnComponent {

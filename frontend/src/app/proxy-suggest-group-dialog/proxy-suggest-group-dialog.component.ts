@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Donation, DonationImpl, resetGroupGift, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
     selector: 'proxy-suggest-group-dialog',
     templateUrl: './proxy-suggest-group-dialog.component.html',
     styleUrls: ['./proxy-suggest-group-dialog.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProxySuggestGroupDialogComponent implements OnInit {

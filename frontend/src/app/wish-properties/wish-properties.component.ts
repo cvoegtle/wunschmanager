@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Wish } from "../services/wish";
 
@@ -10,6 +10,7 @@ export enum Change {
     selector: 'app-wish-properties',
     templateUrl: './wish-properties.component.html',
     styleUrls: ['../wish-edit/wish.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { containsSelectedWish, copyDonationInformation, Donation, DonationImpl, isReservedByUser, removeWishSelection, Wish } from '../services/wish';
 import { WishList } from '../services/wish-list';
 import { WishService } from '../services/wish.service';
@@ -18,6 +18,7 @@ import { ReserveAction, ReserveActionDialogComponent } from "../reserve-action-d
     selector: 'wish-list-view',
     templateUrl: './wish-list-view.component.html',
     styleUrls: ['../wish-list-edit/wish-list.component.css', '../util/color.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishListViewComponent implements OnInit {

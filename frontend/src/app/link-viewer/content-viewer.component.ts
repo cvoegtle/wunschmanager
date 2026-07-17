@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { convertUrlToShortText, makeValidUrl } from "../util/url-helper";
 import { Alternative, Wish } from "../services/wish";
 
@@ -6,6 +6,7 @@ import { Alternative, Wish } from "../services/wish";
     selector: 'content-viewer',
     templateUrl: './content-viewer.component.html',
     styleUrls: ['../wish-edit/wish.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ContentViewerComponent implements OnInit {

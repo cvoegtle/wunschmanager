@@ -1,9 +1,10 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'wish-image-zoom',
   templateUrl: './wish-image-zoom.component.html',
   styleUrls: ['./wish-image-zoom.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class WishImageZoomComponent {

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { WishList } from "../services/wish-list";
 import { Change } from "../wish-properties/wish-properties.component";
@@ -7,6 +7,7 @@ import { Change } from "../wish-properties/wish-properties.component";
     selector: 'edit-event-dialog',
     templateUrl: './edit-event-dialog.component.html',
     styleUrls: ['./edit-event-dialog.component.css', '../util/color.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class EditEventDialogComponent {

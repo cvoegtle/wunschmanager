@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import { WishListService } from '../services/wish-list.service';
 import { ErrorHandler } from '../error-handler/error-handler.component';
@@ -8,6 +8,7 @@ import { WishIds } from "../services/wish-copy-task";
     selector: 'all-shared',
     templateUrl: './all-shared.component.html',
     styleUrls: ['./all-shared.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AllSharedComponent implements OnInit {

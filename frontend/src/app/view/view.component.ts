@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationService } from '../services/configuration.service';
 import { WishListService } from '../services/wish-list.service';
@@ -13,6 +13,7 @@ import { UserStatus } from "../services/user.status";
     selector: 'app-view',
     templateUrl: './view.component.html',
     styleUrls: ['./view.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ViewComponent implements OnInit {

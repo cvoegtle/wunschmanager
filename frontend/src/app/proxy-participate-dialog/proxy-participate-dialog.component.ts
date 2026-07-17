@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Donation, DonationImpl, DonationInEdit, donationOpenParticipation, copyDonation, Wish } from "../services/wish";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { disabled } from "@angular/forms/signals";
@@ -7,6 +7,7 @@ import { disabled } from "@angular/forms/signals";
     selector: 'proxy-participate-dialog',
     templateUrl: './proxy-participate-dialog.component.html',
     styleUrls: ['./proxy-participate-dialog.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ProxyParticipateDialogComponent implements OnInit {

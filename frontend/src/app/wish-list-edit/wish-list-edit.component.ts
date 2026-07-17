@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { WishList } from '../services/wish-list';
 import {
   copyDonation,
@@ -36,6 +36,7 @@ import { ProxyParticipateDialogComponent } from "../proxy-participate-dialog/pro
     selector: 'wish-list-edit',
     templateUrl: './wish-list-edit.component.html',
     styleUrls: ['./wish-list.component.css', '../util/color.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class WishListEditComponent {
