@@ -23,7 +23,7 @@ apply plugin: 'com.google.cloud.tools.appengine'  // App Engine tasks
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api'
     // Version is managed by Spring Boot's dependency management plugin
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 
