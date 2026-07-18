@@ -30,3 +30,5 @@ backend/src/main/webapp/.DS_Store
 frontend/.DS_Store
 frontend/src/app/.DS_Store
 
+/uploads/
+

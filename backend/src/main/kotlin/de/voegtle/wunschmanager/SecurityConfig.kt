@@ -31,6 +31,7 @@ class SecurityConfig {
                            "/please_login.html",
                            "/logged_out.html",
                            "/app/**",
+                           "/uploads/**",
                            "/user/status",
                            "/wishlist/get",
                            "/wishlist/shared",
