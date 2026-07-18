@@ -1,6 +1,6 @@
 <div matLine class="donor-container">
   @if (donationInEdit.donation.amount) {
-    <span>{{donationInEdit.donation.amount | euro: 2}} </span>
+    <span class="donation-amount">{{donationInEdit.donation.amount | euro: 2}}</span>
   }
   <span class="highlighted">{{donationInEdit.donation.donor}}</span>
   @if (!donationInEdit.donation.donor) {

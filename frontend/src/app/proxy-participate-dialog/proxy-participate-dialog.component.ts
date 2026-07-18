@@ -111,8 +111,8 @@ export class ProxyParticipateDialogComponent implements OnInit {
     const donors = this.donationsInEdit
       .filter(d => !d.isDeleted)
       .map(d => {
-        const donor = d.donation.donor;
-        return donor ? donor : "";
+        let donor = d.donation.donor;
+        return donor ? donor.toLowerCase().trim() : "";
       });
 
     const uniqueDonors = new Set(donors);

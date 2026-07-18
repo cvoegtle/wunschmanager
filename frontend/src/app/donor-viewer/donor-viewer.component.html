@@ -3,7 +3,7 @@
     <hr class="separator-line">
   }
   @if (myPresent && donation.amount) {
-    <span>{{donation.amount | euro: 2}} </span>
+    <span class="donation-amount">{{donation.amount | euro: 2}}</span>
   }
   @if (!isMyDonation() && loggedIn) {
     <a href="mailto:{{donation.donor}}" class="highlighted">{{donation.donor}}</a>

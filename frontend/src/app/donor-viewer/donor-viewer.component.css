@@ -5,3 +5,7 @@
 .highlighted {
     font-weight: bold;
 }
+
+.donation-amount {
+    margin-right: 8px;
+}
