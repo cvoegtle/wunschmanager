@@ -24,7 +24,7 @@ import java.util.logging.Logger
 @RestController
 class ImageService {
   val log: Logger = Logger.getLogger("ImageService")
-  val imageAccess: ImageAccess = ImageAccess()
+  val imageAccess: ImageAccess = ImageAccess.create()
   private val maxImageSize = 2*1024*1024
 
 

@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser
 
 @RestController
 class WishListService {
-  val imageAccess: ImageAccess = ImageAccess()
+  val imageAccess: ImageAccess = ImageAccess.create()
 
   @GetMapping("/wishlist/create")
   fun create(@RequestParam() event: String, @RequestParam() managed: Boolean, @AuthenticationPrincipal oidcUser: OidcUser?): WishList {

@@ -33,7 +33,7 @@ import org.voegtle.wunschmanager.data.WishList
 import java.util.Date
 
 @RestController() class WishService {
-  val imageAccess: ImageAccess = ImageAccess()
+  val imageAccess: ImageAccess = ImageAccess.create()
 
   @GetMapping("/wish/list") fun list(@RequestParam() list: Long, @RequestParam() user: String?, @AuthenticationPrincipal oidcUser: OidcUser?): List<Wish> {
     val wishList: WishList = ObjectifyService.ofy().load().type(WishList::class.java).id(list).now()
