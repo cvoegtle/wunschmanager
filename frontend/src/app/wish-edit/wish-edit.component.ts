@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish, Image } from "../services/wish";
+import { Alternative, ensureEmptyAlternative, ImageUpload, isAvailable, isReservedByUser, removeEmptyAlternatives, Wish, Image, isAlternativesInUse } from "../services/wish";
 import { Change, WishPropertiesComponent } from "../wish-properties/wish-properties.component";
 import { MatDialog } from '@angular/material/dialog';
 import { isBlue, isGreen, isRed, isYellow } from "../util/color";
@@ -106,6 +106,14 @@ export class WishEditComponent implements OnInit {
 
   protected addAlternative() {
     ensureEmptyAlternative(this.wish)
+  }
+
+  protected removeAlternative() {
+    removeEmptyAlternatives(this.wish)
+  }
+
+  protected isAlternativesInUse(): boolean {
+    return isAlternativesInUse(this.wish);
   }
 
   protected onFileSelected(event: Event) {

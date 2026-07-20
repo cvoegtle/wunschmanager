@@ -265,6 +265,10 @@ export function removeEmptyAlternatives(wish: Wish) {
   }
 }
 
+export function isAlternativesInUse(wish: Wish): boolean {
+  return wish.alternatives.every(a => isWithLink(a));
+}
+
 function isWithDescriptionOrLink(content: Wish | Alternative):boolean {
   return !isEmptyString(content.description) || !isEmptyString(content.link);
 }
