@@ -15,9 +15,7 @@
     <span class="highlighted">{{donation.donor}}</span>
   }
   @if (loggedIn && donation.organiser) {
-    <span> </span>
-    } @if (loggedIn && donation.organiser) {
-    <span class="material-icons" style="vertical-align: bottom">manage_accounts</span>
+    <span class="material-icons organiser-icon" style="vertical-align: bottom">manage_accounts</span>
   }
   @if (donation.proxyDonor && loggedIn) {
     <span> (durch <a href="mailto:{{donation.proxyDonor}}">{{donation.proxyDonor}}</a>)</span>
